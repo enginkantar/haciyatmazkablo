@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://haciyatmazkablo.com/sitemap.xml
