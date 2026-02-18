@@ -139,6 +139,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 }
 </script>
 </head>
+<script src="assets/js/neural-glow-bg.js"></script>
 
 <body>
 
@@ -167,133 +168,151 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="hero d-flex align-items-start pt-2">
-        <div class="container">
-            <div class="row align-items-center">
+    <section id="hero" class="neural-glow-section" <!-- class="hero d-flex align-items-start pt-2" --></section>>
+    <div class="container" style="line-height: 1.3">
+        <div class="row align-items-center">
 
-                <div class="col-lg-6">
-                    <h1 class="price-main mb-1">
-                        ⚡ YENİ NESİL KABLO, VİDEO-OYUN-KAYDIRMA KEYFİ<br>
-                        ⚡ DURMA, HEMEN AL: EĞLENCEN ASLA BÖLÜNMESİN!
-                    </h1>
-                    <p class="lead mb-1">
-                        Hala sıradan, kalitesiz kablolarla vakit ve nakit mi kaybediyorsunuz? Kırılan, temassızlık yapan
-                        kablolar yüzünden her ay yenisini satın alma devrine DERHAL SON VERİN!
-                        <span style="color:#FFC107; font-weight:700;"> HACIYATMAZ KABLO Premium Type-C den Type-C
-                            240W-480Mbps</span> ile hızın ve dayanıklılığın zirvesine çıkın
-                        Özel açılı başlığı ve dahili standı sayesinde oyunun en kritik anında veya en sevdiğin dizinin
-                        ortasında kablo bükülmelerine, şarj kesintilerine ELVEDA DE! Yeni nesil Type-C adaptörler için
-                        tasarlandı.
-                        240W süper hızlı şarj performansı için çift Type-C bağlantı gerekir.
-                    </p>
-                    <p class="lead mb-1">⚡ NEDEN ŞİMDİ ALMALISIN?</p>
-                    <div class="mb-1">
-                        <p class="text-muted"><small>✓ Bu ürünün fiyatını aynı watt, aynı verï akışı, aynı uzunluk ve
-                                stantsız özellikteki sıradan kablolarla kıyasla!!!</small></p>
-                        <p class="text-muted mb-2"><small>✓ 240 Watt-480Mbps, 50.000+ Bükülme Testini Geçti: Piyasadaki
-                                çöp
-                                kablolarla karıştırmayın; bu kablo pes etmez!</small></p>
-                        <p class="text-muted mb-2"><small>✓ 1.5 Metre / 48 Telli Örgü Zırh: Maksimum dayanıklılık için
-                                tasarlandı. Bir kere alın, ömürlük kullanın!</small></p>
-                        <p class="text-muted mb-2"><small>✓ Evrensel Uyumluluk: 2023 sonrası tüm cep telefonları ve
-                                USB-C cihazlarla tam performans.</small></p>
-                        <p class="text-muted"><small>✓ Dahili Telefon Stand Özelliği: Başka hiçbir yerde yok! Hem şarj
-                                et hem en konforlu açıyla izle.</small></p>
-                    </div>
-                    <div class="price-main mb-1">
-                        <strong>🛍️ Sipariş Ver 821 TL - 🚛 Ücretsiz kargo - 🏠 Kapıda ödeme (WhatsApp'dan yazınız) ✂️
-                            Taksit İmkanı</strong>
-                        <p class="text-muted"><small>✂️ Taksitli ödemelerde banka komisyonu uygulanabilir.</small></p>
-                    </div>
-                    <!--- //biz ekran acmiyoruz direk iyizco ya gonderiyoruz-->
-                    <button class="btn btn-warning btn-lg me-2 mb-2"
-                        onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
-                        <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
-                    </button>
-                    <button class="btn btn-outline-light btn-lg mb-2"
-                        onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
-                        <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
-                    </button>
-                    <button class="fas fa-shopping-cart"
-                        onclick="window.open('https://www.hepsiburada.com/basemo-type-c-to-type-c-240w-extra-dayanikli-super-hizli-480-mps-veri-aktarimi-hem-stand-hem-sarj-kablosu-birarada-p-HBCV0000BTCZRI?magaza=Batumedikal', '_blank')">
-                        <i>🛍️</i> HepsiBurada'dan Satın Al
-                    </button>
-                    <button class="fas fa-shopping-cart"
-                        onclick="window.open('https://www.trendyol.com/basemo/type-c-de-type-c-ye-hem-stand-hem-sarj-kablosu-birarada-p-1080438073?merchantId=443670&filterOverPriceListings=false', '_blank')">
-                        <i>🛍️</i> Trendyol'dan Satın Al
-                    </button>
-                    <button class="fas fa-shopping-cart"
-                        onclick="window.open('https://www.n11.com/urun/type-c-acili-240w-sarj-kablosu-116755521?magaza=batu-medikal-depo', '_blank')">
-                        <i>🛍️</i> N11'den Satın Al
-                    </button>
-                    <button class="fas fa-shopping-cart"
-                        onclick="window.open('https://www.pttavm.com/item-p-1427845396', '_blank')">
-                        <i>🛍️</i> PTTAVM'den Satın Al
-                    </button>
+            <div class="col-lg-6">
+                <h1 class="price-main mb-1">
+                    ⚡ YENİ NESİL KABLO, VİDEO-OYUN-KAYDIRMA KEYFİ<br>
+                    ⚡ DURMA, HEMEN AL: EĞLENCEN ASLA BÖLÜNMESİN!
+                </h1>
+                <p class="lead mb-1" white style="color:#ffffff;">
+                    Hala sıradan, kalitesiz kablolarla vakit ve nakit mi kaybediyorsunuz? Kırılan, temassızlık yapan
+                    kablolar yüzünden her ay yenisini satın alma devrine DERHAL SON VERİN!
+                    <span style="color:#FFC107; font-weight:700;"> HACIYATMAZ KABLO Premium Type-C den Type-C
+                        240W-480Mbps</span> ile hızın ve dayanıklılığın zirvesine çıkın
+                    Özel açılı başlığı ve dahili standı sayesinde oyunun en kritik anında veya en sevdiğin dizinin
+                    ortasında kablo bükülmelerine, şarj kesintilerine ELVEDA DE! Yeni nesil Type-C adaptörler için
+                    tasarlandı.
+                    240W süper hızlı şarj performansı için çift Type-C bağlantı gerekir.
+                </p>
+                <p class="lead mb-1" style="color:#FFC107; line-height:1.2;">⚡ NEDEN ŞİMDİ ALMALISIN?</p>
+                <div class="mb-1" style="line-height:0.2em;">
+                    <p class="text-white mb-2" style="line-height:1.2;"><small>✓ Bu ürünün fiyatını aynı watt, aynı verï
+                            akışı, aynı uzunluk ve
+                            stantsız özellikteki sıradan kablolarla kıyasla!!!</small></p>
+                    <p class="text-white mb-2" style="line-height:1.2;"><small>✓ 240 Watt-480Mbps, 50.000+ Bükülme
+                            Testini Geçti: Piyasadaki
+                            çöp
+                            kablolarla karıştırmayın; bu kablo pes etmez!</small></p>
+                    <p class="text-white mb-2" style="line-height:1.2;"><small>✓ 1.5 Metre / 48 Telli Örgü Zırh:
+                            Maksimum dayanıklılık için
+                            tasarlandı. Bir kere alın, ömürlük kullanın!</small></p>
+                    <p class="text-white mb-2" style="line-height:1.2;"><small>✓ Evrensel Uyumluluk: 2023 sonrası tüm
+                            cep telefonları ve
+                            USB-C cihazlarla tam performans.</small></p>
+                    <p class="text-white" style="line-height:1.2;"><small>✓ Dahili Telefon Stand Özelliği: Başka hiçbir
+                            yerde yok! Hem şarj
+                            et hem en konforlu açıyla izle.</small></p>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <!--<img src="assets/images/110001404174630.jpg" alt="BASEMO Type-C 240W Kablosu" class="img-fluid rounded-4 shadow-lg">-->
-                    <div class="col-lg-15 mx-auto">
-                        <!-- IMAGE CAROUSEL - 2 SANIYEDE BİR DEĞİŞEN RESİMLER -->
-                        <div id="heroCarousel" class="carousel slide rounded-6 shadow-lg overflow-hidden"
-                            data-bs-ride="carousel" data-bs-interval="3000">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="assets/basemo-cable-chrome/basemo8webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo2webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo4webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo1webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo5webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo11webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="assets/basemo-cable-chrome/basemo12.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                <div class="price-main mb-1">
+                    <strong>🛍️ Sipariş Ver 821 TL - 🚛 Ücretsiz kargo - 🏠 Kapıda ödeme (WhatsApp'dan yazınız) ✂️
+                        Taksit İmkanı</strong>
+                    <p class="text-white"><small>✂️ Taksitli ödemelerde banka komisyonu uygulanabilir.</small></p>
+                </div>
+                <!--- //biz ekran acmiyoruz direk iyizco ya gonderiyoruz-->
+                <button class="btn btn-warning btn-lg me-2 mb-2"
+                    onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
+                    <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
+                </button>
+                <button class="btn btn-outline-light btn-lg mb-2"
+                    onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
+                </button>
+                <button class="fas fa-shopping-cart"
+                    onclick="window.open('https://www.hepsiburada.com/basemo-type-c-to-type-c-240w-extra-dayanikli-super-hizli-480-mps-veri-aktarimi-hem-stand-hem-sarj-kablosu-birarada-p-HBCV0000BTCZRI?magaza=Batumedikal', '_blank')">
+                    <i>🛍️</i> HepsiBurada'dan Satın Al
+                </button>
+                <button class="fas fa-shopping-cart"
+                    onclick="window.open('https://www.trendyol.com/basemo/type-c-de-type-c-ye-hem-stand-hem-sarj-kablosu-birarada-p-1080438073?merchantId=443670&filterOverPriceListings=false', '_blank')">
+                    <i>🛍️</i> Trendyol'dan Satın Al
+                </button>
+                <button class="fas fa-shopping-cart"
+                    onclick="window.open('https://www.n11.com/urun/type-c-acili-240w-sarj-kablosu-116755521?magaza=batu-medikal-depo', '_blank')">
+                    <i>🛍️</i> N11'den Satın Al
+                </button>
+                <button class="fas fa-shopping-cart"
+                    onclick="window.open('https://www.pttavm.com/item-p-1427845396', '_blank')">
+                    <i>🛍️</i> PTTAVM'den Satın Al
+                </button>
+            </div>
+            <div class="col-lg-6 text-center">
+                <!--<img src="assets/images/110001404174630.jpg" alt="BASEMO Type-C 240W Kablosu" class="img-fluid rounded-4 shadow-lg">-->
+                <div class="col-lg-15 mx-auto">
+                    <!-- IMAGE CAROUSEL - 2 SANIYEDE BİR DEĞİŞEN RESİMLER -->
+                    <div id="heroCarousel" class="carousel slide rounded-6 shadow-lg overflow-hidden"
+                        data-bs-ride="carousel" data-bs-interval="3000">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="assets/basemo-cable-chrome/basemo8webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo2webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo4webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo1webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo5webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo11webp.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/basemo-cable-chrome/basemo12.webp"
+                                    alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/enYonIHBozU" title="HACIYATMAZ KABLO Premium Type-C den Type-C
+                        240W-480Mbps" allowfullscreen allow="autoplay" playsinline=1 mute="1"></iframe>
                                 </div>
                             </div>
-                            <!-- Önceki/Sonraki Butonları -->
-                            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
-                            </button>
-                            <!-- Nokta İndikatörleri -->
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0"
-                                    class="active"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="5"></button>
-                                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="6"></button>
-                            </div>
+                        </div>
+                        <!-- Önceki/Sonraki Butonları -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+                        </button>
+                        <!-- Nokta İndikatörleri -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0"
+                                class="active"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="5"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="6"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="7"></button>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- YOUTUBE VİDEOSU (CAROUSEL ALTINA EKLENDİ) -->
+            <!-- <div class="ratio ratio-16x9 mt-4">
+                <iframe src="https://www.youtube.com/embed/enYonIHBozU" title="YouTube video" allowfullscreen>
+                </iframe>
+            </div> -->
+            <!-- Video bitişi -->
         </div>
-        </div>
-        </div>
+    </div>
+    </div>
+    </div>
     </section>
     <!-- FEATURES SECTION -->
     <section id="features" class="features py-5">
@@ -468,7 +487,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 </strong> <a
                     onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;"
                     class="text-warning text-decoration-none">0553 475 90 32</a></p>
-            <p class="mb-3"><i class="fas fa-envelope text-black text-muted small mb-0"></i> <strong
+            <p class="mb-3"><i class="fas fa-envelope text-black text-white small mb-0"></i> <strong
                     class="text-warning mb-3">E-POSTA : </strong>
                 <a href="mailto:haciyatmazkablo@gmail.com"
                     class="text-warning text-decoration-none">haciyatmazkablo@gmail.com</a>
@@ -483,32 +502,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <a href="https://www.youtube.com/@Haciyatmazkablo" target="_blank"
                     class="text-warning text-decoration-none">@Haciyatmazkablo</a>
             </p>
-            <p class="text-muted small mb-0">&copy; 2025 HACIYATMAZKABLO. Tüm hakları saklıdır. | Güvenli Ödeme
+            <p class="text-white small mb-0">&copy; 2025 HACIYATMAZKABLO. Tüm hakları saklıdır. | Güvenli Ödeme
                 | Hızlı
-                Teslimat | 15 Gün Para İade</p>
+                Teslimat | 15 Gün Para İade | Designed BY @Batu Bilişim with engine 0553 475 90 32</p>
         </div>
     </footer>
-
-    <!-- IYZICO PAY LINK MODAL (Demo) -->
-    <div class="modal fade" id="paymentModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title"><i class="fab fa-cc-visa"></i> Ödeme Başarılı</h5>
-                </div>
-                <div class="modal-body text-center">
-                    <i class="fas fa-check-circle text-success" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                    <h5>Sipariş Alındı!</h5>
-                    <p class="text-muted">Gerçek ortamda İyzico ile Güvenli ödeme sayfasına yönlendirileceksiniz.</p>
-                    <p class="text-muted small">Şu an demo mode çalışıyor. İyzico Pay Link'i entegre etmek için
-                        README.md dosyasını oku.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Tamam</button>
-                </div>
-            </div>
-        </div>
-        <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 </body>
 
 <!-- Bootstrap JS -->
