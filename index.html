@@ -174,6 +174,196 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   }
 }
 </script>
+
+    <style>
+        /* ═══ LIQUID GRADIENT BUTTON ═══ */
+        .btn-liquid {
+            position: relative;
+            overflow: hidden;
+            border: none;
+            color: #000 !important;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Animated gradient background */
+        .btn-liquid::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg,
+                    #28a745 0%,
+                    #20c997 15%,
+                    #28a745 30%,
+                    #2ecc71 45%,
+                    #28a745 55%,
+                    #1e7e34 70%,
+                    #28a745 85%,
+                    #34d058 100%);
+            background-size: 300% 300%;
+            animation: liquid-flow 4s ease infinite;
+            border-radius: inherit;
+            z-index: -2;
+        }
+
+        /* Shine overlay */
+        .btn-liquid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            z-index: -1;
+            animation: liquid-shine 3s ease-in-out infinite;
+        }
+
+        /* Hover state */
+        .btn-liquid:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 8px 25px rgba(40, 167, 69, 0.4),
+                0 0 40px rgba(40, 167, 69, 0.2);
+            color: #000 !important;
+        }
+
+        .btn-liquid:hover::before {
+            animation-duration: 1.5s;
+        }
+
+        .btn-liquid:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* ═══ DARK VERSION (koyu arka plan üzerindeki butonlar için) ═══ */
+        .btn-liquid-dark {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            color: #fff !important;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 1;
+            background: #1a1a1a;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* Border gradient */
+        .btn-liquid-dark::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg,
+                    #28a745 0%,
+                    #20c997 25%,
+                    #28a745 50%,
+                    #34d058 75%,
+                    #28a745 100%);
+            background-size: 300% 300%;
+            animation: liquid-flow 4s ease infinite;
+            border-radius: inherit;
+            z-index: -2;
+        }
+
+        /* Inner dark fill */
+        .btn-liquid-dark::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: #1a1a1a;
+            border-radius: inherit;
+            z-index: -1;
+            transition: background 0.3s ease;
+        }
+
+        .btn-liquid-dark:hover {
+            color: #000 !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-liquid-dark:hover::after {
+            background: transparent;
+        }
+
+        /* ═══ KEYFRAMES ═══ */
+        @keyframes liquid-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            25% {
+                background-position: 100% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            75% {
+                background-position: 0% 100%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes liquid-shine {
+            0% {
+                left: -100%;
+            }
+
+            50% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            .btn-liquid,
+            .btn-liquid-dark {
+                font-size: 0.95rem;
+                padding: 12px 28px;
+            }
+        }
+
+        /* ═══ WHATSAPP BUTTON (GREEN ONLY) ═══ */
+        .btn-whatsapp {
+            background-color: #25D366;
+            border-color: #25D366;
+            color: #ffffff !important;
+            font-weight: 700;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1ebe5d;
+            border-color: #1ebe5d;
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 <script src="assets/js/neural-glow-bg.js"></script>
 
@@ -186,7 +376,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <button class="btn btn-dark btn-lg" onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
+            <button class="btn btn-liquid btn-lg" onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
                 <i class="fas fa-shopping-cart"></i> Sipariş Ver - 821 TL 🛍️
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -195,14 +385,13 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <li class="nav-item"><a class="nav-link" href="#features">Özellikler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#specs">Teknik Özellikler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
-                    <li class="nav-item"><button class="btn btn-warning btn-sm"
+                    <li class="nav-item"><button class="btn-liquid btn-lg"
                             onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">🛍️Satın Al</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
     <!-- HERO SECTION -->
     <section id="hero" class="neural-glow-section" <!-- class="hero d-flex align-items-start pt-2" --></section>>
     <div class="container" style="line-height: 1.3">
@@ -250,11 +439,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <p class="text-white"><small>✂️ Taksitli ödemelerde banka komisyonu uygulanabilir.</small></p>
                 </div>
                 <!--- //biz ekran acmiyoruz direk iyizco ya gonderiyoruz-->
-                <button class="btn btn-warning btn-lg me-2 mb-2"
+                <button class="btn btn-liquid btn-lg me-2 mb-2"
                     onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
                     <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
                 </button>
-                <button class="btn btn-outline-light btn-lg mb-2"
+                <button class="btn btn-whatsapp btn-lg mb-2"
                     onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
                     <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
                 </button>
@@ -481,7 +670,488 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </div>
         </div>
     </section>
+    <!--  -->
+    <!-- ═══════════════════════════════════════════════════════════════
+     MÜŞTERI YORUMLARI MARQUEE - haciyatmazkablo.com
+     
+     ═══════════════════════════════════════════════════════════════ -->
 
+    <style>
+        /* ═══ MARQUEE STYLES ═══ */
+        .reviews-section {
+            background: #000000;
+            padding: 60px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .reviews-section h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .reviews-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        .reviews-subtitle span {
+            color: #ffc107;
+            font-weight: 700;
+        }
+
+        /* Track */
+        .marquee-track {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .marquee-track+.marquee-track {
+            margin-top: 16px;
+        }
+
+        /* Inner - BU ÖNEMLİ: flex + nowrap */
+        .marquee-inner {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 16px;
+            padding: 8px 0;
+            animation: mq-scroll 35s linear infinite;
+            will-change: transform;
+            min-width: max-content;
+        }
+
+        .marquee-track.reverse .marquee-inner {
+            animation-name: mq-scroll-reverse;
+            animation-duration: 40s;
+        }
+
+        .marquee-track:hover .marquee-inner {
+            animation-play-state: paused;
+        }
+
+        @keyframes mq-scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes mq-scroll-reverse {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* ═══ APPLE BEYAZ KART ═══ */
+        .rv-card {
+            flex-shrink: 0;
+            width: 300px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .rv-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 193, 7, 0.15);
+        }
+
+        .rv-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .rv-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .rv-name {
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .rv-location {
+            color: #999;
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        .rv-stars {
+            color: #ffc107;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .rv-body {
+            color: #333;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Fade kenarlar */
+        .mq-fade-l,
+        .mq-fade-r {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .mq-fade-l {
+            left: 0;
+            background: linear-gradient(to right, #000000, transparent);
+        }
+
+        .mq-fade-r {
+            right: 0;
+            background: linear-gradient(to left, #000000, transparent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .reviews-section {
+                padding: 40px 0;
+            }
+
+            .reviews-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .rv-card {
+                width: 260px;
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rv-card {
+                width: 240px;
+                padding: 16px;
+            }
+        }
+    </style>
+
+    <section class="reviews-section" id="reviews">
+        <h2>Müşterilerimiz Ne Diyor? ⭐⭐⭐⭐⭐</h2>
+        <p class="reviews-subtitle">
+            <span>1.200+</span> mutlu müşteri &bull; Google'da <span>5.0</span> puan
+        </p>
+
+        <!-- ÜST SIRA → Sola kayar -->
+        <div class="marquee-track">
+            <div class="mq-fade-l"></div>
+            <div class="mq-fade-r"></div>
+            <div class="marquee-inner">
+                <!-- 5 kart + 5 duplicate = 10 -->
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">A</div>
+                        <div>
+                            <p class="rv-name">Ahmet Y.</p>
+                            <p class="rv-location">İstanbul</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"240W şarj hızı gerçekten inanılmaz. MacBook Pro'yu 30 dakikada %50 şarj etti.
+                        Kablo kalitesi çok sağlam, bükülmüyor."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">M</div>
+                        <div>
+                            <p class="rv-name">Merve K.</p>
+                            <p class="rv-location">Ankara</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Hem telefonu hem tableti aynı anda şarj ediyorum. USB-C to C bağlantısı
+                        mükemmel. Bu fiyata bu kalite başka yerde yok."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">E</div>
+                        <div>
+                            <p class="rv-name">Emre B.</p>
+                            <p class="rv-location">İzmir</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Gamer olarak veri aktarım hızı çok önemli. 40Gbps ile dosya transferi saniyeler
+                        sürüyor. Örgülü yapısı da çok dayanıklı."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">S</div>
+                        <div>
+                            <p class="rv-name">Selin D.</p>
+                            <p class="rv-location">Bursa</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Samsung Galaxy S24 Ultra ile denedim, süper hızlı şarj destekliyor. Kargo da çok
+                        hızlı geldi, aynı gün kargoya verdiler."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">C</div>
+                        <div>
+                            <p class="rv-name">Can A.</p>
+                            <p class="rv-location">Antalya</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"MediaMarkt'ta 1000TL'ye satılan benzer kabloyu burada çok daha uygun fiyata
+                        aldım. Kaliteden ödün yok!"</p>
+                </div>
+
+                <!-- ═══ DUPLICATE (sonsuz döngü) ═══ -->
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">A</div>
+                        <div>
+                            <p class="rv-name">Ahmet Y.</p>
+                            <p class="rv-location">İstanbul</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"240W şarj hızı gerçekten inanılmaz. MacBook Pro'yu 30 dakikada %50 şarj etti.
+                        Kablo kalitesi çok sağlam, bükülmüyor."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">M</div>
+                        <div>
+                            <p class="rv-name">Merve K.</p>
+                            <p class="rv-location">Ankara</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Hem telefonu hem tableti aynı anda şarj ediyorum. USB-C to C bağlantısı
+                        mükemmel. Bu fiyata bu kalite başka yerde yok."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">E</div>
+                        <div>
+                            <p class="rv-name">Emre B.</p>
+                            <p class="rv-location">İzmir</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Gamer olarak veri aktarım hızı çok önemli. 40Gbps ile dosya transferi saniyeler
+                        sürüyor. Örgülü yapısı da çok dayanıklı."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">S</div>
+                        <div>
+                            <p class="rv-name">Selin D.</p>
+                            <p class="rv-location">Bursa</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Samsung Galaxy S24 Ultra ile denedim, süper hızlı şarj destekliyor. Kargo da çok
+                        hızlı geldi, aynı gün kargoya verdiler."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">C</div>
+                        <div>
+                            <p class="rv-name">Can A.</p>
+                            <p class="rv-location">Antalya</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"MediaMarkt'ta 1000TL'ye satılan benzer kabloyu burada çok daha uygun fiyata
+                        aldım. Kaliteden ödün yok!"</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- ALT SIRA → Sağa kayar (reverse) -->
+        <div class="marquee-track reverse">
+            <div class="mq-fade-l"></div>
+            <div class="mq-fade-r"></div>
+            <div class="marquee-inner">
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">F</div>
+                        <div>
+                            <p class="rv-name">Fatih Ö.</p>
+                            <p class="rv-location">Çorum</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Ofiste herkesin dikkatini çekti. 8K video çıkışı monitöre direkt bağlanıyor. Bir
+                        kablo ile her şeyi hallediyorum."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">Z</div>
+                        <div>
+                            <p class="rv-name">Zehra T.</p>
+                            <p class="rv-location">Konya</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"iPad Pro ve MacBook Air ikisinde de kullanıyorum. Thunderbolt 4 uyumlu, hız
+                        müthiş. Ambalajı bile premium hissettirdi."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">O</div>
+                        <div>
+                            <p class="rv-name">Okan M.</p>
+                            <p class="rv-location">Trabzon</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Daha önce ucuz kablolar aldım hep bozuldu. Bu kablo 3 aydır günde 4-5 kez
+                        kullanıyorum, sıfır sorun. E-Mark çipi fark yaratıyor."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">D</div>
+                        <div>
+                            <p class="rv-name">Deniz S.</p>
+                            <p class="rv-location">Samsun</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"WhatsApp'tan sordum 5 dakikada cevap geldi. Sipariş verdim ertesi gün elime
+                        ulaştı. Müşteri hizmeti 10 numara."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">B</div>
+                        <div>
+                            <p class="rv-name">Burak K.</p>
+                            <p class="rv-location">Gaziantep</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Steam Deck'te harici SSD bağlayıp oyun yüklüyorum. 40Gbps aktarım hızı sayesinde
+                        50GB oyun 2 dakikada aktarılıyor."</p>
+                </div>
+
+                <!-- ═══ DUPLICATE ═══ -->
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">F</div>
+                        <div>
+                            <p class="rv-name">Fatih Ö.</p>
+                            <p class="rv-location">Çorum</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Ofiste herkesin dikkatini çekti. 8K video çıkışı monitöre direkt bağlanıyor. Bir
+                        kablo ile her şeyi hallediyorum."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">Z</div>
+                        <div>
+                            <p class="rv-name">Zehra T.</p>
+                            <p class="rv-location">Konya</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"iPad Pro ve MacBook Air ikisinde de kullanıyorum. Thunderbolt 4 uyumlu, hız
+                        müthiş. Ambalajı bile premium hissettirdi."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">O</div>
+                        <div>
+                            <p class="rv-name">Okan M.</p>
+                            <p class="rv-location">Trabzon</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Daha önce ucuz kablolar aldım hep bozuldu. Bu kablo 3 aydır günde 4-5 kez
+                        kullanıyorum, sıfır sorun. E-Mark çipi fark yaratıyor."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffb300;">D</div>
+                        <div>
+                            <p class="rv-name">Deniz S.</p>
+                            <p class="rv-location">Samsun</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"WhatsApp'tan sordum 5 dakikada cevap geldi. Sipariş verdim ertesi gün elime
+                        ulaştı. Müşteri hizmeti 10 numara."</p>
+                </div>
+
+                <div class="rv-card">
+                    <div class="rv-header">
+                        <div class="rv-avatar" style="background:#ffc107;">B</div>
+                        <div>
+                            <p class="rv-name">Burak K.</p>
+                            <p class="rv-location">Gaziantep</p>
+                        </div>
+                    </div>
+                    <div class="rv-stars">★★★★★</div>
+                    <p class="rv-body">"Steam Deck'te harici SSD bağlayıp oyun yüklüyorum. 40Gbps aktarım hızı sayesinde
+                        50GB oyun 2 dakikada aktarılıyor."</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
     <!-- CTA SECTION -->
     <section class="cta py-5 text-center">
         <div class="container">
@@ -492,7 +1162,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
                 <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
             </button>
-            <button class="btn btn-outline-light btn-lg mb-2"
+            <button class="btn btn-whatsapp btn-lg mb-2"
                 onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
                 <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
             </button>
