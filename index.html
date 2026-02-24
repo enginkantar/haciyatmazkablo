@@ -198,14 +198,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             right: -2px;
             bottom: -2px;
             background: linear-gradient(135deg,
-                    #28a745 0%,
-                    #20c997 15%,
-                    #28a745 30%,
-                    #2ecc71 45%,
-                    #28a745 55%,
-                    #1e7e34 70%,
-                    #28a745 85%,
-                    #34d058 100%);
+                    #ffc107 0%,
+                    #ff9800 15%,
+                    #ffc107 30%,
+                    #ffe082 45%,
+                    #ffc107 55%,
+                    #ff8f00 70%,
+                    #ffc107 85%,
+                    #ffca28 100%);
             background-size: 300% 300%;
             animation: liquid-flow 4s ease infinite;
             border-radius: inherit;
@@ -232,8 +232,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         .btn-liquid:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow:
-                0 8px 25px rgba(40, 167, 69, 0.4),
-                0 0 40px rgba(40, 167, 69, 0.2);
+                0 8px 25px rgba(255, 193, 7, 0.4),
+                0 0 40px rgba(255, 193, 7, 0.2);
             color: #000 !important;
         }
 
@@ -268,11 +268,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             right: -2px;
             bottom: -2px;
             background: linear-gradient(135deg,
-                    #28a745 0%,
-                    #20c997 25%,
-                    #28a745 50%,
-                    #34d058 75%,
-                    #28a745 100%);
+                    #ffc107 0%,
+                    #ff9800 25%,
+                    #ffc107 50%,
+                    #ffca28 75%,
+                    #ffc107 100%);
             background-size: 300% 300%;
             animation: liquid-flow 4s ease infinite;
             border-radius: inherit;
@@ -296,7 +296,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         .btn-liquid-dark:hover {
             color: #000 !important;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
         }
 
         .btn-liquid-dark:hover::after {
@@ -350,18 +350,26 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             }
         }
 
-        /* ═══ WHATSAPP BUTTON (GREEN ONLY) ═══ */
-        .btn-whatsapp {
-            background-color: #25D366;
-            border-color: #25D366;
-            color: #ffffff !important;
-            font-weight: 700;
+        /* ═══ FORCE REMOVE ALL GREEN COLORS ═══ */
+        .btn-success,
+        .bg-success,
+        .text-success,
+        .btn-outline-success {
+            background-color: #ffc107 !important;
+            border-color: #ffc107 !important;
+            color: #000 !important;
         }
 
-        .btn-whatsapp:hover {
-            background-color: #1ebe5d;
-            border-color: #1ebe5d;
-            color: #ffffff !important;
+        .btn-success:hover,
+        .btn-outline-success:hover {
+            background-color: #ff9800 !important;
+            border-color: #ff9800 !important;
+            color: #000 !important;
+        }
+
+        /* Remove any WhatsApp green */
+        .fab.fa-whatsapp.text-success {
+            color: #ffc107 !important;
         }
     </style>
 </head>
@@ -443,7 +451,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
                     <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
                 </button>
-                <button class="btn btn-whatsapp btn-lg mb-2"
+                <button class="btn btn-outline-light btn-lg mb-2"
                     onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
                     <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
                 </button>
@@ -1162,7 +1170,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 onclick="gtag_report_conversion_new_tab('https://iyzi.link/AKc7ug')">
                 <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
             </button>
-            <button class="btn btn-whatsapp btn-lg mb-2"
+            <button class="btn btn-outline-light btn-lg mb-2"
                 onclick="gtag('event', 'conversion', {'send_to': 'AW-17613782027/q0x1CMi3lPkbEIv4885B'}); window.open('https://wa.me/905534759032?text=Merhaba,%20kapıda%20ödemeli%20haciyatmaz%20kablo%20satın%20almak%20istiyorum.', '_blank'); return false;">
                 <i class="fab fa-whatsapp"></i> WhatsApp ile Sor
             </button>
@@ -1214,6 +1222,339 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 | Hızlı
                 Teslimat | 15 Gün Para İade | Designed BY @Batu Bilişim with engine 0553 475 90 32</p>
         </div>
+
+        <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Type-C Kablo Nedir? USB PD ve 240W Şarj Teknolojisi Rehberi",
+    "description": "Type-C kablo nedir, nasıl çalışır? USB Power Delivery (PD), e-marker çip, 240W şarj teknolojisi ve watt hesaplaması hakkında kapsamlı rehber.",
+    "author": {
+        "@type": "Organization",
+        "name": "Hacıyatmaz Kablo",
+        "url": "https://haciyatmazkablo.com"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Hacıyatmaz Kablo",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://haciyatmazkablo.com/assets/images/logo.png"
+        }
+    },
+    "datePublished": "2025-02-01",
+    "dateModified": "2026-02-23",
+    "mainEntityOfPage": "https://haciyatmazkablo.com/#type-c-rehber",
+    "keywords": ["type-c kablo", "usb pd", "240w şarj", "e-marker çip", "usb power delivery", "type-c nedir", "hızlı şarj kablosu"],
+    "articleSection": "Teknoloji Rehberi"
+}
+</script>
+
+        <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Type-C kablo nedir?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Type-C, USB'nin daha yeni ve gelişmiş bir türüdür. 2014 civarında yaygınlaşmaya başladı. Tek tip, iki taraflı takılabilen, hem veri hem şarj işini daha hızlı ve pratik yapan bir bağlantı standardıdır."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "USB PD (Power Delivery) nedir?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "USB Power Delivery (USB PD), Type-C kablolar üzerinden yüksek güçlü şarj yapılmasını sağlayan bir standarttır. USB PD 3.1 EPR ile 48V × 5A = 240W güce kadar çıkılabilir."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "E-marker çip nedir ve neden önemlidir?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "E-marker, kablonun içindeki küçük bir çiptir. Kablonun ne kadar güç ve veri taşıyabildiğini cihaza bildirir. 240W ve 5A üzeri şarj için e-marker çipli kablo zorunludur."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "240W Type-C kablo hangi cihazlarla uyumludur?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "240W Type-C kablolar MacBook Pro, Dell XPS, Lenovo ThinkPad, Samsung Galaxy S serisi, iPad Pro, Steam Deck ve USB-C destekli tüm modern cihazlarla uyumludur."
+            }
+        }
+    ]
+}
+</script>
+
+        <style>
+            /* ═══ ARTICLE SECTION STYLES ═══ */
+            .article-section {
+                background: #ffffff;
+                padding: 80px 20px;
+                position: relative;
+                z-index: 5;
+            }
+
+            .article-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .article-section .article-badge {
+                display: inline-block;
+                background: #ffc107;
+                color: #000;
+                font-size: 0.8rem;
+                font-weight: 800;
+                padding: 4px 14px;
+                border-radius: 20px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 16px;
+            }
+
+            .article-section h2 {
+                font-size: 2.2rem;
+                font-weight: 900;
+                color: #1a1a1a;
+                line-height: 1.3;
+                margin-bottom: 12px;
+            }
+
+            .article-section .article-meta {
+                color: #999;
+                font-size: 0.85rem;
+                margin-bottom: 32px;
+                padding-bottom: 24px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .article-section h3 {
+                font-size: 1.4rem;
+                font-weight: 800;
+                color: #1a1a1a;
+                margin-top: 36px;
+                margin-bottom: 12px;
+            }
+
+            .article-section p {
+                color: #444;
+                font-size: 1.05rem;
+                line-height: 1.85;
+                margin-bottom: 20px;
+                font-weight: 400;
+            }
+
+            .article-section strong {
+                color: #1a1a1a;
+                font-weight: 700;
+            }
+
+            .article-section .highlight-box {
+                background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                border-left: 4px solid #ffc107;
+                border-radius: 8px;
+                padding: 24px 28px;
+                margin: 28px 0;
+                color: #fff;
+            }
+
+            .article-section .highlight-box p {
+                color: rgba(255, 255, 255, 0.9);
+                margin: 0;
+            }
+
+            .article-section .highlight-box strong {
+                color: #ffc107;
+            }
+
+            .article-section .watt-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 24px 0;
+                font-size: 0.95rem;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .article-section .watt-table thead {
+                background: #1a1a1a;
+                color: #ffc107;
+            }
+
+            .article-section .watt-table th {
+                padding: 14px 16px;
+                text-align: left;
+                font-weight: 700;
+            }
+
+            .article-section .watt-table td {
+                padding: 12px 16px;
+                border-bottom: 1px solid #eee;
+                color: #333;
+            }
+
+            .article-section .watt-table tbody tr:hover {
+                background: #fffde7;
+            }
+
+            .article-section .watt-table .watt-highlight {
+                background: #fff8e1;
+                font-weight: 700;
+            }
+
+            .article-section .article-cta {
+                margin-top: 40px;
+                padding: 32px;
+                background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                border-radius: 12px;
+                text-align: center;
+            }
+
+            .article-section .article-cta p {
+                color: rgba(255, 255, 255, 0.8);
+                margin-bottom: 16px;
+                font-size: 1.1rem;
+            }
+
+            .article-section .article-cta strong {
+                color: #ffc107;
+            }
+
+            @media (max-width: 768px) {
+                .article-section {
+                    padding: 50px 16px;
+                }
+
+                .article-section h2 {
+                    font-size: 1.6rem;
+                }
+
+                .article-section h3 {
+                    font-size: 1.2rem;
+                }
+
+                .article-section p {
+                    font-size: 0.95rem;
+                }
+
+                .watt-table {
+                    font-size: 0.85rem;
+                }
+
+                .watt-table th,
+                .watt-table td {
+                    padding: 10px 12px;
+                }
+            }
+        </style>
+
+        <section class="article-section" id="type-c-rehber">
+            <div class="article-container">
+
+                <span class="article-badge">📚 Teknoloji Rehberi</span>
+
+                <h2>Type-C Kablo Nedir? USB PD ve 240W Şarj Teknolojisi</h2>
+
+                <div class="article-meta">
+                    Hacıyatmaz Kablo Teknik Ekibi &bull; Son güncelleme: Şubat 2026 &bull; 4 dk okuma
+                </div>
+
+                <!-- BÖLÜM 1 -->
+                <h3>🔌 Type-C Nedir ve Neden Geliştirildi?</h3>
+                <p>
+                    <strong>Type-C</strong>, USB'nin daha yeni ve gelişmiş bir türüdür. 2014 civarında yaygınlaşmaya
+                    başladı çünkü eski <strong>USB-A</strong> ve <strong>USB-B</strong> uçları hem yavaştı hem de tek
+                    yönde takılıyordu. Ayrıca her cihaz için farklı kablo gerekiyordu. Type-C ile amaç, <strong>tek tip
+                        ve daha güçlü bir bağlantı</strong> sunmaktı. Hem veri hem de şarj işini daha hızlı ve pratik
+                    yapmak için tasarlandı.
+                </p>
+
+                <!-- BÖLÜM 2 -->
+                <h3>⚡ Type-C Nasıl Çalışır? E-Marker ve USB-IF</h3>
+                <p>
+                    Type-C'nin en büyük avantajı <strong>iki taraflı takılabilmesidir</strong>; kabloyu ters düz etme
+                    derdi yoktur. İçinde hem veri hatları hem de yüksek güç taşıyan hatlar bulunur.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        Bazı kablolarda <strong>"e-marker"</strong> adlı küçük bir çip vardır; bu çip kablonun ne kadar
+                        güç taşıyabildiğini cihaza bildirir. Standartları <strong>USB-IF</strong> adlı kuruluş belirler;
+                        bu kurum USB teknolojisinin kurallarını yazar ve uyumluluğu denetler. <strong>240W şarj</strong>
+                        için e-marker çipli kablo zorunludur.
+                    </p>
+                </div>
+
+                <!-- BÖLÜM 3 -->
+                <h3>🔋 Güç Seviyeleri: Watt Hesaplaması</h3>
+                <p>
+                    Type-C kablolar farklı güç değerlerini destekler. Güç hesabı basittir: <strong>Volt × Amper =
+                        Watt</strong>. Watt değeri yükseldikçe cihaz daha hızlı şarj olur ya da daha yüksek performansta
+                    çalışabilir.
+                </p>
+
+                <table class="watt-table">
+                    <thead>
+                        <tr>
+                            <th>Güç Seviyesi</th>
+                            <th>Hesaplama</th>
+                            <th>Kullanım Alanı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>15W</strong></td>
+                            <td>5V × 3A</td>
+                            <td>Telefonlar, kulaklıklar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>60W</strong></td>
+                            <td>20V × 3A</td>
+                            <td>Tabletler, hafif laptoplar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>100W</strong></td>
+                            <td>20V × 5A</td>
+                            <td>Dizüstü bilgisayarlar</td>
+                        </tr>
+                        <tr class="watt-highlight">
+                            <td><strong>240W ⚡</strong></td>
+                            <td>48V × 5A (USB PD 3.1 EPR)</td>
+                            <td>Güçlü laptoplar, monitörler, gaming</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- BÖLÜM 4 -->
+                <h3>🎯 Hangi Cihazlarda Fark Yaratır?</h3>
+                <p>
+                    En yüksek performans modern dizüstülerde, tabletlerde, yüksek çözünürlüklü monitörlerde ve hızlı
+                    şarj destekli telefonlarda alınır. Çünkü Type-C <strong>aynı anda hem yüksek güç hem de yüksek hızlı
+                        veri aktarımı</strong> sunabilir. Tek kablo ile görüntü, veri ve şarj taşınabilir. Bu da masa
+                    üstünde kablo karmaşasını azaltır.
+                </p>
+                <p>
+                    Bu yüzden yeni cihazlarda Type-C kullanmak hem pratik hem de uzun vadede daha mantıklıdır.
+                </p>
+
+                <!-- CTA -->
+                <div class="article-cta">
+                    <p>
+                        <strong>240W E-Marker çipli</strong> profesyonel Type-C kablomuzla farkı yaşayın.
+                    </p>
+                    <a href="#hero" class="btn btn-warning btn-lg">
+                        🛒 Hemen Satın Al — 821 TL
+                    </a>
+                </div>
+
+            </div>
+        </section>
     </footer>
 </body>
 
