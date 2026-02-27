@@ -88,7 +88,7 @@ function handlePayment() {
         phone: customerPhone,
         address: customerAddress,
         product: 'BASEMO Type-C 240W',
-        price: 989,
+        price: 821,
         currency: 'TRY',
         timestamp: new Date().toISOString()
     };
@@ -249,7 +249,7 @@ function trackEvent(eventName, eventData) {
 trackEvent('page_view', {
     page_title: 'BASEMO Type-C 240W Landing Page',
     product: 'BASEMO-TYPE-C-240W',
-    price: 989,
+    price: 821,
     currency: 'TRY'
 });
 
@@ -266,7 +266,7 @@ document.querySelectorAll('button[data-bs-toggle="modal"]').forEach(btn => {
 // ===== CONSOLE GREETING =====
 console.log('%c🚀 BASEMO Type-C 240W Landing Page', 'font-size: 18px; color: #ffc107; font-weight: bold;');
 console.log('%cPayment Provider: Iyzico Pay Link', 'font-size: 12px; color: #666;');
-console.log('%cPrice: ₺989 | Currency: TRY | Product: BASEMO Type-C 240W', 'font-size: 11px; color: #999;');
+console.log('%cPrice: ₺821 | Currency: TRY | Product: BASEMO Type-C 240W', 'font-size: 11px; color: #999;');
 console.log('%c📞 Support: 0553 475 90 32 (WhatsApp) | 💬 Email: info@batumedikal.com', 'font-size: 11px; color: #666;');
 console.log('%cKeyboard Shortcuts: O = Order, W = WhatsApp', 'font-size: 11px; color: #999;');
 
