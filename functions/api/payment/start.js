@@ -231,11 +231,14 @@ export async function onRequestPost(context) {
     JSON.stringify({
       conversationId,
       basketId,
-      amount:        finalPrice,
-      customerName:  name.trim(),
-      customerEmail: email.trim().toLowerCase(),
-      status:        'PENDING',
-      createdAt:     new Date().toISOString(),
+      amount:           finalPrice,
+      customerName:     name.trim(),
+      customerEmail:    email.trim().toLowerCase(),
+      customerPhone:    phone.trim(),
+      customerAddress:  address.trim(),
+      customerCity:     city.trim(),
+      status:           'PENDING',
+      createdAt:        new Date().toISOString(),
     }),
     { expirationTtl: 1800 }
   );

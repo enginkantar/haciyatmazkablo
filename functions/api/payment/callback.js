@@ -200,6 +200,42 @@ async function processCallback(request, env, token, conversationId) {
     { expirationTtl: 86400 } // 24 saat audit için
   );
 
+  // ─── Telegram bildirimi ───────────────────────────────────────────────────
+  if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
+    const msg =
+`🛍️ *Yeni Sipariş!*
+
+📦 Ürün: Hacıyatmaz Kablo Type\\-C 240W
+💰 Tutar: ${kvData.amount} TL
+🔖 Sipariş No: ${kvData.basketId}
+
+👤 Ad: ${kvData.customerName}
+📧 E\\-posta: ${kvData.customerEmail}
+📱 Telefon: ${kvData.customerPhone}
+
+📍 Adres:
+${kvData.customerAddress}
+${kvData.customerCity}`;
+
+    try {
+      await fetch(
+        `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            chat_id:    env.TELEGRAM_CHAT_ID,
+            text:       msg,
+            parse_mode: 'MarkdownV2',
+          }),
+        }
+      );
+    } catch (e) {
+      // Telegram hatası ödeme akışını bozmasın
+      console.error('[callback] Telegram bildirim hatası:', e.message);
+    }
+  }
+
   return redirect(`${SUCCESS}?order=${kvData.basketId}`);
 }
 
