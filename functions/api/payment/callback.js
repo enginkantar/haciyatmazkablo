@@ -203,14 +203,14 @@ async function processCallback(request, env, token, conversationId) {
   // ─── Telegram bildirimi ───────────────────────────────────────────────────
   if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
     const msg =
-`🛍️ *Yeni Sipariş!*
+`🛍️ YENİ SİPARİŞ!
 
-📦 Ürün: Hacıyatmaz Kablo Type\\-C 240W
+📦 Ürün: Hacıyatmaz Kablo Type-C 240W
 💰 Tutar: ${kvData.amount} TL
 🔖 Sipariş No: ${kvData.basketId}
 
 👤 Ad: ${kvData.customerName}
-📧 E\\-posta: ${kvData.customerEmail}
+📧 E-posta: ${kvData.customerEmail}
 📱 Telefon: ${kvData.customerPhone}
 
 📍 Adres:
@@ -224,14 +224,12 @@ ${kvData.customerCity}`;
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({
-            chat_id:    env.TELEGRAM_CHAT_ID,
-            text:       msg,
-            parse_mode: 'MarkdownV2',
+            chat_id: env.TELEGRAM_CHAT_ID,
+            text:    msg,
           }),
         }
       );
     } catch (e) {
-      // Telegram hatası ödeme akışını bozmasın
       console.error('[callback] Telegram bildirim hatası:', e.message);
     }
   }

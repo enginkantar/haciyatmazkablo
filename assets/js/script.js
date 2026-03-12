@@ -124,19 +124,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ── Step indicator animation on modal open ────────
+    // ── Step indicator animation on modal open (tek seferlik) ─────
     const orderModal = document.getElementById('orderModal');
+    let stepsAnimated = false;
     if (orderModal) {
         orderModal.addEventListener('shown.bs.modal', function() {
-            // Her açılışta sıfırla
-            ['step1', 'step2', 'step3'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.style.opacity = 0; el.style.transform = 'translateX(-20px)'; }
-            });
-            ['stepLine1', 'stepLine2'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.style.opacity = 0; el.style.transform = 'scaleX(0)'; }
-            });
+            if (stepsAnimated) return;   // ikinci açılışta tekrarlama
+            stepsAnimated = true;
 
             if (typeof anime === 'undefined') return;
 
