@@ -112,8 +112,10 @@ document.addEventListener('DOMContentLoaded', function() {
         paymentBtn.addEventListener('click', handlePayment);
     }
 
-    // Keyboard Shortcuts
+    // Keyboard Shortcuts — input/textarea/select odaktayken çalışma
     document.addEventListener('keydown', function(e) {
+        const tag = document.activeElement && document.activeElement.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
         if (e.key.toLowerCase() === 'o') {
             openOrderModal();
         }
