@@ -75,7 +75,11 @@ async function iyzicoAuthHeader(apiKey, secretKey, rnd, uri, body) {
 function jsonResp(request, data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json', ...corsHeaders(request) },
+    headers: {
+      'Content-Type':  'application/json',
+      'Cache-Control': 'no-store',
+      ...corsHeaders(request),
+    },
   });
 }
 

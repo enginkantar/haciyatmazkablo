@@ -85,7 +85,13 @@ async function verifyResponseSignature(secretKey, data) {
 }
 
 function redirect(url) {
-  return Response.redirect(url, 302);
+  return new Response(null, {
+    status:  302,
+    headers: {
+      'Location':      url,
+      'Cache-Control': 'no-store',
+    },
+  });
 }
 
 // ─── Ortak işlem mantığı ──────────────────────────────────────────────────────
