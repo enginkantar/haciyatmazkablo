@@ -4,13 +4,85 @@
 // =====================================================
 
 // Iyzico Pay Link (UPDATE WITH YOUR ACTUAL LINK)
-
 const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 
-// Menu linklarına event listener ekle
+// =====================================================
+// COUNTDOWN TIMER & DYNAMIC PRICE
+// =====================================================
+const PRICE_NORMAL    = '821';
+const PRICE_DISCOUNT  = '799';
+const TIMER_TOTAL_SEC = 7 * 60; // 420 saniye
+
+let currentPrice      = PRICE_DISCOUNT; // Sayfa açılışında indirimli fiyat
+let timerSecondsLeft  = TIMER_TOTAL_SEC;
+let timerInterval     = null;
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2, '0')}`;
+}
+
+function updatePriceLabels(price) {
+  document.querySelectorAll('.dynamic-price').forEach(el => {
+    el.textContent = price;
+  });
+}
+
+function startCountdownTimer() {
+  const countdown = document.getElementById('timerCountdown');
+  const bar       = document.getElementById('timerBar');
+  const banner    = document.getElementById('timerBanner');
+  if (!countdown) return;
+
+  // Başlangıç durumu: indirimli fiyat göster
+  currentPrice = PRICE_DISCOUNT;
+  updatePriceLabels(PRICE_DISCOUNT);
+  countdown.textContent = formatTime(timerSecondsLeft);
+  if (bar) bar.style.width = '100%';
+
+  timerInterval = setInterval(() => {
+    timerSecondsLeft--;
+
+    if (timerSecondsLeft <= 0) {
+      timerSecondsLeft = 0;
+      clearInterval(timerInterval);
+
+      // Süre doldu → normal fiyata geç
+      currentPrice = PRICE_NORMAL;
+      updatePriceLabels(PRICE_NORMAL);
+
+      if (countdown) countdown.textContent = '0:00';
+      if (bar) bar.style.width = '0%';
+      if (banner) {
+        banner.classList.add('expired');
+        const inner = banner.querySelector('.timer-inner');
+        if (inner) {
+          inner.innerHTML =
+            '<span>🔥</span>' +
+            '<span class="timer-label">Stoklar Tükenmek Üzere :</span>' +
+            '<span class="timer-label">Süre doldu →</span>' +
+            '<span class="timer-price-badge" style="background:#888;color:#fff;">821 TL</span>';
+        }
+      }
+      return;
+    }
+
+    if (countdown) countdown.textContent = formatTime(timerSecondsLeft);
+    const pct = (timerSecondsLeft / TIMER_TOTAL_SEC) * 100;
+    if (bar) bar.style.width = pct + '%';
+  }, 1000);
+}
+
+// =====================================================
+// DOM READY — TIMER + MENÜ + PAYMENT INIT
+// =====================================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 BASEMO Landing Page Loaded');
-    
+
+    // Geri sayım sayacını başlat
+    startCountdownTimer();
+
     const navbarCollapse = document.getElementById('navbarNav');
     
     if (navbarCollapse) {
@@ -30,17 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// DOM Initialization
+// DOM Initialization — Payment button + Keyboard Shortcuts
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 BASEMO Landing Page Loaded');
     console.log('Payment Provider: Iyzico');
-    
+
     // Payment Button
     const paymentBtn = document.getElementById('paymentBtn');
     if (paymentBtn) {
         paymentBtn.addEventListener('click', handlePayment);
     }
-    
+
     // Keyboard Shortcuts
     document.addEventListener('keydown', function(e) {
         if (e.key.toLowerCase() === 'o') {
@@ -50,100 +121,106 @@ document.addEventListener('DOMContentLoaded', function() {
             window.open('https://wa.me/905534759032', '_blank');
         }
     });
+
+    // ── Step indicator animation on modal open ────────
+    const orderModal = document.getElementById('orderModal');
+    if (orderModal) {
+        orderModal.addEventListener('shown.bs.modal', function() {
+            // Her açılışta sıfırla
+            ['step1', 'step2', 'step3'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.opacity = 0; el.style.transform = 'translateX(-20px)'; }
+            });
+            ['stepLine1', 'stepLine2'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.opacity = 0; el.style.transform = 'scaleX(0)'; }
+            });
+
+            if (typeof anime === 'undefined') return;
+
+            anime.timeline({ easing: 'easeOutBack', duration: 380 })
+                .add({ targets: '#step1',     opacity: [0,1], translateX: [-22, 0] }, 80)
+                .add({ targets: '#stepLine1', opacity: [0,1], scaleX: [0,1],
+                       transformOrigin: 'left center', easing: 'easeInOutSine', duration: 280 }, 380)
+                .add({ targets: '#step2',     opacity: [0,1], translateX: [-22, 0] }, 580)
+                .add({ targets: '#stepLine2', opacity: [0,1], scaleX: [0,1],
+                       transformOrigin: 'left center', easing: 'easeInOutSine', duration: 280 }, 880)
+                .add({ targets: '#step3',     opacity: [0,1], translateX: [-22, 0] }, 1080);
+        });
+    }
 });
 
 // ===== PAYMENT HANDLER =====
-function handlePayment() {
+async function handlePayment() {
     const form = document.getElementById('orderForm');
-    
-    // Validate form
+
     if (!form.checkValidity()) {
         showAlert('Lütfen tüm alanları doğru şekilde doldurunuz!', 'warning');
         form.reportValidity();
         return;
     }
-    
-    // Get form data
-    const customerName = document.getElementById('customerName').value.trim();
-    const customerEmail = document.getElementById('customerEmail').value.trim();
-    const customerPhone = document.getElementById('customerPhone').value.trim();
+
+    const customerName    = document.getElementById('customerName').value.trim();
+    const customerEmail   = document.getElementById('customerEmail').value.trim();
+    const customerPhone   = document.getElementById('customerPhone').value.trim();
     const customerAddress = document.getElementById('customerAddress').value.trim();
-    
-    // Validate phone format
+    const customerCity    = document.getElementById('customerCity').value.trim();
+
     if (!validatePhone(customerPhone)) {
-        showAlert('Geçerli bir telefon numarası girin (05XX XXX XXXX)', 'warning');
+        showAlert('Geçerli bir telefon numarası girin (05XXXXXXXXX — 11 haneli)', 'warning');
         return;
     }
-    
-    // Validate email
     if (!validateEmail(customerEmail)) {
         showAlert('Geçerli bir e-posta adresi girin', 'warning');
         return;
     }
-    
-    // Log order info
-    const orderData = {
-        name: customerName,
-        email: customerEmail,
-        phone: customerPhone,
-        address: customerAddress,
-        product: 'BASEMO Type-C 240W',
-        price: 821,
-        currency: 'TRY',
-        timestamp: new Date().toISOString()
-    };
-    
-    console.log('📦 Sipariş Bilgileri:', orderData);
-    
-    // Show loading state
-    const btn = document.getElementById('paymentBtn');
-    const btnText = btn.innerText;
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>İşleniyor...';
-    
-    // Simulate processing (1.5 seconds)
-    setTimeout(() => {
-        redirectToPayment(orderData);
-        
-        // Reset button
-        btn.disabled = false;
-        btn.innerText = btnText;
-    }, 1500);
-}
+    if (!customerCity) {
+        showAlert('Lütfen şehrinizi girin', 'warning');
+        return;
+    }
 
-// ===== REDIRECT TO IYZICO =====
-function redirectToPayment(orderData) {
-    // Build payment URL with parameters
-    const params = new URLSearchParams({
-        customerName: orderData.name,
-        customerEmail: orderData.email,
-        customerPhone: orderData.phone,
-        customerAddress: orderData.address,
-        product: orderData.product,
-        price: orderData.price,
-        currency: orderData.currency
-    });
-    
-    const paymentUrl = `${IYZICO_PAY_LINK}?${params.toString()}`;
-    
-    console.log('💳 Ödeme URL\'si:', paymentUrl);
-    
-    // Show success notification
-    showAlert('Ödeme sayfasına yönlendiriliyorsunuz...', 'success');
-    
-    // Redirect to Iyzico (opens in new window)
-    setTimeout(() => {
-        window.open(paymentUrl, '_blank');
-        
-        // Close modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
-        if (modal) {
-            modal.hide();
+    const btn       = document.getElementById('paymentBtn');
+    const inner     = document.getElementById('paymentBtnInner');
+    const innerText = inner ? inner.innerHTML : '';
+    btn.disabled    = true;
+    if (inner) inner.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>İşleniyor...';
+
+    try {
+        const resp = await fetch('/api/payment/start', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name:    customerName,
+                email:   customerEmail,
+                phone:   customerPhone,
+                address: customerAddress,
+                city:    customerCity,
+                price:   currentPrice,   // 799 (timer aktifse) veya 821
+            }),
+        });
+
+        const data = await resp.json();
+
+        if (!resp.ok || !data.paymentPageUrl) {
+            throw new Error(data.error || 'Ödeme başlatılamadı.');
         }
-        
-        // Reset form
+
+        // Modal kapat, formu sıfırla
+        const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+        if (modal) modal.hide();
         document.getElementById('orderForm').reset();
-    }, 500);
+
+        showAlert('🔒 iyzico güvenli ödeme sayfasına yönlendiriliyorsunuz...', 'success');
+
+        // Instagram/TikTok in-app dahil tüm browser'larda çalışır (fetch içinde redirect değil)
+        setTimeout(() => { window.location.href = data.paymentPageUrl; }, 800);
+
+    } catch (err) {
+        console.error('Ödeme hatası:', err);
+        showAlert(err.message || 'Bir hata oluştu. Lütfen tekrar deneyin.', 'warning');
+        btn.disabled = false;
+        if (inner) inner.innerHTML = innerText;
+    }
 }
 // ===== MOBILE MENU AUTO-CLOSE =====
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -158,15 +235,15 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
 // ===== VALIDATION FUNCTIONS =====
 function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Sadece ASCII + standart e-posta formatı (ı, ğ, ş gibi Türkçe karakter reddedilir)
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
 }
 
 function validatePhone(phone) {
-    // Turkish phone format: 05XX XXX XXXX or +90XXX XXX XXXX
-    const phoneRegex = /^(\+90|0)[0-9]{10}$|^(05\d{2}\s\d{3}\s\d{4}|0\d{3}\s\d{3}\s\d{4})$/;
-    const cleanPhone = phone.replace(/\s/g, '');
-    return phoneRegex.test(cleanPhone) && cleanPhone.length >= 10;
+    // Türk GSM: 05XXXXXXXXX — 11 hane, boşluksuz
+    const clean = phone.replace(/\s/g, '');
+    return /^05[0-9]{9}$/.test(clean);
 }
 
 // ===== ALERT NOTIFICATIONS =====
@@ -216,24 +293,95 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ===== FORM ENHANCEMENTS =====
+
+// ── Yardımcı: input glow durumu ──────────────────────────
+function setFieldGlow(el, state) {
+    if (state === 'valid') {
+        el.style.borderColor = '#25d366';
+        el.style.boxShadow  = '0 0 0 3px rgba(37,211,102,0.25)';
+    } else if (state === 'invalid') {
+        el.style.borderColor = '#ff4444';
+        el.style.boxShadow  = '0 0 0 3px rgba(255,68,68,0.25)';
+    } else {
+        el.style.borderColor = '#333';
+        el.style.boxShadow  = '';
+    }
+}
+
+// ── Ad Soyad ─────────────────────────────────────────────
+const nameInput = document.getElementById('customerName');
+if (nameInput) {
+    nameInput.addEventListener('input', function() {
+        const v = this.value.trim();
+        if (v.length === 0)      setFieldGlow(this, 'neutral');
+        else if (v.length >= 3)  setFieldGlow(this, 'valid');
+        else                     setFieldGlow(this, 'invalid');
+    });
+    nameInput.addEventListener('blur', function() {
+        if (!this.value.trim()) setFieldGlow(this, 'neutral');
+    });
+}
+
+// ── E-posta ───────────────────────────────────────────────
+const emailInput = document.getElementById('customerEmail');
+if (emailInput) {
+    emailInput.addEventListener('input', function() {
+        const v = this.value.trim();
+        if (v.length === 0)          setFieldGlow(this, 'neutral');
+        else if (validateEmail(v))   setFieldGlow(this, 'valid');
+        else                         setFieldGlow(this, 'invalid');
+    });
+    emailInput.addEventListener('blur', function() {
+        if (!this.value.trim()) setFieldGlow(this, 'neutral');
+    });
+}
+
+// ── Telefon ───────────────────────────────────────────────
 const phoneInput = document.getElementById('customerPhone');
 if (phoneInput) {
     phoneInput.addEventListener('input', function() {
-        // Auto-format phone number
-        let value = this.value.replace(/\D/g, '');
-        if (value.length > 0) {
-            if (value.startsWith('0')) {
-                if (value.length > 3) {
-                    value = value.slice(0, 4) + ' ' + value.slice(4, 7) + ' ' + value.slice(7, 11);
-                }
-            } else if (value.startsWith('9')) {
-                value = '0' + value;
-                if (value.length > 3) {
-                    value = value.slice(0, 4) + ' ' + value.slice(4, 7) + ' ' + value.slice(7, 11);
-                }
-            }
-        }
-        this.value = value;
+        let digits = this.value.replace(/\D/g, '');
+        // +90 yapıştırma: 905XXXXXXXXX → 05XXXXXXXXX
+        if (digits.startsWith('90') && digits.length >= 11) digits = '0' + digits.slice(1, 11);
+        // 9... → 05... normalize
+        if (digits.startsWith('9') && digits.length >= 10) digits = '0' + digits.slice(0, 10);
+        // 11 hanede kes
+        if (digits.length > 11) digits = digits.slice(0, 11);
+        this.value = digits;
+
+        if (digits.length === 0)                              setFieldGlow(this, 'neutral');
+        else if (digits.length >= 2 && !digits.startsWith('05')) setFieldGlow(this, 'invalid');
+        else if (digits.length === 11)                        setFieldGlow(this, 'valid');
+        else                                                  setFieldGlow(this, 'neutral');
+    });
+    phoneInput.addEventListener('paste', function() {
+        setTimeout(() => phoneInput.dispatchEvent(new Event('input')), 0);
+    });
+    phoneInput.addEventListener('blur', function() {
+        if (!this.value) setFieldGlow(this, 'neutral');
+    });
+}
+
+// ── Şehir (select) ────────────────────────────────────────
+const citySelect = document.getElementById('customerCity');
+if (citySelect) {
+    citySelect.addEventListener('change', function() {
+        if (this.value) setFieldGlow(this, 'valid');
+        else            setFieldGlow(this, 'neutral');
+    });
+}
+
+// ── Adres ─────────────────────────────────────────────────
+const addressInput = document.getElementById('customerAddress');
+if (addressInput) {
+    addressInput.addEventListener('input', function() {
+        const v = this.value.trim();
+        if (v.length === 0)       setFieldGlow(this, 'neutral');
+        else if (v.length >= 10)  setFieldGlow(this, 'valid');
+        else                      setFieldGlow(this, 'invalid');
+    });
+    addressInput.addEventListener('blur', function() {
+        if (!this.value.trim()) setFieldGlow(this, 'neutral');
     });
 }
 

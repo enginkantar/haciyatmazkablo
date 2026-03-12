@@ -1,0 +1,21 @@
+# Secrets — asla commit etme
+.dev.vars
+.env
+.env.local
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Node
+node_modules/
+npm-debug.log
+package.json
+package-lock.json
+
+# Wrangler local cache
+.wrangler/
+
+# Test dosyaları
+test-iyzico-sdk.cjs
+test-iyzico.mjs
