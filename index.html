@@ -158,6 +158,80 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 }
 </script>
 
+<!-- FAQ Schema.org yapısal verisi — SEO için -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kopmayan kablo fikri nereden çıktı?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hepimiz aynı sorunu yaşadık: Telefon şarjdayken kabloyu biraz gergin tuttuk, bükük bir açıda bıraktık ya da yatakta dönerken üzerine yattık... ve kablo koptu. Biz bu soruna mühendislik çözümü aradık. 48 telli örgü zırh, 90° açılı L tipi başlık ve 50.000+ bükülme testinden geçmiş iç yapı sayesinde Hacıyatmaz Kablo, günlük kullanımın en zorlu koşullarına dayanmak üzere tasarlandı."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Neden kopmuyor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Üç temel mühendislik özelliği sayesinde: 1) 48 Telli Örgü Zırh — bükülme ve çekme kuvvetini eşit dağıtır. 2) 90° L Tipi Başlık — en çok kopma yaşanan başlık noktasındaki gerilimi ortadan kaldırır. 3) 50.000+ Bükülme Testi — günde 20 kez takıp çıkarsanız yaklaşık 7 yıl sorunsuz kullanım demektir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "20 dakikada %85 şarj gerçekten mümkün mü?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Evet, uyumlu cihaz ve adaptörle mümkün. Hacıyatmaz Kablo 240W güç aktarımını destekler. Şarj hızı telefonunuzun ve adaptörünüzün desteklediği maksimum watt değerine bağlıdır. Kablo asla darboğaz olmaz, cihazınızın izin verdiği en yüksek hızda şarj olursunuz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Neden eli rahatsız etmiyor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "90° L tipi başlık telefona yandan giriş yapar, kablo elinizin altından geçmez. Üstelik dahili stand özelliği sayesinde telefonu bir yere koyup elleri serbest kullanabilirsiniz — oyun, video, görüntülü arama... Elinizde tutmanıza bile gerek kalmaz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Telefonumun Type-C girişi olduğunu nasıl anlarım?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Telefonunuzun şarj girişine bakın. Type-C uç oval ve simetriktir — her iki yönde de takılabilir. 2020 ve sonrası üretilen hemen hemen tüm Android telefonlar ile iPhone 15 ve sonrası modeller Type-C kullanır."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Stand özelliği nasıl çalışıyor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kablonun başlık kısmında entegre bir menteşe mekanizması var. Kabloyu telefona taktıktan sonra bu menteşeyi açarak telefonu dik veya hafif eğik konumda sabitleyebilirsiniz. Ayrı bir stand veya aksesuar satın almanıza gerek yok."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kargo ve ödeme seçenekleri nelerdir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kendi sitemizden kredi kartı ve kapıda ödeme ile sipariş verebilirsiniz. Ayrıca Trendyol, Hepsiburada, N11 ve PTTAVM mağazalarımızdan da güvenle satın alabilirsiniz. Taksit imkânı mevcuttur. Kargo tüm Türkiye'ye gönderilmektedir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "İade ve garanti koşulları nedir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tüm marketplace kanallarımızdan yapılan alışverişlerde ilgili platformun iade koşulları geçerlidir. Kendi sitemizden yapılan siparişlerde 14 gün içinde koşulsuz iade hakkınız bulunmaktadır. Ürünümüz üretim hatalarına karşı garantilidir."
+      }
+    }
+  ]
+}
+</script>
+
     <style>
         /* ═══ LIQUID GRADIENT BUTTON ═══ */
         .btn-liquid {
@@ -1192,6 +1266,127 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </div>
         </div>
     </section>
+
+    <!-- SSS / FAQ -->
+    <section id="sss" class="py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+      <div class="container">
+        <h2 class="text-center text-warning mb-2"><i class="fas fa-question-circle"></i> Sıkça Sorulan Sorular</h2>
+        <p class="text-center text-white-50 mb-4">Merak ettikleriniz için aşağıya göz atın</p>
+        <div class="accordion" id="faqAccordion">
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                🤔 Kopmayan kablo fikri nereden çıktı?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Hepimiz aynı sorunu yaşadık: Telefon şarjdayken kabloyu biraz gergin tuttuk, bükük bir açıda bıraktık ya da yatakta dönerken üzerine yattık... ve kablo koptu. Biz bu soruna mühendislik çözümü aradık. 48 telli örgü zırh, 90° açılı L tipi başlık ve 50.000+ bükülme testinden geçmiş iç yapı sayesinde Hacıyatmaz Kablo, günlük kullanımın en zorlu koşullarına dayanmak üzere tasarlandı. Adını da buradan aldı — ne yaparsanız yapın, hacıyatmaz gibi ayakta kalıyor.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                💪 Neden kopmuyor?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Üç temel mühendislik özelliği sayesinde:<br><br>
+                <strong class="text-warning">1. 48 Telli Örgü Zırh:</strong> İç kablolar tek tek korumalı ve birbirine örülmüş. Standart kablolarda 12-16 tel bulunurken, Hacıyatmaz Kablo'da 48 tel var. Bu, bükülme ve çekme kuvvetini eşit dağıtır.<br><br>
+                <strong class="text-warning">2. 90° L Tipi Başlık:</strong> Kablonun en çok koptuğu nokta başlık bağlantısıdır. L tipi tasarım sayesinde kablo dik açıyla bükülmez, gerilme noktası ortadan kalkar.<br><br>
+                <strong class="text-warning">3. 50.000+ Bükülme Testi:</strong> Üretim sürecinde her kablo 50.000 kereden fazla bükülme testine tabi tutulur. Bu, günde 20 kez takıp çıkarsanız bile yaklaşık 7 yıl sorunsuz kullanım demektir.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                ⚡ 20 dakikada %85 şarj gerçekten mümkün mü?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Evet, uyumlu cihaz ve adaptörle mümkün. Hacıyatmaz Kablo 240W güç aktarımını destekler — bu, piyasadaki en yüksek şarj standardıdır. Ancak şarj hızı telefonunuzun ve adaptörünüzün desteklediği maksimum watt değerine bağlıdır. Örneğin telefonunuz 67W destekliyorsa, kablo 67W hızında şarj eder. Kablo asla darboğaz olmaz, cihazınızın izin verdiği en yüksek hızda şarj olursunuz.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                🖐️ Neden elinizi rahatsız etmiyor?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Çoğu kablonun sorunu şudur: Telefonu şarj ederken kullanmak istediğinizde kablo elinize batıyor, tutmayı zorlaştırıyor, özellikle oyun oynarken rahatsızlık veriyor. Hacıyatmaz Kablo'nun 90° L tipi başlığı telefona yandan giriş yapar, kablo elinizin altından geçmez. Üstelik dahili stand özelliği sayesinde telefonu bir yere koyup elleri serbest kullanabilirsiniz — oyun, video, görüntülü arama, yemek tarifi takip etme... Elinizde tutmanıza bile gerek kalmaz.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                🔌 Telefonumun Type-C girişi olduğunu nasıl anlarım?
+              </button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Çok basit: Telefonunuzun şarj girişine bakın. Type-C uç <strong class="text-warning">oval ve simetriktir</strong> — her iki yönde de takılabilir, ters-düz derdi yoktur. Eski Micro-USB uçlar ise yamuk trapez şeklindedir ve sadece tek yönde girer.<br><br>
+                2020 ve sonrası üretilen hemen hemen tüm Android telefonlar (Samsung, Xiaomi, Oppo, Vivo, Realme, Huawei, OnePlus) Type-C kullanır. iPhone 15 ve sonrası modeller de Type-C'ye geçmiştir. Eğer telefonunuzu hangi yöne çevirirseniz çevirin şarj kablosu takılabiliyorsa, Type-C girişiniz var demektir ve Hacıyatmaz Kablo tam size göre.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                📱 Stand özelliği nasıl çalışıyor?
+              </button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Kablonun başlık kısmında entegre bir menteşe mekanizması var. Kabloyu telefona taktıktan sonra bu menteşeyi açarak telefonu dik veya hafif eğik konumda sabitleyebilirsiniz. Ayrı bir stand veya aksesuar satın almanıza gerek yok — şarj kablosunun kendisi aynı zamanda stand. Masada, yatakta, mutfak tezgahında... her yerde kullanabilirsiniz.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                🚚 Kargo ve ödeme seçenekleri nelerdir?
+              </button>
+            </h2>
+            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Kendi sitemizden (haciyatmazkablo.com) kredi kartı ve kapıda ödeme ile sipariş verebilirsiniz. Ayrıca Trendyol, Hepsiburada, N11 ve PTTAVM mağazalarımızdan da güvenle satın alabilirsiniz. Taksit imkânı mevcuttur. Kargo tüm Türkiye'ye gönderilmektedir.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                🔄 İade ve garanti koşulları nedir?
+              </button>
+            </h2>
+            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                Tüm marketplace kanallarımızdan (Trendyol, Hepsiburada, N11, PTTAVM) yapılan alışverişlerde ilgili platformun iade koşulları geçerlidir. Kendi sitemizden yapılan siparişlerde 14 gün içinde koşulsuz iade hakkınız bulunmaktadır. Ürünümüz üretim hatalarına karşı garantilidir.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- /SSS -->
+
     <!-- FOOTER -->
     <footer id="contact" class="metal-footer text-white text-center py-4">
         <div class="container">
@@ -1635,6 +1830,24 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 }
 .btn-payment-hover:not(:disabled):hover .btn-payment-shadow {
   box-shadow: 5px 5px #394481, 10px 10px #5766be, 15px 15px #8898f3;
+}
+
+/* ── FAQ Accordion koyu tema override ────────────────── */
+#faqAccordion .accordion-button::after {
+  filter: invert(1) brightness(2);
+}
+#faqAccordion .accordion-button:not(.collapsed) {
+  color: #ffc107;
+  box-shadow: none;
+  background: rgba(255,255,255,0.10) !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+#faqAccordion .accordion-button:focus {
+  box-shadow: none;
+}
+#faqAccordion .accordion-body {
+  background: rgba(255,255,255,0.03);
+  border-radius: 0 0 12px 12px;
 }
 
 /* ── Modal form: placeholder beyaz + shadow ───────────── */
