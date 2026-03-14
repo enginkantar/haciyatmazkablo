@@ -32,6 +32,36 @@
     <link rel="canonical" href="https://www.haciyatmazkablo.com/" />
     <!-- Google Search Console Verification - Kodu Search Console'dan alıp buraya ekleyin -->
     <meta name="google-site-verification" content="GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE_HERE" />
+
+    <!-- ═══ Open Graph — Facebook / Instagram / WhatsApp önizleme ═══ -->
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="Hacıyatmaz Kablo Type-C 240W | Kopmayan Kablo | Stand Özellikli">
+    <meta property="og:description"
+        content="Kopan kablolardan bıktınız mı? 48 telli örgü zırh, 90° L tipi başlık, 240W hızlı şarj ve dahili stand. 821 TL — Aynı gün ücretsiz kargo.">
+    <meta property="og:image" content="https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo8webp.webp">
+    <meta property="og:image:alt" content="Hacıyatmaz Kablo Type-C 240W Premium Örgülü Şarj Kablosu">
+    <meta property="og:url" content="https://www.haciyatmazkablo.com/">
+    <meta property="og:site_name" content="Hacıyatmaz Kablo">
+    <meta property="og:locale" content="tr_TR">
+
+    <!-- ═══ Twitter / X Card ═══ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hacıyatmaz Kablo Type-C 240W | Kopmayan Kablo">
+    <meta name="twitter:description"
+        content="48 telli örgü zırh, 90° L tipi başlık, 240W hızlı şarj, dahili stand. 821 TL — Aynı gün ücretsiz kargo.">
+    <meta name="twitter:image" content="https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo8webp.webp">
+
+    <!-- ═══ Dil & Coğrafi Hedefleme ═══ -->
+    <link rel="alternate" hreflang="tr" href="https://www.haciyatmazkablo.com/">
+    <link rel="alternate" hreflang="x-default" href="https://www.haciyatmazkablo.com/">
+    <!-- ═══ Preconnect — CDN bağlantılarını erken başlat ═══ -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -158,12 +188,20 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 }
 </script>
 
-<!-- FAQ Schema.org yapısal verisi — SEO için -->
-<script type="application/ld+json">
+    <!-- FAQ Schema.org yapısal verisi — SEO için -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Type-C kablo neden kırılır?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type-C kablolar üç noktadan kırılır: 1) Başlık bağlantısı — kablo dik açıyla bükülünce iç teller zamanla kopar. 2) Kablo gövdesi — ucuz kablolarda dış kılıf esnekliğini kaybedip çatlar. 3) Cihaz girişi — zorla takma veya eğik kullanım girişi yıpratır. Çözüm: 90° L tipi başlık, 48 telli örgü zırh ve esnek kılıf kombinasyonu."
+      }
+    },
     {
       "@type": "Question",
       "name": "Kopmayan kablo fikri nereden çıktı?",
@@ -450,7 +488,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <li class="nav-item"><a class="nav-link" href="#features">Özellikler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#specs">Teknik Özellikler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
-                    <li class="nav-item"><button class="btn-liquid btn-lg" data-bs-toggle="modal" data-bs-target="#orderModal">🛍️Satın Al</button>
+                    <li class="nav-item"><button class="btn-liquid btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#orderModal">🛍️Satın Al</button>
                     </li>
                 </ul>
             </div>
@@ -501,7 +540,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 et hem en konforlu açıyla izle.</small></p>
                     </div>
                     <div class="price-main mb-1">
-                        <strong>🛍️ Sipariş Ver <span class="dynamic-price">821</span> TL - 🚛 Ücretsiz Aynı gün Kargo - 🏠 Kapıda ödeme (WhatsApp'dan
+                        <strong>🛍️ Sipariş Ver <span class="dynamic-price">821</span> TL - 🚛 Ücretsiz Aynı gün Kargo -
+                            🏠 Kapıda ödeme (WhatsApp'dan
                             yazınız) ✂️
                             Taksit İmkanı</strong>
                         <p class="text-white"><small>✂️ Taksitli ödemelerde banka komisyonu uygulanabilir.</small></p>
@@ -509,19 +549,20 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
                     <!-- COUNTDOWN TIMER BANNER -->
                     <div id="timerBanner" class="timer-banner">
-                      <div class="timer-inner">
-                        <span>🔥</span>
-                        <span class="timer-label">Stoklar Tükenmek Üzere :</span>
-                        <span id="timerCountdown">7:00</span>
-                        <span class="timer-label">içinde sipariş ver →</span>
-                        <span class="timer-price-badge"><span class="dynamic-price">799</span> TL</span>
-                      </div>
-                      <div class="timer-bar-wrap"><div id="timerBar" class="timer-bar"></div></div>
+                        <div class="timer-inner">
+                            <span>🔥</span>
+                            <span class="timer-label">Stoklar Tükenmek Üzere :</span>
+                            <span id="timerCountdown">7:00</span>
+                            <span class="timer-label">içinde sipariş ver →</span>
+                            <span class="timer-price-badge"><span class="dynamic-price">799</span> TL</span>
+                        </div>
+                        <div class="timer-bar-wrap">
+                            <div id="timerBar" class="timer-bar"></div>
+                        </div>
                     </div>
 
                     <!--- //biz ekran acmiyoruz direk iyizco ya gonderiyoruz-->
-                    <button class="btn btn-liquid btn-lg me-2 mb-2"
-                        data-bs-toggle="modal" data-bs-target="#orderModal">
+                    <button class="btn btn-liquid btn-lg me-2 mb-2" data-bs-toggle="modal" data-bs-target="#orderModal">
                         <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
                     </button>
                     <button class="btn btn-outline-light btn-lg mb-2"
@@ -554,31 +595,38 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img src="assets/basemo-cable-chrome/basemo8webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo Type-C 240W Premium 48 Telli Örgü Zırhlı Şarj Kablosu"
+                                        class="d-block w-100" fetchpriority="high">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo2webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo 90° Açılı L Tipi Başlık — Kablo Kopma Önleyici Tasarım"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo4webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo Dahili Stand Özelliği — Eller Serbest Kullanım"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo1webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo 240W Hızlı Şarj 480Mbps Veri Aktarımı"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo5webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo USB-C 1.5 Metre Premium Örgülü Şarj Kablosu"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo11webp.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo 50.000+ Bükülme Testi — Dayanıklılık Kanıtlanmış"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item">
                                     <img src="assets/basemo-cable-chrome/basemo12.webp"
-                                        alt="BASEMO Premium Type-C 240W Kablosu" class="d-block w-100">
+                                        alt="Hacıyatmaz Kablo Tüm Type-C Cihazlarla Uyumlu — Samsung, iPhone 15, Xiaomi"
+                                        class="d-block w-100" loading="lazy">
                                 </div>
                                 <div class="carousel-item" data-bs-interval="35000">
                                     <div class="ratio ratio-16x9">
@@ -1237,8 +1285,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h2 class="mb-4">🛍️ Şimdi Güvenli Satın Al ✂️ Taksit İmkanı |🏠 Kapıda ödeme (WhatsApp'dan yazınız) | 🚛
                 Ücretsiz Aynı Gün Kargo</h2>
             <p class="lead mb-4">2 Yıl Garantili, 15 Gün Para İade, 24/7 Destek</p>
-            <button class="btn btn-outline-light btn-lg mb-2"
-                data-bs-toggle="modal" data-bs-target="#orderModal">
+            <button class="btn btn-outline-light btn-lg mb-2" data-bs-toggle="modal" data-bs-target="#orderModal">
                 <i class="fas fa-shopping-cart"></i> Hemen Güvenli Satın Al
             </button>
             <button class="btn btn-outline-light btn-lg mb-2"
@@ -1269,121 +1316,194 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
     <!-- SSS / FAQ -->
     <section id="sss" class="py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
-      <div class="container">
-        <h2 class="text-center text-warning mb-2"><i class="fas fa-question-circle"></i> Sıkça Sorulan Sorular</h2>
-        <p class="text-center text-white-50 mb-4">Merak ettikleriniz için aşağıya göz atın</p>
-        <div class="accordion" id="faqAccordion">
+        <div class="container">
+            <h2 class="text-center text-warning mb-2"><i class="fas fa-question-circle"></i> Sıkça Sorulan Sorular</h2>
+            <p class="text-center text-white-50 mb-4">Merak ettikleriniz için aşağıya göz atın</p>
+            <div class="accordion" id="faqAccordion">
 
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                🤔 Kopmayan kablo fikri nereden çıktı?
-              </button>
-            </h2>
-            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Hepimiz aynı sorunu yaşadık: Telefon şarjdayken kabloyu biraz gergin tuttuk, bükük bir açıda bıraktık ya da yatakta dönerken üzerine yattık... ve kablo koptu. Biz bu soruna mühendislik çözümü aradık. 48 telli örgü zırh, 90° açılı L tipi başlık ve 50.000+ bükülme testinden geçmiş iç yapı sayesinde Hacıyatmaz Kablo, günlük kullanımın en zorlu koşullarına dayanmak üzere tasarlandı. Adını da buradan aldı — ne yaparsanız yapın, hacıyatmaz gibi ayakta kalıyor.
-              </div>
+                <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq0" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🔌 Type-C kablo neden kırılır?
+                        </button>
+                    </h2>
+                    <div id="faq0" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Type-C kablolar üç noktadan kırılır:<br><br>
+                            <strong class="text-warning">1. Başlık bağlantısı:</strong> Kablo dik açıyla bükülünce iç teller zamanla kopar. Ucuz kablolarda bu nokta sadece ince bir plastikle korunur.<br><br>
+                            <strong class="text-warning">2. Kablo gövdesi:</strong> Düşük kaliteli dış kılıf esnekliğini kaybedip çatlar, içindeki teller açığa çıkar. Özellikle sürekli sarıp açılan kabloların ortasından kopması bu yüzdendir.<br><br>
+                            <strong class="text-warning">3. Cihaz girişi:</strong> Zorla takma veya eğik kullanım hem kablonun ucunu hem telefonun girişini yıpratır.<br><br>
+                            Hacıyatmaz Kablo bu üç noktayı da 90° L tipi başlık, 48 telli örgü zırh ve esnek kılıf kombinasyonuyla çözer.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq1"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🤔 Kopmayan kablo fikri nereden çıktı?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Hepimiz aynı sorunu yaşadık: Telefon şarjdayken kabloyu biraz gergin tuttuk, bükük bir açıda
+                            bıraktık ya da yatakta dönerken üzerine yattık... ve kablo koptu. Biz bu soruna mühendislik
+                            çözümü aradık. 48 telli örgü zırh, 90° açılı L tipi başlık ve 50.000+ bükülme testinden
+                            geçmiş iç yapı sayesinde Hacıyatmaz Kablo, günlük kullanımın en zorlu koşullarına dayanmak
+                            üzere tasarlandı. Adını da buradan aldı — ne yaparsanız yapın, hacıyatmaz gibi ayakta
+                            kalıyor.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq2"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            💪 Neden kopmuyor?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Üç temel mühendislik özelliği sayesinde:<br><br>
+                            <strong class="text-warning">1. 48 Telli Örgü Zırh:</strong> İç kablolar tek tek korumalı ve
+                            birbirine örülmüş. Standart kablolarda 12-16 tel bulunurken, Hacıyatmaz Kablo'da 48 tel var.
+                            Bu, bükülme ve çekme kuvvetini eşit dağıtır.<br><br>
+                            <strong class="text-warning">2. 90° L Tipi Başlık:</strong> Kablonun en çok koptuğu nokta
+                            başlık bağlantısıdır. L tipi tasarım sayesinde kablo dik açıyla bükülmez, gerilme noktası
+                            ortadan kalkar.<br><br>
+                            <strong class="text-warning">3. 50.000+ Bükülme Testi:</strong> Üretim sürecinde her kablo
+                            50.000 kereden fazla bükülme testine tabi tutulur. Bu, günde 20 kez takıp çıkarsanız bile
+                            yaklaşık 7 yıl sorunsuz kullanım demektir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq3"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            ⚡ 20 dakikada %85 şarj gerçekten mümkün mü?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Evet, uyumlu cihaz ve adaptörle mümkün. Hacıyatmaz Kablo 240W güç aktarımını destekler — bu,
+                            piyasadaki en yüksek şarj standardıdır. Ancak şarj hızı telefonunuzun ve adaptörünüzün
+                            desteklediği maksimum watt değerine bağlıdır. Örneğin telefonunuz 67W destekliyorsa, kablo
+                            67W hızında şarj eder. Kablo asla darboğaz olmaz, cihazınızın izin verdiği en yüksek hızda
+                            şarj olursunuz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq4"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🖐️ Neden elinizi rahatsız etmiyor?
+                        </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Çoğu kablonun sorunu şudur: Telefonu şarj ederken kullanmak istediğinizde kablo elinize
+                            batıyor, tutmayı zorlaştırıyor, özellikle oyun oynarken rahatsızlık veriyor. Hacıyatmaz
+                            Kablo'nun 90° L tipi başlığı telefona yandan giriş yapar, kablo elinizin altından geçmez.
+                            Üstelik dahili stand özelliği sayesinde telefonu bir yere koyup elleri serbest
+                            kullanabilirsiniz — oyun, video, görüntülü arama, yemek tarifi takip etme... Elinizde
+                            tutmanıza bile gerek kalmaz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq5"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🔌 Telefonumun Type-C girişi olduğunu nasıl anlarım?
+                        </button>
+                    </h2>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Çok basit: Telefonunuzun şarj girişine bakın. Type-C uç <strong class="text-warning">oval ve
+                                simetriktir</strong> — her iki yönde de takılabilir, ters-düz derdi yoktur. Eski
+                            Micro-USB uçlar ise yamuk trapez şeklindedir ve sadece tek yönde girer.<br><br>
+                            2020 ve sonrası üretilen hemen hemen tüm Android telefonlar (Samsung, Xiaomi, Oppo, Vivo,
+                            Realme, Huawei, OnePlus) Type-C kullanır. iPhone 15 ve sonrası modeller de Type-C'ye
+                            geçmiştir. Eğer telefonunuzu hangi yöne çevirirseniz çevirin şarj kablosu takılabiliyorsa,
+                            Type-C girişiniz var demektir ve Hacıyatmaz Kablo tam size göre.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq6"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            📱 Stand özelliği nasıl çalışıyor?
+                        </button>
+                    </h2>
+                    <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Kablonun başlık kısmında entegre bir menteşe mekanizması var. Kabloyu telefona taktıktan
+                            sonra bu menteşeyi açarak telefonu dik veya hafif eğik konumda sabitleyebilirsiniz. Ayrı bir
+                            stand veya aksesuar satın almanıza gerek yok — şarj kablosunun kendisi aynı zamanda stand.
+                            Masada, yatakta, mutfak tezgahında... her yerde kullanabilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq7"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🚚 Kargo ve ödeme seçenekleri nelerdir?
+                        </button>
+                    </h2>
+                    <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Kendi sitemizden (haciyatmazkablo.com) kredi kartı ve kapıda ödeme ile sipariş
+                            verebilirsiniz. Ayrıca Trendyol, Hepsiburada, N11 ve PTTAVM mağazalarımızdan da güvenle
+                            satın alabilirsiniz. Taksit imkânı mevcuttur. Kargo tüm Türkiye'ye gönderilmektedir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2"
+                    style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed text-white fw-bold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq8"
+                            style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
+                            🔄 İade ve garanti koşulları nedir?
+                        </button>
+                    </h2>
+                    <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50" style="line-height: 1.7;">
+                            Tüm marketplace kanallarımızdan (Trendyol, Hepsiburada, N11, PTTAVM) yapılan alışverişlerde
+                            ilgili platformun iade koşulları geçerlidir. Kendi sitemizden yapılan siparişlerde 14 gün
+                            içinde koşulsuz iade hakkınız bulunmaktadır. Ürünümüz üretim hatalarına karşı garantilidir.
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                💪 Neden kopmuyor?
-              </button>
-            </h2>
-            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Üç temel mühendislik özelliği sayesinde:<br><br>
-                <strong class="text-warning">1. 48 Telli Örgü Zırh:</strong> İç kablolar tek tek korumalı ve birbirine örülmüş. Standart kablolarda 12-16 tel bulunurken, Hacıyatmaz Kablo'da 48 tel var. Bu, bükülme ve çekme kuvvetini eşit dağıtır.<br><br>
-                <strong class="text-warning">2. 90° L Tipi Başlık:</strong> Kablonun en çok koptuğu nokta başlık bağlantısıdır. L tipi tasarım sayesinde kablo dik açıyla bükülmez, gerilme noktası ortadan kalkar.<br><br>
-                <strong class="text-warning">3. 50.000+ Bükülme Testi:</strong> Üretim sürecinde her kablo 50.000 kereden fazla bükülme testine tabi tutulur. Bu, günde 20 kez takıp çıkarsanız bile yaklaşık 7 yıl sorunsuz kullanım demektir.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                ⚡ 20 dakikada %85 şarj gerçekten mümkün mü?
-              </button>
-            </h2>
-            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Evet, uyumlu cihaz ve adaptörle mümkün. Hacıyatmaz Kablo 240W güç aktarımını destekler — bu, piyasadaki en yüksek şarj standardıdır. Ancak şarj hızı telefonunuzun ve adaptörünüzün desteklediği maksimum watt değerine bağlıdır. Örneğin telefonunuz 67W destekliyorsa, kablo 67W hızında şarj eder. Kablo asla darboğaz olmaz, cihazınızın izin verdiği en yüksek hızda şarj olursunuz.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                🖐️ Neden elinizi rahatsız etmiyor?
-              </button>
-            </h2>
-            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Çoğu kablonun sorunu şudur: Telefonu şarj ederken kullanmak istediğinizde kablo elinize batıyor, tutmayı zorlaştırıyor, özellikle oyun oynarken rahatsızlık veriyor. Hacıyatmaz Kablo'nun 90° L tipi başlığı telefona yandan giriş yapar, kablo elinizin altından geçmez. Üstelik dahili stand özelliği sayesinde telefonu bir yere koyup elleri serbest kullanabilirsiniz — oyun, video, görüntülü arama, yemek tarifi takip etme... Elinizde tutmanıza bile gerek kalmaz.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                🔌 Telefonumun Type-C girişi olduğunu nasıl anlarım?
-              </button>
-            </h2>
-            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Çok basit: Telefonunuzun şarj girişine bakın. Type-C uç <strong class="text-warning">oval ve simetriktir</strong> — her iki yönde de takılabilir, ters-düz derdi yoktur. Eski Micro-USB uçlar ise yamuk trapez şeklindedir ve sadece tek yönde girer.<br><br>
-                2020 ve sonrası üretilen hemen hemen tüm Android telefonlar (Samsung, Xiaomi, Oppo, Vivo, Realme, Huawei, OnePlus) Type-C kullanır. iPhone 15 ve sonrası modeller de Type-C'ye geçmiştir. Eğer telefonunuzu hangi yöne çevirirseniz çevirin şarj kablosu takılabiliyorsa, Type-C girişiniz var demektir ve Hacıyatmaz Kablo tam size göre.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                📱 Stand özelliği nasıl çalışıyor?
-              </button>
-            </h2>
-            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Kablonun başlık kısmında entegre bir menteşe mekanizması var. Kabloyu telefona taktıktan sonra bu menteşeyi açarak telefonu dik veya hafif eğik konumda sabitleyebilirsiniz. Ayrı bir stand veya aksesuar satın almanıza gerek yok — şarj kablosunun kendisi aynı zamanda stand. Masada, yatakta, mutfak tezgahında... her yerde kullanabilirsiniz.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                🚚 Kargo ve ödeme seçenekleri nelerdir?
-              </button>
-            </h2>
-            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Kendi sitemizden (haciyatmazkablo.com) kredi kartı ve kapıda ödeme ile sipariş verebilirsiniz. Ayrıca Trendyol, Hepsiburada, N11 ve PTTAVM mağazalarımızdan da güvenle satın alabilirsiniz. Taksit imkânı mevcuttur. Kargo tüm Türkiye'ye gönderilmektedir.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item border-0 mb-2" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8" style="background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 1.05rem;">
-                🔄 İade ve garanti koşulları nedir?
-              </button>
-            </h2>
-            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-              <div class="accordion-body text-white-50" style="line-height: 1.7;">
-                Tüm marketplace kanallarımızdan (Trendyol, Hepsiburada, N11, PTTAVM) yapılan alışverişlerde ilgili platformun iade koşulları geçerlidir. Kendi sitemizden yapılan siparişlerde 14 gün içinde koşulsuz iade hakkınız bulunmaktadır. Ürünümüz üretim hatalarına karşı garantilidir.
-              </div>
-            </div>
-          </div>
-
         </div>
-      </div>
     </section>
     <!-- /SSS -->
 
@@ -1410,7 +1530,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <a href="https://www.youtube.com/@Haciyatmazkablo" target="_blank"
                     class="text-warning text-decoration-none">@Haciyatmazkablo</a>
             </p>
-            <p class="text-white small mb-0">&copy; 2026 HACIYATMAZKABLO. Tüm hakları saklıdır. | iyzico ile Güvenli
+            <p class="text-white small mb-0">&copy; 2026 HACIYATMAZKABLO. Tüm hakları saklıdır.| iyzico ile Güvenli
                 Ödeme
             <div class="mt-3">
                 <a href="mesafeli-satis-sozlesmesi.html" class="text-warning text-decoration-none me-3">
@@ -1422,17 +1542,18 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </div>
 
             <div class="mt-3">
-                <img src="assets/basemo-cable-chrome/3luOdemeLogo.png" alt="Mastercard"
-                    style="height:28px; margin-right:10px; background:white; padding:3px; border-radius:4px;">
+                <img src="assets/basemo-cable-chrome/3luOdemeLogo.png" alt="Mastercard, Visa, Troy ödeme logoları"
+                    style="height:28px; margin-right:10px; background:white; padding:3px; border-radius:4px;"
+                    loading="lazy" width="90" height="28">
             </div>
             | Hızlı
-            Teslimat | 15 Gün Para İade | Designed BY @Batu Teknoloji with engine 0553 475 90 32</p>
+            Teslimat | 15 Gün Para İade | Designed BY Batu Teknoloji Beğendiyseniz sizede yaparız. 0553 475 90 32</p>
             <div class="mt-4 text-center">
                 <p class="text-white small mb-2">Güvenli Ödeme Altyapısı</p>
 
                 <img src="assets/basemo-cable-chrome/OdemeLogo.png"
-                    alt="iyzico ile Öde - Visa - Mastercard - American Express - Troy"
-                    style="max-width:100%; height:45px; object-fit:contain;">
+                    alt="iyzico ile Öde — Visa, Mastercard, American Express, Troy güvenli ödeme"
+                    style="max-width:100%; height:45px; object-fit:contain;" loading="lazy" width="300" height="45">
             </div>
         </div>
 
@@ -1788,398 +1909,447 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
 <!-- ===== SİPARİŞ MODAL STYLES ===== -->
 <style>
-/* === Ödeme Butonu — Hover 3D Shadow Effect === */
-.btn-payment-hover {
-  position: relative;
-  background: transparent;
-  border: none;
-  padding: 0 0 18px 0; /* shadow için alt boşluk */
-  cursor: pointer;
-  display: block;
-  width: 100%;
-}
-.btn-payment-hover:disabled { opacity: 0.65; cursor: not-allowed; }
-.btn-payment-inner {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 50px;
-  border-radius: 9999px;
-  background: linear-gradient(to right, #070e41, #263381);
-  border: 2px solid rgb(76, 100, 255);
-  padding: 0 28px;
-  font-weight: 700;
-  font-size: 1rem;
-  color: #fff;
-  transition: transform 0.3s;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.btn-payment-shadow {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 18px;
-  z-index: 0;
-  border-radius: 9999px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.btn-payment-hover:not(:disabled):hover .btn-payment-inner,
-.btn-payment-hover:not(:disabled):hover .btn-payment-shadow {
-  transform: translate(-3px, -3px);
-}
-.btn-payment-hover:not(:disabled):hover .btn-payment-shadow {
-  box-shadow: 5px 5px #394481, 10px 10px #5766be, 15px 15px #8898f3;
-}
+    /* === Ödeme Butonu — Hover 3D Shadow Effect === */
+    .btn-payment-hover {
+        position: relative;
+        background: transparent;
+        border: none;
+        padding: 0 0 18px 0;
+        /* shadow için alt boşluk */
+        cursor: pointer;
+        display: block;
+        width: 100%;
+    }
 
-/* ── FAQ Accordion koyu tema override ────────────────── */
-#faqAccordion .accordion-button::after {
-  filter: invert(1) brightness(2);
-}
-#faqAccordion .accordion-button:not(.collapsed) {
-  color: #ffc107;
-  box-shadow: none;
-  background: rgba(255,255,255,0.10) !important;
-  border-radius: 12px 12px 0 0 !important;
-}
-#faqAccordion .accordion-button:focus {
-  box-shadow: none;
-}
-#faqAccordion .accordion-body {
-  background: rgba(255,255,255,0.03);
-  border-radius: 0 0 12px 12px;
-}
+    .btn-payment-hover:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
 
-/* ── Modal form: placeholder beyaz + shadow ───────────── */
-#orderForm .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
-}
-/* Şehir select dark tema */
-#customerCity {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 36px;
-  cursor: pointer;
-}
-#customerCity option {
-  background: #1a1a1a;
-  color: #fff;
-}
+    .btn-payment-inner {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        border-radius: 9999px;
+        background: linear-gradient(to right, #070e41, #263381);
+        border: 2px solid rgb(76, 100, 255);
+        padding: 0 28px;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #fff;
+        transition: transform 0.3s;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 
-/* ── TIMER BANNER ─────────────────────────────────────── */
-.timer-banner {
-  background: linear-gradient(270deg, #b00020, #ff4444, #ff6a00, #b00020);
-  background-size: 400% 100%;
-  animation: timerShimmer 3s ease infinite;
-  color: #fff;
-  text-align: center;
-  padding: 10px 16px 7px;
-  border-radius: 14px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  position: relative;
-}
-.timer-banner.expired {
-  background: linear-gradient(90deg, #444, #666);
-  animation: none;
-}
-@keyframes timerShimmer {
-  0%   { background-position: 0%   50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0%   50%; }
-}
-.timer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 1rem;
-  font-weight: 700;
-  flex-wrap: wrap;
-}
-#timerCountdown {
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 3px;
-  font-family: 'Courier New', monospace;
-  text-shadow: 0 0 10px rgba(255,255,255,0.6);
-}
-.timer-price-badge {
-  background: #fff;
-  color: #b00020;
-  padding: 2px 12px;
-  border-radius: 7px;
-  font-weight: 900;
-  font-size: 1.15rem;
-  display: inline-block;
-}
-.timer-label {
-  font-size: 0.95rem;
-  opacity: 0.95;
-}
-.timer-bar-wrap {
-  height: 4px;
-  background: rgba(255,255,255,0.28);
-  border-radius: 2px;
-  margin-top: 7px;
-  overflow: hidden;
-}
-.timer-bar {
-  height: 100%;
-  background: #fff;
-  border-radius: 2px;
-  transition: width 1s linear;
-  width: 100%;
-}
+    .btn-payment-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 18px;
+        z-index: 0;
+        border-radius: 9999px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
 
-/* ── STEP INDICATOR ───────────────────────────────────── */
-.order-steps {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 4px 0 10px;
-  gap: 0;
-}
-.step-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  opacity: 0;
-  transform: translateX(-20px);
-  flex: 1;
-  max-width: 88px;
-}
-.step-connector {
-  height: 2px;
-  background: rgba(255,255,255,0.3);
-  flex: 1;
-  margin-top: 17px;
-  opacity: 0;
-  transform-origin: left center;
-  transform: scaleX(0);
-}
-.step-shape {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-.step-circle {
-  border-radius: 50%;
-  background: #ffc107;
-  color: #1a1a00;
-  box-shadow: 0 0 12px rgba(255,193,7,0.65);
-}
-.step-triangle {
-  width: 0;
-  height: 0;
-  background: transparent !important;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  border-bottom: 32px solid #00c6ff;
-  box-shadow: none;
-  margin-top: 2px;
-}
-.step-square {
-  border-radius: 7px;
-  background: #25d366;
-  color: #0a1a0a;
-  box-shadow: 0 0 12px rgba(37,211,102,0.55);
-}
-.step-label {
-  font-size: 0.65rem;
-  color: #bbb;
-  text-align: center;
-  line-height: 1.35;
-}
+    .btn-payment-hover:not(:disabled):hover .btn-payment-inner,
+    .btn-payment-hover:not(:disabled):hover .btn-payment-shadow {
+        transform: translate(-3px, -3px);
+    }
+
+    .btn-payment-hover:not(:disabled):hover .btn-payment-shadow {
+        box-shadow: 5px 5px #394481, 10px 10px #5766be, 15px 15px #8898f3;
+    }
+
+    /* ── FAQ Accordion koyu tema override ────────────────── */
+    #faqAccordion .accordion-button::after {
+        filter: invert(1) brightness(2);
+    }
+
+    #faqAccordion .accordion-button:not(.collapsed) {
+        color: #ffc107;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.10) !important;
+        border-radius: 12px 12px 0 0 !important;
+    }
+
+    #faqAccordion .accordion-button:focus {
+        box-shadow: none;
+    }
+
+    #faqAccordion .accordion-body {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 0 0 12px 12px;
+    }
+
+    /* ── Modal form: placeholder beyaz + shadow ───────────── */
+    #orderForm .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.85);
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Şehir select dark tema */
+    #customerCity {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        cursor: pointer;
+    }
+
+    #customerCity option {
+        background: #1a1a1a;
+        color: #fff;
+    }
+
+    /* ── TIMER BANNER ─────────────────────────────────────── */
+    .timer-banner {
+        background: linear-gradient(270deg, #b00020, #ff4444, #ff6a00, #b00020);
+        background-size: 400% 100%;
+        animation: timerShimmer 3s ease infinite;
+        color: #fff;
+        text-align: center;
+        padding: 10px 16px 7px;
+        border-radius: 14px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .timer-banner.expired {
+        background: linear-gradient(90deg, #444, #666);
+        animation: none;
+    }
+
+    @keyframes timerShimmer {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .timer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        flex-wrap: wrap;
+    }
+
+    #timerCountdown {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 3px;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+
+    .timer-price-badge {
+        background: #fff;
+        color: #b00020;
+        padding: 2px 12px;
+        border-radius: 7px;
+        font-weight: 900;
+        font-size: 1.15rem;
+        display: inline-block;
+    }
+
+    .timer-label {
+        font-size: 0.95rem;
+        opacity: 0.95;
+    }
+
+    .timer-bar-wrap {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.28);
+        border-radius: 2px;
+        margin-top: 7px;
+        overflow: hidden;
+    }
+
+    .timer-bar {
+        height: 100%;
+        background: #fff;
+        border-radius: 2px;
+        transition: width 1s linear;
+        width: 100%;
+    }
+
+    /* ── STEP INDICATOR ───────────────────────────────────── */
+    .order-steps {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 4px 0 10px;
+        gap: 0;
+    }
+
+    .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        opacity: 0;
+        transform: translateX(-20px);
+        flex: 1;
+        max-width: 88px;
+    }
+
+    .step-connector {
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+        flex: 1;
+        margin-top: 17px;
+        opacity: 0;
+        transform-origin: left center;
+        transform: scaleX(0);
+    }
+
+    .step-shape {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+
+    .step-circle {
+        border-radius: 50%;
+        background: #ffc107;
+        color: #1a1a00;
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.65);
+    }
+
+    .step-triangle {
+        width: 0;
+        height: 0;
+        background: transparent !important;
+        border-left: 18px solid transparent;
+        border-right: 18px solid transparent;
+        border-bottom: 32px solid #00c6ff;
+        box-shadow: none;
+        margin-top: 2px;
+    }
+
+    .step-square {
+        border-radius: 7px;
+        background: #25d366;
+        color: #0a1a0a;
+        box-shadow: 0 0 12px rgba(37, 211, 102, 0.55);
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+        color: #bbb;
+        text-align: center;
+        line-height: 1.35;
+    }
 </style>
 
 <!-- ===== SİPARİŞ MODAL ===== -->
 <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background:#141414; border:1px solid #2a2a2a; border-radius:16px; color:#fff; box-shadow: 5px 5px 0px 0px rgba(255,0,0,1), 10px 10px 0px 0px rgba(255,165,0,1), 15px 15px 0px 0px rgba(255,255,0,1), 20px 20px 0px 0px rgba(0,128,0,1), 25px 25px 0px 0px rgba(0,0,255,1), 30px 30px 0px 0px rgba(75,0,130,1), 35px 35px 0px 0px rgba(238,130,238,1);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+            style="background:#141414; border:1px solid #2a2a2a; border-radius:16px; color:#fff; box-shadow: 5px 5px 0px 0px rgba(255,0,0,1), 10px 10px 0px 0px rgba(255,165,0,1), 15px 15px 0px 0px rgba(255,255,0,1), 20px 20px 0px 0px rgba(0,128,0,1), 25px 25px 0px 0px rgba(0,0,255,1), 30px 30px 0px 0px rgba(75,0,130,1), 35px 35px 0px 0px rgba(238,130,238,1);">
 
-      <div class="modal-header" style="border-bottom:1px solid #2a2a2a;">
-        <h5 class="modal-title fw-bold" id="orderModalLabel">
-          <i class="fas fa-shopping-cart text-warning me-2"></i>Sipariş Bilgileri
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat" tabindex="-1"></button>
-      </div>
-
-      <div class="modal-body">
-
-        <!-- STEP INDICATOR -->
-        <div class="order-steps" id="orderSteps" aria-hidden="true">
-          <div class="step-item" id="step1">
-            <div class="step-shape step-circle">○</div>
-            <div class="step-label">Sipariş<br>Bilgilerini Gir</div>
-          </div>
-          <div class="step-connector" id="stepLine1"></div>
-          <div class="step-item" id="step2">
-            <div class="step-shape step-triangle"></div>
-            <div class="step-label">Kart ile<br>Güvenli Öde</div>
-          </div>
-          <div class="step-connector" id="stepLine2"></div>
-          <div class="step-item" id="step3">
-            <div class="step-shape step-square">□</div>
-            <div class="step-label">Ürününü<br>Teslim Al</div>
-          </div>
-        </div>
-
-        <form id="orderForm" novalidate>
-
-          <div class="mb-3">
-            <label for="customerName" class="form-label" style="color:#ccc;">Ad Soyad <span class="text-warning">*</span></label>
-            <input type="text" class="form-control" id="customerName"
-              style="background:#1a1a1a; border:1px solid #333; color:#fff;"
-              placeholder="Ahmet Yılmaz" required minlength="3" autocomplete="name" tabindex="1">
-          </div>
-
-          <div class="mb-3">
-            <label for="customerEmail" class="form-label" style="color:#ccc;">E-posta <span class="text-warning">*</span></label>
-            <input type="email" class="form-control" id="customerEmail"
-              style="background:#1a1a1a; border:1px solid #333; color:#fff;"
-              placeholder="ornek@email.com" required autocomplete="email" tabindex="2">
-          </div>
-
-          <div class="mb-3">
-            <label for="customerPhone" class="form-label" style="color:#ccc;">Telefon <span class="text-warning">*</span></label>
-            <input type="tel" class="form-control" id="customerPhone"
-              style="background:#1a1a1a; border:1px solid #333; color:#fff;"
-              placeholder="05XXXXXXXXX" required autocomplete="tel"
-              pattern="0[5][0-9]{9}" maxlength="11" inputmode="numeric" tabindex="3">
-            <div class="form-text" style="color:#888; font-size:0.76rem; margin-top:4px;">
-              Örnek: 05321234567 &nbsp;·&nbsp; 11 haneli, boşluksuz
+            <div class="modal-header" style="border-bottom:1px solid #2a2a2a;">
+                <h5 class="modal-title fw-bold" id="orderModalLabel">
+                    <i class="fas fa-shopping-cart text-warning me-2"></i>Sipariş Bilgileri
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"
+                    tabindex="-1"></button>
             </div>
-          </div>
 
-          <div class="mb-3">
-            <label for="customerCity" class="form-label" style="color:#ccc;">Şehir <span class="text-warning">*</span></label>
-            <select class="form-control" id="customerCity"
-              style="background:#1a1a1a; border:1px solid #333; color:#fff;"
-              required autocomplete="address-level2" tabindex="4">
-              <option value="" disabled selected style="color:#888;">— Şehir seçiniz —</option>
-              <optgroup label="Popüler Şehirler" style="color:#ffc107;">
-                <option value="İstanbul">İstanbul</option>
-                <option value="Ankara">Ankara</option>
-                <option value="İzmir">İzmir</option>
-                <option value="Bursa">Bursa</option>
-                <option value="Antalya">Antalya</option>
-              </optgroup>
-              <optgroup label="Tüm İller" style="color:#aaa;">
-                <option value="Adana">Adana</option>
-                <option value="Adıyaman">Adıyaman</option>
-                <option value="Afyonkarahisar">Afyonkarahisar</option>
-                <option value="Ağrı">Ağrı</option>
-                <option value="Aksaray">Aksaray</option>
-                <option value="Amasya">Amasya</option>
-                <option value="Ardahan">Ardahan</option>
-                <option value="Artvin">Artvin</option>
-                <option value="Aydın">Aydın</option>
-                <option value="Balıkesir">Balıkesir</option>
-                <option value="Bartın">Bartın</option>
-                <option value="Batman">Batman</option>
-                <option value="Bayburt">Bayburt</option>
-                <option value="Bilecik">Bilecik</option>
-                <option value="Bingöl">Bingöl</option>
-                <option value="Bitlis">Bitlis</option>
-                <option value="Bolu">Bolu</option>
-                <option value="Burdur">Burdur</option>
-                <option value="Çanakkale">Çanakkale</option>
-                <option value="Çankırı">Çankırı</option>
-                <option value="Çorum">Çorum</option>
-                <option value="Denizli">Denizli</option>
-                <option value="Diyarbakır">Diyarbakır</option>
-                <option value="Düzce">Düzce</option>
-                <option value="Edirne">Edirne</option>
-                <option value="Elazığ">Elazığ</option>
-                <option value="Erzincan">Erzincan</option>
-                <option value="Erzurum">Erzurum</option>
-                <option value="Eskişehir">Eskişehir</option>
-                <option value="Gaziantep">Gaziantep</option>
-                <option value="Giresun">Giresun</option>
-                <option value="Gümüşhane">Gümüşhane</option>
-                <option value="Hakkari">Hakkari</option>
-                <option value="Hatay">Hatay</option>
-                <option value="Iğdır">Iğdır</option>
-                <option value="Isparta">Isparta</option>
-                <option value="Kahramanmaraş">Kahramanmaraş</option>
-                <option value="Karabük">Karabük</option>
-                <option value="Karaman">Karaman</option>
-                <option value="Kars">Kars</option>
-                <option value="Kastamonu">Kastamonu</option>
-                <option value="Kayseri">Kayseri</option>
-                <option value="Kilis">Kilis</option>
-                <option value="Kırıkkale">Kırıkkale</option>
-                <option value="Kırklareli">Kırklareli</option>
-                <option value="Kırşehir">Kırşehir</option>
-                <option value="Kocaeli">Kocaeli</option>
-                <option value="Konya">Konya</option>
-                <option value="Kütahya">Kütahya</option>
-                <option value="Malatya">Malatya</option>
-                <option value="Manisa">Manisa</option>
-                <option value="Mardin">Mardin</option>
-                <option value="Mersin">Mersin</option>
-                <option value="Muğla">Muğla</option>
-                <option value="Muş">Muş</option>
-                <option value="Nevşehir">Nevşehir</option>
-                <option value="Niğde">Niğde</option>
-                <option value="Ordu">Ordu</option>
-                <option value="Osmaniye">Osmaniye</option>
-                <option value="Rize">Rize</option>
-                <option value="Sakarya">Sakarya</option>
-                <option value="Samsun">Samsun</option>
-                <option value="Şanlıurfa">Şanlıurfa</option>
-                <option value="Siirt">Siirt</option>
-                <option value="Sinop">Sinop</option>
-                <option value="Şırnak">Şırnak</option>
-                <option value="Sivas">Sivas</option>
-                <option value="Tekirdağ">Tekirdağ</option>
-                <option value="Tokat">Tokat</option>
-                <option value="Trabzon">Trabzon</option>
-                <option value="Tunceli">Tunceli</option>
-                <option value="Uşak">Uşak</option>
-                <option value="Van">Van</option>
-                <option value="Yalova">Yalova</option>
-                <option value="Yozgat">Yozgat</option>
-                <option value="Zonguldak">Zonguldak</option>
-              </optgroup>
-            </select>
-          </div>
+            <div class="modal-body">
 
-          <div class="mb-3">
-            <label for="customerAddress" class="form-label" style="color:#ccc;">Adres <span class="text-warning">*</span></label>
-            <textarea class="form-control" id="customerAddress" rows="2"
-              style="background:#1a1a1a; border:1px solid #333; color:#fff;"
-              placeholder="Mahalle, sokak, kapı no..." required minlength="10" autocomplete="street-address" tabindex="5"></textarea>
-          </div>
+                <!-- STEP INDICATOR -->
+                <div class="order-steps" id="orderSteps" aria-hidden="true">
+                    <div class="step-item" id="step1">
+                        <div class="step-shape step-circle">○</div>
+                        <div class="step-label">Sipariş<br>Bilgilerini Gir</div>
+                    </div>
+                    <div class="step-connector" id="stepLine1"></div>
+                    <div class="step-item" id="step2">
+                        <div class="step-shape step-triangle"></div>
+                        <div class="step-label">Kart ile<br>Güvenli Öde</div>
+                    </div>
+                    <div class="step-connector" id="stepLine2"></div>
+                    <div class="step-item" id="step3">
+                        <div class="step-shape step-square">□</div>
+                        <div class="step-label">Ürününü<br>Teslim Al</div>
+                    </div>
+                </div>
 
-        </form>
-      </div>
+                <form id="orderForm" novalidate>
 
-      <div class="modal-footer" style="border-top:1px solid #2a2a2a; flex-direction:column; align-items:stretch; gap:8px; overflow:visible;">
-        <button type="button" class="btn-payment-hover" id="paymentBtn" tabindex="6">
-          <div class="btn-payment-inner" id="paymentBtnInner">
-            <i class="fas fa-lock me-2"></i>Güvenli Ödemeye Git →
-          </div>
-          <div class="btn-payment-shadow"></div>
-        </button>
-        <p style="font-size:0.78rem; color:#888; text-align:center; margin:0;">
-          🔒 iyzico güvenli ödeme sayfasına yönlendirileceksiniz
-        </p>
-      </div>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label" style="color:#ccc;">Ad Soyad <span
+                                class="text-warning">*</span></label>
+                        <input type="text" class="form-control" id="customerName"
+                            style="background:#1a1a1a; border:1px solid #333; color:#fff;" placeholder="Ahmet Yılmaz"
+                            required minlength="3" autocomplete="name" tabindex="1">
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="customerEmail" class="form-label" style="color:#ccc;">E-posta <span
+                                class="text-warning">*</span></label>
+                        <input type="email" class="form-control" id="customerEmail"
+                            style="background:#1a1a1a; border:1px solid #333; color:#fff;" placeholder="ornek@email.com"
+                            required autocomplete="email" tabindex="2">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="customerPhone" class="form-label" style="color:#ccc;">Telefon <span
+                                class="text-warning">*</span></label>
+                        <input type="tel" class="form-control" id="customerPhone"
+                            style="background:#1a1a1a; border:1px solid #333; color:#fff;" placeholder="05XXXXXXXXX"
+                            required autocomplete="tel" pattern="0[5][0-9]{9}" maxlength="11" inputmode="numeric"
+                            tabindex="3">
+                        <div class="form-text" style="color:#888; font-size:0.76rem; margin-top:4px;">
+                            Örnek: 05321234567 &nbsp;·&nbsp; 11 haneli, boşluksuz
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="customerCity" class="form-label" style="color:#ccc;">Şehir <span
+                                class="text-warning">*</span></label>
+                        <select class="form-control" id="customerCity"
+                            style="background:#1a1a1a; border:1px solid #333; color:#fff;" required
+                            autocomplete="address-level2" tabindex="4">
+                            <option value="" disabled selected style="color:#888;">— Şehir seçiniz —</option>
+                            <optgroup label="Popüler Şehirler" style="color:#ffc107;">
+                                <option value="İstanbul">İstanbul</option>
+                                <option value="Ankara">Ankara</option>
+                                <option value="İzmir">İzmir</option>
+                                <option value="Bursa">Bursa</option>
+                                <option value="Antalya">Antalya</option>
+                            </optgroup>
+                            <optgroup label="Tüm İller" style="color:#aaa;">
+                                <option value="Adana">Adana</option>
+                                <option value="Adıyaman">Adıyaman</option>
+                                <option value="Afyonkarahisar">Afyonkarahisar</option>
+                                <option value="Ağrı">Ağrı</option>
+                                <option value="Aksaray">Aksaray</option>
+                                <option value="Amasya">Amasya</option>
+                                <option value="Ardahan">Ardahan</option>
+                                <option value="Artvin">Artvin</option>
+                                <option value="Aydın">Aydın</option>
+                                <option value="Balıkesir">Balıkesir</option>
+                                <option value="Bartın">Bartın</option>
+                                <option value="Batman">Batman</option>
+                                <option value="Bayburt">Bayburt</option>
+                                <option value="Bilecik">Bilecik</option>
+                                <option value="Bingöl">Bingöl</option>
+                                <option value="Bitlis">Bitlis</option>
+                                <option value="Bolu">Bolu</option>
+                                <option value="Burdur">Burdur</option>
+                                <option value="Çanakkale">Çanakkale</option>
+                                <option value="Çankırı">Çankırı</option>
+                                <option value="Çorum">Çorum</option>
+                                <option value="Denizli">Denizli</option>
+                                <option value="Diyarbakır">Diyarbakır</option>
+                                <option value="Düzce">Düzce</option>
+                                <option value="Edirne">Edirne</option>
+                                <option value="Elazığ">Elazığ</option>
+                                <option value="Erzincan">Erzincan</option>
+                                <option value="Erzurum">Erzurum</option>
+                                <option value="Eskişehir">Eskişehir</option>
+                                <option value="Gaziantep">Gaziantep</option>
+                                <option value="Giresun">Giresun</option>
+                                <option value="Gümüşhane">Gümüşhane</option>
+                                <option value="Hakkari">Hakkari</option>
+                                <option value="Hatay">Hatay</option>
+                                <option value="Iğdır">Iğdır</option>
+                                <option value="Isparta">Isparta</option>
+                                <option value="Kahramanmaraş">Kahramanmaraş</option>
+                                <option value="Karabük">Karabük</option>
+                                <option value="Karaman">Karaman</option>
+                                <option value="Kars">Kars</option>
+                                <option value="Kastamonu">Kastamonu</option>
+                                <option value="Kayseri">Kayseri</option>
+                                <option value="Kilis">Kilis</option>
+                                <option value="Kırıkkale">Kırıkkale</option>
+                                <option value="Kırklareli">Kırklareli</option>
+                                <option value="Kırşehir">Kırşehir</option>
+                                <option value="Kocaeli">Kocaeli</option>
+                                <option value="Konya">Konya</option>
+                                <option value="Kütahya">Kütahya</option>
+                                <option value="Malatya">Malatya</option>
+                                <option value="Manisa">Manisa</option>
+                                <option value="Mardin">Mardin</option>
+                                <option value="Mersin">Mersin</option>
+                                <option value="Muğla">Muğla</option>
+                                <option value="Muş">Muş</option>
+                                <option value="Nevşehir">Nevşehir</option>
+                                <option value="Niğde">Niğde</option>
+                                <option value="Ordu">Ordu</option>
+                                <option value="Osmaniye">Osmaniye</option>
+                                <option value="Rize">Rize</option>
+                                <option value="Sakarya">Sakarya</option>
+                                <option value="Samsun">Samsun</option>
+                                <option value="Şanlıurfa">Şanlıurfa</option>
+                                <option value="Siirt">Siirt</option>
+                                <option value="Sinop">Sinop</option>
+                                <option value="Şırnak">Şırnak</option>
+                                <option value="Sivas">Sivas</option>
+                                <option value="Tekirdağ">Tekirdağ</option>
+                                <option value="Tokat">Tokat</option>
+                                <option value="Trabzon">Trabzon</option>
+                                <option value="Tunceli">Tunceli</option>
+                                <option value="Uşak">Uşak</option>
+                                <option value="Van">Van</option>
+                                <option value="Yalova">Yalova</option>
+                                <option value="Yozgat">Yozgat</option>
+                                <option value="Zonguldak">Zonguldak</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="customerAddress" class="form-label" style="color:#ccc;">Adres <span
+                                class="text-warning">*</span></label>
+                        <textarea class="form-control" id="customerAddress" rows="2"
+                            style="background:#1a1a1a; border:1px solid #333; color:#fff;"
+                            placeholder="Mahalle, sokak, kapı no..." required minlength="10"
+                            autocomplete="street-address" tabindex="5"></textarea>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer"
+                style="border-top:1px solid #2a2a2a; flex-direction:column; align-items:stretch; gap:8px; overflow:visible;">
+                <button type="button" class="btn-payment-hover" id="paymentBtn" tabindex="6">
+                    <div class="btn-payment-inner" id="paymentBtnInner">
+                        <i class="fas fa-lock me-2"></i>Güvenli Ödemeye Git →
+                    </div>
+                    <div class="btn-payment-shadow"></div>
+                </button>
+                <p style="font-size:0.78rem; color:#888; text-align:center; margin:0;">
+                    🔒 iyzico güvenli ödeme sayfasına yönlendirileceksiniz
+                </p>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 <!-- ===== /SİPARİŞ MODAL ===== -->
 
