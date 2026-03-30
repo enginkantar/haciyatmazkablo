@@ -89,4 +89,83 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Cihazlar Ana Sayfa -->
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Cihaz Sayfaları -->
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/iphone-15-type-c-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/iphone-16-sarj-kablosu/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/macbook-pro-240w-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/macbook-air-sarj-kablosu/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/asus-rog-sarj-kablosu/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/msi-laptop-240w-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/samsung-galaxy-s24-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/xiaomi-hizli-sarj-kablosu/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/ipad-pro-type-c-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/cihazlar/4k-monitor-type-c-kablo/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
