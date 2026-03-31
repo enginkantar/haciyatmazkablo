@@ -7,81 +7,16 @@
 const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 
 // =====================================================
-// COUNTDOWN TIMER & DYNAMIC PRICE
+// PRICE — sabit 821 TL
 // =====================================================
-const PRICE_NORMAL    = '821';
-const PRICE_DISCOUNT  = '799';
-const TIMER_TOTAL_SEC = 7 * 60; // 420 saniye
-
-let currentPrice      = PRICE_DISCOUNT; // Sayfa açılışında indirimli fiyat
-let timerSecondsLeft  = TIMER_TOTAL_SEC;
-let timerInterval     = null;
-
-function formatTime(s) {
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
-  return `${m}:${sec.toString().padStart(2, '0')}`;
-}
-
-function updatePriceLabels(price) {
-  document.querySelectorAll('.dynamic-price').forEach(el => {
-    el.textContent = price;
-  });
-}
-
-function startCountdownTimer() {
-  const countdown = document.getElementById('timerCountdown');
-  const bar       = document.getElementById('timerBar');
-  const banner    = document.getElementById('timerBanner');
-  if (!countdown) return;
-
-  // Başlangıç durumu: indirimli fiyat göster
-  currentPrice = PRICE_DISCOUNT;
-  updatePriceLabels(PRICE_DISCOUNT);
-  countdown.textContent = formatTime(timerSecondsLeft);
-  if (bar) bar.style.width = '100%';
-
-  timerInterval = setInterval(() => {
-    timerSecondsLeft--;
-
-    if (timerSecondsLeft <= 0) {
-      timerSecondsLeft = 0;
-      clearInterval(timerInterval);
-
-      // Süre doldu → normal fiyata geç
-      currentPrice = PRICE_NORMAL;
-      updatePriceLabels(PRICE_NORMAL);
-
-      if (countdown) countdown.textContent = '0:00';
-      if (bar) bar.style.width = '0%';
-      if (banner) {
-        banner.classList.add('expired');
-        const inner = banner.querySelector('.timer-inner');
-        if (inner) {
-          inner.innerHTML =
-            '<span>🔥</span>' +
-            '<span class="timer-label">Stoklar Tükenmek Üzere :</span>' +
-            '<span class="timer-label">Süre doldu →</span>' +
-            '<span class="timer-price-badge" style="background:#888;color:#fff;">821 TL</span>';
-        }
-      }
-      return;
-    }
-
-    if (countdown) countdown.textContent = formatTime(timerSecondsLeft);
-    const pct = (timerSecondsLeft / TIMER_TOTAL_SEC) * 100;
-    if (bar) bar.style.width = pct + '%';
-  }, 1000);
-}
+const PRICE_NORMAL = '821';
+let currentPrice   = PRICE_NORMAL;
 
 // =====================================================
 // DOM READY — TIMER + MENÜ + PAYMENT INIT
 // =====================================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 BASEMO Landing Page Loaded');
-
-    // Geri sayım sayacını başlat
-    startCountdownTimer();
 
     const navbarCollapse = document.getElementById('navbarNav');
     
@@ -191,7 +126,7 @@ async function handlePayment() {
                 phone:   customerPhone,
                 address: customerAddress,
                 city:    customerCity,
-                price:   currentPrice,   // 799 (timer aktifse) veya 821
+                price:   currentPrice,   // 821 TL sabit
             }),
         });
 
