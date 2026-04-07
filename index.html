@@ -119,9 +119,23 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 {
   "@context": "https://schema.org",
   "@type": "Product",
+  "@id": "https://www.haciyatmazkablo.com/#product",
   "name": "Hacıyatmaz Kablo Type-C 240W Premium Şarj Kablosu",
-  "image": "https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo1webp.webp",
-  "description": "240W Type-C to Type-C premium örgülü şarj kablosu. Dahili stand, 480 Mbps veri aktarımı (USB 2.0 uyumlu), 50.000+ bükülme testi.",
+  "description": "90 derece L tipi başlık, dahili stand, 48 telli örgü zırh ve 240W USB PD 3.1 destekli type c kablo. 50.000+ bükülme testi. 480 Mbps veri aktarımı.",
+  "url": "https://www.haciyatmazkablo.com/",
+  "image": [
+    "https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo1webp.webp",
+    "https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo8webp.webp"
+  ],
+  "sku": "HK-240W-LTYPE-001",
+  "brand": {"@type": "Brand", "name": "Hacıyatmaz Kablo"},
+  "manufacturer": {"@type": "Organization", "name": "Hacıyatmaz Kablo"},
+  "category": "Electronics > Cables > USB-C Cables",
+  "sameAs": [
+    "https://www.youtube.com/@Haciyatmazkablo",
+    "https://www.tiktok.com/@haciyatmazkablo",
+    "https://www.instagram.com/haci_yatmaz_kablo/"
+  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
@@ -129,82 +143,36 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     "bestRating": "5",
     "worstRating": "1"
   },
-  "brand": {
-    "@type": "Brand",
-    "name": "Hacıyatmaz Kablo"
-  },
-  "manufacturer": {
-    "@type": "Organization",
-    "name": "Hacıyatmaz Kablo"
-  },
-  "sameAs": [
-    "https://www.youtube.com/@Haciyatmazkablo",
-    "https://www.tiktok.com/@haciyatmazkablo",
-    "https://www.instagram.com/haci_yatmaz_kablo/"
-  ],
-  "hasMerchantReturnPolicy": {
-    "@type": "MerchantReturnPolicy",
-    "applicableCountry": "TR",
-    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-    "merchantReturnDays": 30,
-    "returnMethod": "https://schema.org/ReturnByMail",
-    "returnFees": "https://schema.org/FreeReturn"
-  },
-  "offers": [
-    {
-      "@type": "Offer",
-      "url": "https://www.haciyatmazkablo.com",
-      "price": "821",
-      "priceCurrency": "TRY",
-      "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2026-12-31",
-      "seller": {"@type": "Organization", "name": "Hacıyatmaz Kablo"},
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "applicableCountry": "TR",
-        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 30,
-        "returnMethod": "https://schema.org/ReturnByMail",
-        "returnFees": "https://schema.org/FreeReturn"
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.haciyatmazkablo.com/",
+    "price": "821",
+    "priceCurrency": "TRY",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "priceValidUntil": "2026-12-31",
+    "seller": {"@type": "Organization", "name": "Hacıyatmaz Kablo"},
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "TR",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 14,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "TRY"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "TR"
       }
-    },
-    {
-      "@type": "Offer",
-      "url": "https://www.hepsiburada.com/basemo-en-guclu-type-c-den-type-c-240watt-gucle-super-hizli-480mps-veri-aktarimi-hem-stant-hem-extra-dayanikli-sarj-kablosu-birarada-e-marker-pd-p-HBCV0000BTCZRI?magaza=Batu%20Depo",
-      "price": "821",
-      "priceCurrency": "TRY",
-      "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2026-12-31",
-      "seller": {"@type": "Organization", "name": "HepsiBurada"}
-    },
-    {
-      "@type": "Offer",
-      "url": "https://www.trendyol.com/basemo/en-guclu-type-c-den-type-c-ye-240w-480mbps-1-5-metre-hem-stand-hem-sarj-kablosu-p-1080438073?isRecoEnginePdpEnabled=false&merchantId=443670&filterOverPriceListings=false",
-      "price": "821",
-      "priceCurrency": "TRY",
-      "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2026-12-31",
-      "seller": {"@type": "Organization", "name": "Trendyol"}
-    },
-    {
-      "@type": "Offer",
-      "url": "https://www.n11.com/urun/type-c-acili-240w-sarj-kablosu-116755521?magaza=batu-medikal-depo",
-      "price": "821",
-      "priceCurrency": "TRY",
-      "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2026-12-31",
-      "seller": {"@type": "Organization", "name": "N11"}
-    },
-    {
-      "@type": "Offer",
-      "url": "https://www.pttavm.com/item-p-1427845396",
-      "price": "821",
-      "priceCurrency": "TRY",
-      "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2026-12-31",
-      "seller": {"@type": "Organization", "name": "PTTAVM"}
     }
-  ]
+  }
 }
 </script>
 
@@ -292,6 +260,46 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Kablo USB 2.0 standardında 480 Mbps veri aktarımı destekler. Bu kablo öncelikli olarak 240W yüksek güç şarj için tasarlanmıştır; veri transferi için USB 2.0 (480 Mbps) kapasitesi sunmaktadır."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Type-C kablo nedir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type-C, USB'nin daha yeni ve gelişmiş bir türüdür. 2014 civarında yaygınlaşmaya başladı. Tek tip, iki taraflı takılabilen, hem veri hem şarj işini daha hızlı ve pratik yapan bir bağlantı standardıdır."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "USB PD (Power Delivery) nedir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "USB Power Delivery (USB PD), Type-C kablolar üzerinden yüksek güçlü şarj yapılmasını sağlayan bir standarttır. USB PD 3.1 EPR ile 48V × 5A = 240W güce kadar çıkılabilir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "E-marker çip nedir ve neden önemlidir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "E-marker, kablonun içindeki küçük bir çiptir. Kablonun ne kadar güç ve veri taşıyabildiğini cihaza bildirir. 240W ve 5A üzeri şarj için e-marker çipli kablo zorunludur."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Oyun oynarken kablo neden rahatsız eder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Düz başlıklı kablolar elde baskı yapar ve oyun sırasında hareketi kısıtlar. 90 derece L tipi başlık, kabloyu yana yönlendirerek eli tamamen serbest bırakır. Dahili stand ile telefon dik durur, el hiç kabloya değmez."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "240W kablo telefonda güvenli mi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Evet, tamamen güvenli. 240W kablo kapasiteyi gösterir, zorla göndermez. iPhone 27W çekiyorsa kablo 27W iletir. E-marker çip, adaptör ve cihaz arasında güvenli güç müzakeresi yapar; fazla güç asla çekilmez."
       }
     }
   ]
@@ -2762,46 +2770,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 }
 </script>
 
-        <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "Type-C kablo nedir?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Type-C, USB'nin daha yeni ve gelişmiş bir türüdür. 2014 civarında yaygınlaşmaya başladı. Tek tip, iki taraflı takılabilen, hem veri hem şarj işini daha hızlı ve pratik yapan bir bağlantı standardıdır."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "USB PD (Power Delivery) nedir?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "USB Power Delivery (USB PD), Type-C kablolar üzerinden yüksek güçlü şarj yapılmasını sağlayan bir standarttır. USB PD 3.1 EPR ile 48V × 5A = 240W güce kadar çıkılabilir."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "E-marker çip nedir ve neden önemlidir?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "E-marker, kablonun içindeki küçük bir çiptir. Kablonun ne kadar güç ve veri taşıyabildiğini cihaza bildirir. 240W ve 5A üzeri şarj için e-marker çipli kablo zorunludur."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "240W Type-C kablo hangi cihazlarla uyumludur?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "240W Type-C kablolar MacBook Pro, Dell XPS, Lenovo ThinkPad, Samsung Galaxy S serisi, iPad Pro, Steam Deck ve USB-C destekli tüm modern cihazlarla uyumludur."
-            }
-        }
-    ]
-}
-</script>
+        <!-- FAQPage schema tek blokta head bölümünde tanımlandı -->
 
         <style>
             /* ═══ ARTICLE SECTION STYLES ═══ */
