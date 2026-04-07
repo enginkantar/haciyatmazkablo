@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasarım B — Clean Light Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Rubik', sans-serif; background: #FAFAF8; color: #111; overflow-x: hidden; }
+
+        /* ═══ TASARIM B: CLEAN LIGHT PREMIUM ═══
+           Kaynak: Minimal & Direct — ui-ux-pro-max
+           Karakteri: Açık arka plan, bol beyaz alan,
+           sade tipografi, ürün odağı, hızlı yükleme hissi.
+           Apple/Braun minimal product page estetiği.
+        ════════════════════════════════════════ */
+
+        /* Nav */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 64px; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 48px;
+            background: rgba(250,250,248,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .nav__logo {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 800; font-size: 1rem;
+            color: #111; letter-spacing: -0.5px;
+        }
+        .nav__cta {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 700; font-size: 0.85rem;
+            color: #fff; background: #111;
+            border: none; border-radius: 8px;
+            padding: 10px 20px; cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .nav__cta:hover { background: #222; transform: translateY(-1px); }
+
+        /* Hero */
+        .hero {
+            min-height: 100svh;
+            padding-top: 64px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 48px;
+            padding-right: 48px;
+            gap: 64px;
+        }
+
+        /* Copy */
+        .hero__copy { padding: 48px 0; }
+
+        /* Trust chip */
+        .trust-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50px;
+            padding: 6px 14px 6px 8px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 600;
+            color: #555;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .trust-chip__stars { color: #F59E0B; font-size: 0.85rem; letter-spacing: 0.5px; }
+
+        /* H1 — büyük, sade, net */
+        .hero__h1 {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            color: #111;
+            margin-bottom: 20px;
+        }
+        .hero__h1 .accent { color: #D97706; }
+
+        /* Alt başlık */
+        .hero__sub {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.05rem; line-height: 1.7;
+            color: #666;
+            max-width: 440px;
+            margin-bottom: 32px;
+        }
+
+        /* Benefit bullets — 3 max (Stitch: minimal single column) */
+        .hero__benefits {
+            list-style: none; padding: 0;
+            display: flex; flex-direction: column; gap: 12px;
+            margin-bottom: 36px;
+        }
+        .hero__benefits li {
+            display: flex; align-items: center; gap: 12px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.95rem; font-weight: 600; color: #333;
+        }
+        .benefit-icon {
+            width: 28px; height: 28px; flex-shrink: 0;
+            background: #FEF3C7;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #D97706;
+        }
+
+        /* Fiyat */
+        .hero__price-row {
+            display: flex; align-items: baseline; gap: 12px;
+            margin-bottom: 28px;
+        }
+        .hero__price {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 900; font-size: 2.6rem;
+            color: #111; line-height: 1;
+        }
+        .hero__price-sub {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.85rem; color: #888;
+        }
+
+        /* CTA'lar */
+        .hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .btn-primary {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            color: #fff; background: #111;
+            border: none; border-radius: 12px;
+            padding: 15px 28px;
+            display: inline-flex; align-items: center; gap: 10px;
+            cursor: pointer; text-decoration: none;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .btn-primary:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .btn-primary:active { transform: scale(0.98); }
+
+        .btn-secondary {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 600; font-size: 1rem;
+            color: #111;
+            background: #fff;
+            border: 1.5px solid rgba(0,0,0,0.15);
+            border-radius: 12px; padding: 14px 24px;
+            display: inline-flex; align-items: center; gap: 10px;
+            cursor: pointer; text-decoration: none;
+            transition: border-color 0.2s, transform 0.15s;
+        }
+        .btn-secondary:hover {
+            border-color: rgba(0,0,0,0.35);
+            transform: translateY(-1px);
+        }
+
+        /* Güven satırı */
+        .hero__trust {
+            display: flex; gap: 20px; flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .trust-item {
+            display: flex; align-items: center; gap: 6px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.78rem; color: #999;
+        }
+        .trust-item svg { color: #4ADE80; }
+
+        /* Görsel */
+        .hero__visual {
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Ürün görsel — yuvarlak kart, ince gölge */
+        .product-frame {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #f0efed;
+            box-shadow:
+                0 4px 6px rgba(0,0,0,0.04),
+                0 12px 40px rgba(0,0,0,0.08),
+                0 0 0 1px rgba(0,0,0,0.05);
+            aspect-ratio: 1 / 1.05;
+        }
+        .product-frame img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .product-frame:hover img { transform: scale(1.03); }
+
+        /* USP float card */
+        .usp-card {
+            position: absolute;
+            bottom: -16px; left: -24px;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
+            z-index: 5;
+            min-width: 200px;
+        }
+        .usp-card__badge {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #92400E;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 3px 8px; border-radius: 4px;
+            margin-bottom: 6px;
+        }
+        .usp-card__text {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 700; font-size: 0.9rem;
+            color: #111; line-height: 1.3;
+        }
+
+        /* Stat card */
+        .stat-card {
+            position: absolute;
+            top: 24px; right: -20px;
+            background: #111;
+            color: #fff;
+            border-radius: 14px;
+            padding: 14px 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            z-index: 5;
+            text-align: center;
+        }
+        .stat-card__num {
+            font-family: 'Rubik', sans-serif;
+            font-weight: 900; font-size: 1.6rem;
+            color: #F59E0B; line-height: 1;
+        }
+        .stat-card__label {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.7rem; color: rgba(255,255,255,0.5);
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px; padding: 40px 24px 60px;
+            }
+            .hero__visual { order: -1; }
+            .product-frame { aspect-ratio: 4/3; }
+            .usp-card { left: 16px; bottom: -12px; }
+            .stat-card { right: 16px; top: 16px; }
+        }
+        @media (max-width: 480px) {
+            .nav { padding: 0 20px; }
+            .hero__h1 { font-size: 2rem; }
+            .hero__ctas { flex-direction: column; }
+            .btn-primary, .btn-secondary { justify-content: center; }
+            .usp-card { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .product-frame img, .btn-primary, .btn-secondary,
+            .btn-brutal-primary { transition: none; }
+        }
+
+        /* Tasarım etiketi */
+        .design-label {
+            position: fixed; top: 16px; right: 16px;
+            background: #111; color: #fff;
+            font-family: 'Rubik', sans-serif; font-weight: 800;
+            font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 6px 14px; border-radius: 8px;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="design-label">Tasarım B — Clean Light</div>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="Ana navigasyon">
+    <div class="nav__logo">Hacıyatmaz Kablo</div>
+    <button class="nav__cta" aria-label="Hemen satın al">Hemen Al — 821 TL</button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+
+    <!-- SOL: Copy -->
+    <div class="hero__copy">
+
+        <div class="trust-chip">
+            <span class="trust-chip__stars" aria-hidden="true">★★★★★</span>
+            <span>127 değerlendirme · Trendyol &amp; Hepsiburada</span>
+        </div>
+
+        <h1 class="hero__h1">
+            Bir kablo.<br>
+            <span class="accent">Ömür boyu.</span>
+        </h1>
+
+        <p class="hero__sub">
+            Her ay kablo almak zorunda değilsin. 90° L tipi başlık,
+            48 telli örgü zırh — ve Türkiye'de hiçbir kabloda olmayan
+            dahili telefon standı.
+        </p>
+
+        <ul class="hero__benefits" role="list">
+            <li>
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                </span>
+                Dahili stand — hem şarj et, hem izle
+            </li>
+            <li>
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </span>
+                50.000+ bükülme testi — kopan kablo devri bitti
+            </li>
+            <li>
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </span>
+                240W hızlı şarj — laptop'ı, tableti, telefonu tek kabloyla
+            </li>
+        </ul>
+
+        <div class="hero__price-row">
+            <span class="hero__price" aria-label="Fiyat 821 Türk Lirası">821 TL</span>
+            <span class="hero__price-sub">Ücretsiz kargo · Kapıda ödeme</span>
+        </div>
+
+        <div class="hero__ctas">
+            <a href="#" class="btn-primary" role="button">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Hemen Satın Al
+            </a>
+            <a href="#" class="btn-secondary" role="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                WhatsApp ile Sipariş
+            </a>
+        </div>
+
+        <div class="hero__trust" role="list">
+            <div class="trust-item" role="listitem">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                2 yıl garanti
+            </div>
+            <div class="trust-item" role="listitem">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                15 gün iade
+            </div>
+            <div class="trust-item" role="listitem">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Taksit imkânı
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SAĞ: Ürün görseli -->
+    <div class="hero__visual">
+        <div class="product-frame">
+            <img
+                src="assets/basemo-cable-chrome/basemo8webp.webp"
+                alt="Hacıyatmaz Kablo Type-C 240W Premium Şarj Kablosu — Dahili Stand Özellikli"
+                loading="eager">
+        </div>
+
+        <div class="usp-card" role="note">
+            <span class="usp-card__badge">Türkiye'de ilk</span>
+            <p class="usp-card__text">Hem şarj kablosu,<br>hem telefon standı</p>
+        </div>
+
+        <div class="stat-card" role="note" aria-label="127 doğrulanmış değerlendirme, 5 yıldız">
+            <div class="stat-card__num">127</div>
+            <div class="stat-card__label">5★ Yorum</div>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

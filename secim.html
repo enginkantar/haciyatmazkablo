@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seçim — Buton & Logo Animasyonları</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Rubik', sans-serif; background: #0f0f0f; color: #fff; padding: 48px 24px; }
+  h2 { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #666; margin-bottom: 8px; }
+  h3 { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 32px; }
+  .section { max-width: 960px; margin: 0 auto 80px; }
+  .divider { border: none; border-top: 1px solid #222; margin: 0 auto 64px; max-width: 960px; }
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .option {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 40px 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .option-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #555; margin-top: 8px;
+  }
+  .preview-bg {
+    width: 100%; padding: 28px 20px;
+    background: #FAFAF8; border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .preview-bg.dark { background: #111; }
+
+  /* ═══════════════════════════════════════════
+     BUTON TASARIM 1 — Pressed 3D (Clay)
+     Karakteri: Sert alt gölge, tıklanınca içeri batar
+  ═══════════════════════════════════════════ */
+  .btn-3d-clay {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    color: #fff;
+    background: #111;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 28px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative;
+    /* 3D depth */
+    box-shadow:
+      0 6px 0 #000,
+      0 8px 16px rgba(0,0,0,0.4);
+    transform: translateY(0);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .btn-3d-clay:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 0 #000,
+      0 12px 20px rgba(0,0,0,0.45);
+  }
+  .btn-3d-clay:active {
+    transform: translateY(5px);
+    box-shadow:
+      0 1px 0 #000,
+      0 2px 6px rgba(0,0,0,0.3);
+  }
+  .btn-3d-clay.wa {
+    background: #fff;
+    color: #111;
+    border: 2px solid #111;
+    box-shadow:
+      0 6px 0 #111,
+      0 8px 16px rgba(0,0,0,0.15);
+  }
+  .btn-3d-clay.wa:hover {
+    box-shadow:
+      0 8px 0 #111,
+      0 12px 20px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+  }
+  .btn-3d-clay.wa:active {
+    transform: translateY(5px);
+    box-shadow: 0 1px 0 #111, 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  /* ═══════════════════════════════════════════
+     BUTON TASARIM 2 — Metallic Gold (Premium)
+     Karakteri: Altın metal doku, specular highlight,
+     perspective tilt on hover
+  ═══════════════════════════════════════════ */
+  .btn-3d-metal {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 0.95rem;
+    color: #1a0f00;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 28px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative;
+    background: linear-gradient(
+      160deg,
+      #FFE08A 0%,
+      #F59E0B 25%,
+      #D97706 50%,
+      #F59E0B 75%,
+      #FFE08A 100%
+    );
+    background-size: 200% 200%;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      inset 0 -2px 0 rgba(0,0,0,0.2),
+      0 4px 0 #92400E,
+      0 6px 20px rgba(245,158,11,0.4);
+    transform: perspective(600px) rotateX(0deg);
+    transition: all 0.15s ease;
+    animation: metalShift 4s ease infinite;
+  }
+  @keyframes metalShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .btn-3d-metal:hover {
+    transform: perspective(600px) rotateX(6deg) translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      inset 0 -2px 0 rgba(0,0,0,0.25),
+      0 6px 0 #92400E,
+      0 10px 28px rgba(245,158,11,0.55);
+  }
+  .btn-3d-metal:active {
+    transform: perspective(600px) rotateX(2deg) translateY(3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      0 1px 0 #92400E,
+      0 3px 10px rgba(245,158,11,0.3);
+  }
+  .btn-3d-metal.wa {
+    background: linear-gradient(160deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
+    color: #F59E0B;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      inset 0 -2px 0 rgba(0,0,0,0.4),
+      0 4px 0 #000,
+      0 6px 20px rgba(0,0,0,0.5);
+    animation: none;
+  }
+  .btn-3d-metal.wa:hover {
+    transform: perspective(600px) rotateX(6deg) translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 6px 0 #000,
+      0 10px 28px rgba(0,0,0,0.5);
+  }
+  .btn-3d-metal.wa:active {
+    transform: perspective(600px) rotateX(2deg) translateY(3px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 #000;
+  }
+
+  /* ═══════════════════════════════════════════
+     BUTON TASARIM 3 — Neon Glow (Cyber)
+     Karakteri: Koyu, neon kenarlık, glow pulse,
+     hover'da parlama patlar
+  ═══════════════════════════════════════════ */
+  .btn-3d-neon {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 0.95rem;
+    color: #fff;
+    background: #0a0a0a;
+    border: 1.5px solid rgba(245,158,11,0.6);
+    border-radius: 14px;
+    padding: 14px 28px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(245,158,11,0.15),
+      0 4px 20px rgba(245,158,11,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: all 0.2s ease;
+  }
+  .btn-3d-neon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, transparent 60%);
+    opacity: 1;
+    transition: opacity 0.2s;
+  }
+  .btn-3d-neon::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 50%; height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    transform: skewX(-20deg);
+    animation: neonSweep 3s ease-in-out infinite;
+  }
+  @keyframes neonSweep {
+    0%   { left: -60%; }
+    50%  { left: 130%; }
+    100% { left: 130%; }
+  }
+  .btn-3d-neon:hover {
+    border-color: #F59E0B;
+    box-shadow:
+      0 0 0 1px rgba(245,158,11,0.4),
+      0 0 20px rgba(245,158,11,0.35),
+      0 0 40px rgba(245,158,11,0.15),
+      0 8px 30px rgba(0,0,0,0.5),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+  .btn-3d-neon:active {
+    transform: translateY(1px);
+    box-shadow:
+      0 0 10px rgba(245,158,11,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .btn-3d-neon.wa {
+    border-color: rgba(255,255,255,0.2);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06),
+      0 4px 20px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .btn-3d-neon.wa::before {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+  }
+  .btn-3d-neon.wa:hover {
+    border-color: rgba(255,255,255,0.5);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.2),
+      0 0 20px rgba(255,255,255,0.1),
+      0 8px 30px rgba(0,0,0,0.5),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+
+  /* ═══════════════════════════════════════════
+     LOGO ANİMASYON 1 — Type-In Cursor
+     Karakteri: Her harf sırayla yazılır, cursor yanıp söner
+  ═══════════════════════════════════════════ */
+  .logo-typein {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    color: #111; letter-spacing: -0.5px;
+    display: inline-flex; align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .logo-typein .typed-text {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typeIn 1.8s steps(18, end) 0.3s forwards;
+  }
+  .logo-typein .cursor {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: #D97706;
+    margin-left: 2px;
+    animation: cursorBlink 1s step-end infinite;
+    border-radius: 1px;
+  }
+  @keyframes typeIn {
+    from { width: 0; }
+    to   { width: 200px; }
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* ═══════════════════════════════════════════
+     LOGO ANİMASYON 2 — Glitch Reveal
+     Karakteri: Açılışta 3 kez glitch, sonra sabit
+  ═══════════════════════════════════════════ */
+  .logo-glitch {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    color: #111; letter-spacing: -0.5px;
+    position: relative;
+    cursor: default;
+    animation: glitchIn 0.05s step-end 0.2s 3 alternate;
+  }
+  .logo-glitch::before,
+  .logo-glitch::after {
+    content: 'Hacıyatmaz Kablo';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+  .logo-glitch::before {
+    color: #F59E0B;
+    animation: glitchTop 3s infinite linear;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  }
+  .logo-glitch::after {
+    color: #3B82F6;
+    animation: glitchBot 3s infinite linear;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    opacity: 0.7;
+  }
+  @keyframes glitchTop {
+    0%,90%,100% { transform: translate(0); opacity: 0; }
+    91%          { transform: translate(-3px, -1px); opacity: 1; }
+    93%          { transform: translate(2px, 1px); opacity: 1; }
+    95%          { transform: translate(-1px, 0); opacity: 1; }
+    97%          { transform: translate(0); opacity: 0; }
+  }
+  @keyframes glitchBot {
+    0%,90%,100% { transform: translate(0); opacity: 0; }
+    92%          { transform: translate(3px, 1px); opacity: 1; }
+    94%          { transform: translate(-2px, -1px); opacity: 1; }
+    96%          { transform: translate(1px, 0); opacity: 1; }
+    98%          { transform: translate(0); opacity: 0; }
+  }
+  @keyframes glitchIn {
+    0%   { transform: translate(2px, 0); filter: hue-rotate(90deg); }
+    50%  { transform: translate(-2px, 0); filter: hue-rotate(-90deg); }
+    100% { transform: translate(0); filter: none; }
+  }
+
+  /* ═══════════════════════════════════════════
+     LOGO ANİMASYON 3 — Gold Shimmer
+     Karakteri: Metin üzerinde sağa kayan altın parıltı
+     tıklandığında/hover'da tekrar tetiklenir
+  ═══════════════════════════════════════════ */
+  .logo-shimmer {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+    color: #111;
+    background: linear-gradient(
+      90deg,
+      #111 0%,
+      #111 35%,
+      #D97706 48%,
+      #FFE08A 52%,
+      #D97706 56%,
+      #111 65%,
+      #111 100%
+    );
+    background-size: 250% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmerSlide 3s ease infinite;
+  }
+  @keyframes shimmerSlide {
+    0%   { background-position: 150% center; }
+    50%  { background-position: -50% center; }
+    100% { background-position: -50% center; }
+  }
+  .logo-shimmer:hover { animation: shimmerFast 0.8s ease forwards; }
+  @keyframes shimmerFast {
+    0%   { background-position: 150% center; }
+    100% { background-position: -50% center; }
+  }
+
+  /* Nav mock */
+  .nav-mock {
+    width: 100%; padding: 16px 24px;
+    background: rgba(250,250,248,0.95);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+  }
+  .nav-mock .nav-links {
+    display: flex; gap: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 600; color: #888;
+  }
+  .nav-mock .nav-cta {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700; font-size: 0.78rem;
+    background: #111; color: #fff;
+    border: none; border-radius: 7px;
+    padding: 7px 14px; cursor: pointer;
+  }
+
+  /* Section labels */
+  .badge {
+    display: inline-block;
+    background: #F59E0B22;
+    color: #F59E0B;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ BÖLÜM 1: BUTON TASARIMLARI ═══ -->
+<div class="section">
+  <h2>Bölüm 1</h2>
+  <h3>3D Buton Seçenekleri — "Hemen Satın Al" &amp; "WhatsApp ile Sipariş"</h3>
+
+  <div class="options">
+
+    <!-- Buton A -->
+    <div class="option">
+      <span class="badge">Tasarım A</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Pressed 3D Clay</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          Sert alt gölge. Tıklanınca içeri batar.<br>
+          Sade, cesur, güvenilir. Apple-ish.
+        </div>
+      </div>
+      <div class="preview-bg">
+        <button class="btn-3d-clay">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          Hemen Satın Al
+        </button>
+        <button class="btn-3d-clay wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ile Sipariş
+        </button>
+      </div>
+      <span class="option-label">A — Pressed Clay</span>
+    </div>
+
+    <!-- Buton B -->
+    <div class="option">
+      <span class="badge">Tasarım B</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Metallic Gold Premium</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          Animasyonlu altın metal doku, specular highlight.<br>
+          Premium, jewelry feel. Hover'da 3D tilt.
+        </div>
+      </div>
+      <div class="preview-bg">
+        <button class="btn-3d-metal">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          Hemen Satın Al
+        </button>
+        <button class="btn-3d-metal wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ile Sipariş
+        </button>
+      </div>
+      <span class="option-label">B — Metallic Gold</span>
+    </div>
+
+    <!-- Buton C -->
+    <div class="option">
+      <span class="badge">Tasarım C</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Neon Glow Cyber</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          Amber neon kenarlık, sweep animasyonu.<br>
+          Hover'da glow patlar. Dark-mode native.
+        </div>
+      </div>
+      <div class="preview-bg dark">
+        <button class="btn-3d-neon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          Hemen Satın Al
+        </button>
+        <button class="btn-3d-neon wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ile Sipariş
+        </button>
+      </div>
+      <span class="option-label">C — Neon Glow</span>
+    </div>
+
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══ BÖLÜM 2: LOGO ANİMASYONLARI ═══ -->
+<div class="section">
+  <h2>Bölüm 2</h2>
+  <h3>Logo Animasyon Seçenekleri — "Hacıyatmaz Kablo" (Nav sol üst)</h3>
+
+  <div class="options">
+
+    <!-- Logo 1 -->
+    <div class="option">
+      <span class="badge">Logo 1</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Type-In Cursor</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          Sayfa açılışta yazıyormuş gibi harf harf gelir.<br>
+          Amber cursor yanıp söner. Minimal, tech, güven verir.
+        </div>
+      </div>
+      <div class="nav-mock">
+        <a href="#" style="text-decoration:none" onclick="restartTypein(event)">
+          <span class="logo-typein" id="typein1">
+            <span class="typed-text">Hacıyatmaz Kablo</span><span class="cursor"></span>
+          </span>
+        </a>
+        <div class="nav-links"><span>Özellikler</span><span>SSS</span></div>
+        <button class="nav-cta">Hemen Al</button>
+      </div>
+      <div style="font-family:'Nunito Sans';font-size:0.68rem;color:#444;text-align:center">
+        👆 Logo'ya tıkla → animasyonu yeniden başlat
+      </div>
+      <span class="option-label">1 — Type-In</span>
+    </div>
+
+    <!-- Logo 2 -->
+    <div class="option">
+      <span class="badge">Logo 2</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Glitch Pulse</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          3 saniyede bir kısa glitch etkisi.<br>
+          Amber + mavi kaydırma. Tech/güç hissi.
+        </div>
+      </div>
+      <div class="nav-mock">
+        <a href="#" style="text-decoration:none">
+          <span class="logo-glitch">Hacıyatmaz Kablo</span>
+        </a>
+        <div class="nav-links"><span>Özellikler</span><span>SSS</span></div>
+        <button class="nav-cta">Hemen Al</button>
+      </div>
+      <div style="font-family:'Nunito Sans';font-size:0.68rem;color:#444;text-align:center">
+        👀 3 saniye bekle → glitch görürsün
+      </div>
+      <span class="option-label">2 — Glitch Pulse</span>
+    </div>
+
+    <!-- Logo 3 -->
+    <div class="option">
+      <span class="badge">Logo 3</span>
+      <div style="text-align:center">
+        <div style="font-family:'Nunito Sans';font-size:0.72rem;color:#888;margin-bottom:6px;">Gold Shimmer</div>
+        <div style="font-size:0.65rem;color:#555;max-width:200px;line-height:1.5;">
+          Metin üzerinde altın parıltı sürekli kayar.<br>
+          Hover'da hızlanır. Lüks, premium, güvenilir.
+        </div>
+      </div>
+      <div class="nav-mock">
+        <a href="#" style="text-decoration:none">
+          <span class="logo-shimmer">Hacıyatmaz Kablo</span>
+        </a>
+        <div class="nav-links"><span>Özellikler</span><span>SSS</span></div>
+        <button class="nav-cta">Hemen Al</button>
+      </div>
+      <div style="font-family:'Nunito Sans';font-size:0.68rem;color:#444;text-align:center">
+        🖱️ Üzerine gel → parıltı hızlanır
+      </div>
+      <span class="option-label">3 — Gold Shimmer</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function restartTypein(e) {
+  e.preventDefault();
+  const el = document.querySelector('.logo-typein .typed-text');
+  el.style.animation = 'none';
+  el.offsetWidth; // reflow
+  el.style.animation = '';
+}
+</script>
+</body>
+</html>

@@ -176,6 +176,100 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Kablo Rehber Ana Sayfa -->
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Kablo Sayfaları -->
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/apple-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/iphone-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/samsung-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/hizli-sarj-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/type-c-kablo-fiyat/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/2-metre-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/kablo/3-metre-type-c-kablo/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Yeni Rehber Makaleleri -->
+  <url>
+    <loc>https://www.haciyatmazkablo.com/rehber/gece-sarj-zararli-mi/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/rehber/usb-c-lightning-fark/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/rehber/hizli-sarj-teknolojileri/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/rehber/type-c-kablo-nedir/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.haciyatmazkablo.com/rehber/type-c-kablo-renkleri/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Kullanım Senaryoları Sayfaları -->
   <url>
     <loc>https://www.haciyatmazkablo.com/kullanim/oyun-oynarken-sarj-kablosu/</loc>

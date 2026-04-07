@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Hızlı Şarj Teknolojileri: USB PD, Qualcomm QC, GaN Nedir?",
+      "description": "USB Power Delivery, Qualcomm Quick Charge, GaN adaptör teknolojileri ve 240W EPR farkları. Hangi hızlı şarj standardı hangi cihaz için doğru?",
+      "author": {"@type": "Organization", "name": "Hacıyatmaz Kablo Teknik Ekibi"},
+      "publisher": {"@type": "Organization", "name": "Hacıyatmaz Kablo", "logo": {"@type": "ImageObject", "url": "https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/logo.png"}},
+      "datePublished": "2026-04-07",
+      "dateModified": "2026-04-07",
+      "mainEntityOfPage": "https://www.haciyatmazkablo.com/rehber/hizli-sarj-teknolojileri/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "USB PD ile Qualcomm Quick Charge arasındaki fark nedir?",
+          "acceptedAnswer": {"@type": "Answer", "text": "USB PD (Power Delivery) evrensel bir standarttır, tüm USB-C cihazlarla çalışır. Qualcomm Quick Charge ise Qualcomm yonga seti kullanan Android cihazlara özeldir. iPhone ve MacBook USB PD kullanır, QC desteklemez."}
+        },
+        {
+          "@type": "Question",
+          "name": "GaN adaptör neden daha küçük ama daha güçlü?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Geleneksel adaptörler silikon (Si) transistör kullanır. Galyum Nitrür (GaN) transistörleri çok daha yüksek voltaj ve frekansla çalışabildiğinden daha az ısı üretir, daha küçük bileşenler kullanılır. Sonuç: aynı güçte %40-60 daha küçük adaptör."}
+        },
+        {
+          "@type": "Question",
+          "name": "Hızlı şarj için kablo da önemli mi?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Evet, kritik öneme sahiptir. 100W üzeri şarj için e-marker çipli kablo zorunludur. Çipsiz kablo, 100W üzeri şarjı bloke eder ve akımı 3A ile sınırlar. 240W EPR şarj için ise hem adaptör hem kablonun USB PD 3.1 EPR desteklemesi gerekir."}
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.haciyatmazkablo.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Rehber", "item": "https://www.haciyatmazkablo.com/rehber/"},
+        {"@type": "ListItem", "position": 3, "name": "Hızlı Şarj Teknolojileri", "item": "https://www.haciyatmazkablo.com/rehber/hizli-sarj-teknolojileri/"}
+      ]
+    }
+  ]
+}
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı Şarj Teknolojileri: PD, QC, GaN Nedir? | 2026 Rehber</title>
+    <meta name="description" content="USB PD, Qualcomm Quick Charge, GaN adaptör ve 240W EPR farkları. Hangi hızlı şarj standardı hangi cihaz için? Teknik karşılaştırma rehberi.">
+    <link rel="canonical" href="https://www.haciyatmazkablo.com/rehber/hizli-sarj-teknolojileri/" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-P3NZRVXV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'GT-P3NZRVXV');
+    </script>
+    <style>
+        body {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fafafa; margin: 0; padding: 0;}
+        .breadcrumb-nav {background: #fff; padding: 12px 0; border-bottom: 1px solid #eee;}
+        .breadcrumb {margin: 0; background: transparent; padding: 0;}
+        .breadcrumb-item a {color: #666; text-decoration: none;}
+        .breadcrumb-item a:hover {color: #ffc107;}
+        .breadcrumb-item.active {color: #1a1a1a;}
+        .article-section {background: #ffffff; padding: 60px 0;}
+        .article-container {max-width: 800px; margin: 0 auto; padding: 0 20px;}
+        .article-badge {display: inline-block; background: #fce4ec; color: #c62828; font-size: 0.75rem; font-weight: 700; padding: 8px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;}
+        .article-section h1 {font-size: 2.5rem; font-weight: 900; color: #1a1a1a; line-height: 1.3; margin-bottom: 12px;}
+        .article-meta {color: #999; font-size: 0.85rem; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #eee;}
+        .article-section h2 {font-size: 1.8rem; font-weight: 800; color: #1a1a1a; margin-top: 48px; margin-bottom: 20px;}
+        .article-section p {color: #444; font-size: 1.05rem; line-height: 1.85; margin-bottom: 20px;}
+        .article-section strong {color: #1a1a1a; font-weight: 700;}
+        .article-section ul {color: #444; font-size: 1.05rem; line-height: 1.85; margin-bottom: 20px; padding-left: 24px;}
+        .article-section li {margin-bottom: 12px;}
+        .highlight-box {background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-left: 4px solid #ffc107; border-radius: 8px; padding: 24px 28px; margin: 28px 0; color: #fff;}
+        .highlight-box p {color: rgba(255, 255, 255, 0.9); margin: 0;}
+        .highlight-box strong {color: #ffc107;}
+        .answer-box {background: #fffde7; border-left: 4px solid #ffc107; border-radius: 8px; padding: 20px 24px; margin: 24px 0;}
+        .answer-box p {margin: 0; color: #1a1a1a; font-size: 1.05rem;}
+        .power-table {width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.95rem; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);}
+        .power-table thead {background: #1a1a1a; color: #ffc107;}
+        .power-table th {padding: 14px 16px; text-align: left; font-weight: 700;}
+        .power-table td {padding: 12px 16px; border-bottom: 1px solid #eee; color: #333; background: #fff;}
+        .power-table tbody tr:hover {background: #fffde7;}
+        .power-highlight {background: #e8f5e9 !important; font-weight: 600;}
+        .article-cta {margin-top: 48px; padding: 40px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; text-align: center;}
+        .article-cta h2 {color: #fff; margin-top: 0; margin-bottom: 16px;}
+        .article-cta ul {list-style: none; padding: 0; margin: 24px 0; color: rgba(255,255,255,0.9); text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;}
+        .article-cta li {padding: 8px 0; padding-left: 28px; position: relative;}
+        .article-cta li::before {content: "✓"; position: absolute; left: 0; color: #ffc107; font-weight: bold; font-size: 1.2rem;}
+        .btn-cta {display: inline-block; background: #ffc107; color: #1a1a1a; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; text-decoration: none; transition: all 0.3s ease; margin-top: 16px;}
+        .btn-cta:hover {background: #ffca28; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,193,7,0.4); color: #1a1a1a;}
+        .related-articles {background: #f9f9f9; border-radius: 12px; padding: 32px; margin-top: 48px;}
+        .related-articles h3 {margin-top: 0; font-size: 1.4rem; color: #1a1a1a; margin-bottom: 20px;}
+        .related-articles ul {list-style: none; padding: 0; margin: 0;}
+        .related-articles li {margin-bottom: 12px;}
+        .related-articles a {color: #1a1a1a; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease;}
+        .related-articles a:hover {color: #ffc107;}
+        .related-articles a::before {content: "→"; color: #ffc107; font-weight: bold;}
+        .footer-section {background: #0b0b0b; padding: 40px 0; text-align: center;}
+        .footer-section p {color: rgba(255,255,255,0.6); margin: 0; font-size: 0.9rem;}
+        .footer-section a {color: #ffc107; text-decoration: none;}
+        @media (max-width: 768px) {
+            .article-section h1 {font-size: 1.8rem;}
+            .article-section h2 {font-size: 1.4rem;}
+            .article-cta {padding: 24px;}
+        }
+    </style>
+</head>
+<body>
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                <li class="breadcrumb-item"><a href="/rehber/">Rehber</a></li>
+                <li class="breadcrumb-item active">Hızlı Şarj Teknolojileri</li>
+            </ol>
+        </div>
+    </nav>
+    <section class="article-section">
+        <article class="article-container">
+            <span class="article-badge">⚡ Şarj Teknolojileri</span>
+            <h1>Hızlı Şarj Teknolojileri: USB PD, QC, GaN Nedir?</h1>
+            <div class="article-meta">Hacıyatmaz Kablo Teknik Ekibi &bull; Yayın: 7 Nisan 2026 &bull; <strong>Son Güncelleme: 7 Nisan 2026</strong> &bull; 7 dk okuma</div>
+
+            <div class="answer-box">
+                <p><strong>📋 Kısa Yanıt:</strong> Hızlı şarj üç ana teknoloji üzerinde çalışır: <strong>USB PD</strong> (evrensel, Apple + Android), <strong>Qualcomm QC</strong> (Qualcomm çipli Android'e özel), <strong>GaN</strong> (adaptör teknolojisi, daha küçük ve daha az ısınan). Kablo ise bu sistemin görünmez halkası — yanlış kablo hızlı şarjı %60 yavaşlatır.</p>
+            </div>
+
+            <h2>🚨 "Hızlı Şarj Adaptörüm Var Ama Neden Yavaş Şarj Ediyor?"</h2>
+            <p>65W adaptör aldınız, beklediğiniz hız gelmiyor. Ya da Samsung telefon ile MacBook adaptörünü deniyorsunuz, çalışıyor ama yavaş. Sorun adaptörde değil: <strong>şarj hızını belirleyen 3 faktör var</strong> ve biri eksikse sistem en düşük değerde çalışır.</p>
+            <p>Bu üç faktör: <strong>adaptör standardı + kablo kapasitesi + cihaz desteği.</strong> Biri eksikse sistem en zayıf halkaya göre çalışır.</p>
+
+            <h2>⚡ USB Power Delivery (USB PD) Nedir?</h2>
+            <p><strong>USB PD</strong>, USB-IF tarafından belirlenen evrensel güç iletim protokolüdür. Apple, Samsung, Google, Lenovo — hepsi USB PD'yi destekler. Bu yüzden "evrensel hızlı şarj" denince USB PD kastedilir.</p>
+            <ul>
+                <li><strong>USB PD 2.0:</strong> Maksimum 100W (20V × 5A)</li>
+                <li><strong>USB PD 3.0:</strong> Programlanabilir Güç Kaynağı (PPS) — daha verimli voltaj ayarı</li>
+                <li><strong>USB PD 3.1 EPR:</strong> Maksimum 240W (48V × 5A) — gaming laptop ve monitör seviyesi</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>💡 iPhone ve USB PD:</strong> iPhone 12'den itibaren USB PD destekliyor. 20W adaptör + USB-C kablo kombinasyonu iPhone'u yaklaşık 50 dakikada %80'e dolduruyor. Eski 5W adaptöre göre 3 kat daha hızlı.</p>
+            </div>
+
+            <h2>🟠 Qualcomm Quick Charge (QC) Nedir?</h2>
+            <p><strong>Qualcomm Quick Charge</strong>, Snapdragon yonga seti kullanan Android cihazlara özel bir protokoldür. Samsung Galaxy, Xiaomi, OnePlus, ASUS gibi markalar QC kullanır.</p>
+            <ul>
+                <li><strong>QC 2.0:</strong> 18W</li>
+                <li><strong>QC 3.0:</strong> 18W (daha verimli voltaj ayarı)</li>
+                <li><strong>QC 4+:</strong> 27W, USB PD ile de uyumlu</li>
+                <li><strong>QC 5.0:</strong> 100W, çok az cihazda mevcut</li>
+            </ul>
+            <p><strong>Önemli not:</strong> iPhone, QC desteklemez. QC adaptörü iPhone'a taksanız USB PD üzerinden standart hızda şarj alırsınız. QC bonus olarak çalışmaz — cihaz desteklemiyorsa fark etmez.</p>
+
+            <h2>🔵 GaN Adaptör Nedir? Neden Önemli?</h2>
+            <p><strong>GaN (Galyum Nitrür)</strong>, geleneksel silikon transistörler yerine kullanılan yeni nesil yarı iletken malzemedir. Adaptörün şarj teknolojisini değil, <strong>adaptörün fiziksel tasarımını</strong> etkiler.</p>
+            <ul>
+                <li><strong>Daha küçük boyut:</strong> Aynı güçte geleneksel adaptöre göre %40-60 daha kompakt</li>
+                <li><strong>Daha az ısınma:</strong> Yüksek frekansta çalışarak enerji kaybı azalır</li>
+                <li><strong>Daha yüksek verimlilik:</strong> %90+ verimlilik (geleneksel Si'de %80-85)</li>
+                <li><strong>Çoklu port:</strong> 100W GaN adaptör genellikle 2-4 port sunar, her port eş zamanlı güç paylaşır</li>
+            </ul>
+
+            <table class="power-table">
+                <thead>
+                    <tr><th>Teknoloji</th><th>Maksimum Güç</th><th>Uyumluluk</th><th>Kablo Gereksinimi</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>USB PD 2.0/3.0</strong></td><td>100W</td><td>Evrensel (Apple + Android)</td><td>E-marker çip (60W+)</td></tr>
+                    <tr class="power-highlight"><td><strong>USB PD 3.1 EPR</strong></td><td>240W</td><td>Gaming laptop, monitör</td><td>EPR e-marker çip (zorunlu)</td></tr>
+                    <tr><td><strong>Qualcomm QC 4+</strong></td><td>27W</td><td>Snapdragon Android</td><td>Standart USB-C</td></tr>
+                    <tr><td><strong>Samsung 45W</strong></td><td>45W</td><td>Galaxy S serisi</td><td>USB-C (PD uyumlu)</td></tr>
+                    <tr><td><strong>Apple MagSafe 140W</strong></td><td>140W</td><td>MacBook Pro 14"/16"</td><td>EPR e-marker çip</td></tr>
+                </tbody>
+            </table>
+
+            <h2>🔌 Kablo Hızlı Şarjı Nasıl Etkiler?</h2>
+            <p>Adaptör 240W desteklese bile yanlış kablo hızı düşürür. Kablo, güç iletim sisteminin en çok göz ardı edilen parçasıdır.</p>
+            <ul>
+                <li><strong>60W altı şarj:</strong> Standart USB-C kablo yeterli — e-marker çip gerekmez</li>
+                <li><strong>60W-100W şarj:</strong> E-marker çipli kablo zorunlu — çipsiz kablo 3A ile sınırlar</li>
+                <li><strong>100W-240W şarj:</strong> EPR e-marker çipli kablo zorunlu — yoksa cihaz 100W'a düşer</li>
+                <li><strong>Tel kalitesi:</strong> Düşük AWG (kalın tel) daha az direnç = daha az ısınma = verimli iletim</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>⚠️ Pratik Test:</strong> 100W adaptörünüz varsa ve telefon 12W alıyorsa ilk bakacağınız yer kablo. E-marker çipsiz "240W" yazan ama gerçekte çipsiz olan kabloların piyasada çok fazla örneği var. E-marker çip varlığını doğrulamak için USB-IF'in TID (Transaction ID) sorgusunu kullanın.</p>
+            </div>
+
+            <h2>❓ Sık Sorulan Sorular</h2>
+
+            <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;margin-bottom:12px">
+                <div style="background:#f8f9fa;padding:16px 20px;font-weight:700;color:#1a1a1a;font-size:1rem">USB PD ile Qualcomm Quick Charge arasındaki fark nedir?</div>
+                <div style="padding:16px 20px;color:#444;font-size:.97rem">USB PD evrensel bir standarttır, tüm USB-C cihazlarla çalışır. Qualcomm Quick Charge ise Qualcomm yonga seti kullanan Android cihazlara özeldir. iPhone ve MacBook USB PD kullanır, QC desteklemez.</div>
+            </div>
+
+            <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;margin-bottom:12px">
+                <div style="background:#f8f9fa;padding:16px 20px;font-weight:700;color:#1a1a1a;font-size:1rem">GaN adaptör neden daha küçük ama daha güçlü?</div>
+                <div style="padding:16px 20px;color:#444;font-size:.97rem">Geleneksel adaptörler silikon transistör kullanır. Galyum Nitrür (GaN) transistörleri çok daha yüksek voltaj ve frekansla çalışabildiğinden daha az ısı üretir, daha küçük bileşenler kullanılır. Sonuç: aynı güçte %40-60 daha küçük adaptör.</div>
+            </div>
+
+            <div style="border:1px solid #eee;border-radius:8px;overflow:hidden;margin-bottom:32px">
+                <div style="background:#f8f9fa;padding:16px 20px;font-weight:700;color:#1a1a1a;font-size:1rem">Hızlı şarj için kablo da önemli mi?</div>
+                <div style="padding:16px 20px;color:#444;font-size:.97rem">Evet, kritik öneme sahiptir. 100W üzeri şarj için e-marker çipli kablo zorunludur. Çipsiz kablo, 100W üzeri şarjı bloke eder ve akımı 3A ile sınırlar. 240W EPR şarj için ise hem adaptör hem kablonun USB PD 3.1 EPR desteklemesi gerekir.</div>
+            </div>
+
+            <p style="color:#666;font-size:0.95rem;font-style:italic">USB PD standartları için bağımsız kaynak: <a href="https://www.usb.org/usb-charger-pd" target="_blank" rel="noopener" style="color:#d97706">USB-IF — USB Power Delivery resmi standart sayfası</a></p>
+
+            <p style="color:#555;font-size:1rem;margin-top:28px">Hızlı şarj sisteminin üç halkası var: adaptör, kablo, cihaz. Adaptöre yatırım yapıp kabloda tasarruf etmek sistemin en zayıf halkasını kablo yapar. Doğru kablo seçimi, pahalı adaptörünüzün kapasitesini gerçekten kullanabilmenizi sağlar.</p>
+
+            <div class="article-cta">
+                <h2>⚡ Hızlı Şarjın Eksik Halkası: Doğru Kablo</h2>
+                <p style="color: rgba(255,255,255,0.8);">240W EPR e-marker çipli, gerçek hızlı şarj kablosu:</p>
+                <ul>
+                    <li>USB PD 3.1 EPR e-marker çip (240W / 48V × 5A)</li>
+                    <li>QC, PD, GaN adaptörlerle tam uyumlu</li>
+                    <li>480 Mbps veri aktarımı (USB 2.0)</li>
+                    <li>48 telli örgü zırh — yüksek akım ısı yönetimi</li>
+                    <li>50,000+ bükülme dayanıklılık testi</li>
+                </ul>
+                <a href="/" class="btn-cta">Ürünü İncele — 821 TL</a>
+            </div>
+
+            <aside class="related-articles">
+                <h3>📚 İlgili Rehberler</h3>
+                <ul>
+                    <li><a href="/rehber/240w-sarj-nedir/">240W Şarj Nedir? USB PD 3.1 EPR Detaylı Açıklama</a></li>
+                    <li><a href="/rehber/e-marker-cip-nedir/">E-Marker Çip Nedir? 100W+ Şarj için Zorunlu Teknoloji</a></li>
+                    <li><a href="/rehber/usb-c-lightning-fark/">USB-C mi Lightning mi? iPhone 15+ Geçiş Rehberi</a></li>
+                    <li><a href="/cihazlar/macbook-pro-240w-kablo/">MacBook Pro 240W Kablo — 140W gereksinimi</a></li>
+                    <li><a href="/cihazlar/asus-rog-sarj-kablosu/">ASUS ROG Şarj Kablosu — Gaming laptop hızlı şarj</a></li>
+                    <li><a href="/rehber/">Tüm Rehberlere Dön</a></li>
+                </ul>
+            </aside>
+        </article>
+    </section>
+    <footer class="footer-section">
+        <div class="container">
+            <p>© 2026 <a href="/">Hacıyatmaz Kablo</a> | <a href="/gizlilik-politikasi.html">Gizlilik Politikası</a> | <a href="/mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a></p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
