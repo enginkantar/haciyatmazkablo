@@ -1,0 +1,6 @@
+# HTTP → HTTPS (Cloudflare Pages otomatik yapar ama eksplisit olarak da belirtelim)
+http://haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
+http://www.haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
+
+# www olmadan gelenleri www'ya yönlendir
+https://haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
