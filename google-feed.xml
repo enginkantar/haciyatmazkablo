@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
-    <channel>
-        <title>Hacıyatmaz Kablo</title>
-        <link>https://www.haciyatmazkablo.com</link>
-        <description>BASEMO Premium Type-C Kablolar</description>
-
-        <item>
-            <g:id>BASEMO-240W-TYPEC-1.5M</g:id>
-            <title>BASEMO 240W Type-C to Type-C Kablo USB4 40Gbps 8K E-Mark Çipli Örgülü 1.5 mt</title>
-            <description>BASEMO 240W USB PD 3.1 EPR Type-C to Type-C hızlı şarj ve veri kablosu.
-                40Gbps veri aktarımı, 8K@60Hz video çıkışı, E-Mark akıllı çip, örgülü dayanıklı
-                yapı, 1.5 mt uzunluk. MacBook Pro, Samsung Galaxy, iPad Pro, Steam Deck, Dell XPS
-                ve tüm USB-C cihazlarla uyumlu. 2 yıl garanti, 15 gün para iade, ücretsiz kargo.</description>
-            <link>https://www.haciyatmazkablo.com</link>
-            <g:image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo9webp800x800.webp</g:image_link>
-            <g:additional_image_link>
-                https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo3webp800x800.webp</g:additional_image_link>
-            <g:availability>in_stock</g:availability>
-            <g:price>821.00 TRY</g:price>
-            <g:brand>BASEMO</g:brand>
-            <g:condition>new</g:condition>
-            <g:google_product_category>267</g:google_product_category>
-            <g:product_type>Elektronik > Kablolar > USB Kabloları > Type-C Kablo</g:product_type>
-            <g:shipping>
-                <g:country>TR</g:country>
-                <g:price>0.00 TRY</g:price>
-            </g:shipping>
-            <g:return_policy_label>15_gun_iade</g:return_policy_label>
-            <g:color>Siyah</g:color>
-            <g:material>Örgülü Naylon</g:material>
-            <g:product_length>200 cm</g:product_length>
-            <g:product_highlight>240W USB PD 3.1 EPR hızlı şarj desteği</g:product_highlight>
-            <g:product_highlight>40Gbps USB4 veri aktarım hızı</g:product_highlight>
-            <g:product_highlight>8K@60Hz video çıkışı desteği</g:product_highlight>
-            <g:product_highlight>E-Mark akıllı çip teknolojisi</g:product_highlight>
-            <g:product_highlight>2 yıl garanti ve 15 gün para iade</g:product_highlight>
-        </item>
-
-    </channel>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+<channel>
+<title>Hacıyatmaz Kablo</title>
+<link>https://www.haciyatmazkablo.com</link>
+<description>BASEMO Premium Type-C Kablolar — 240W Hızlı Şarj, Gizli Stand, Türkiye'nin İlk Dahili Stand Özellikli Kablosu</description>
+<item>
+<g:id>BASEMO-240W-TYPEC-15M</g:id>
+<title>Basemo 240W Type-C Şarj Kablosu Gizli Stand 90° Dirsek E-Marker PD 3.1 1.5m</title>
+<description>Basemo 240W Type-C to Type-C şarj ve veri kablosu. E-Marker PD 3.1 çipli, 240W ultra hızlı şarj, 480 Mbps veri aktarımı. Dahili gizli telefon standı ve 90° L tipi dirsek tasarımı ile Türkiye'nin ilk stand özellikli kablosu. 48 telli naylon örgü gövde, çinko alaşım başlıklar, 50.000+ bükülme testi. iPhone 15/16, Samsung Galaxy S24/S25, MacBook Pro/Air, iPad Pro, Steam Deck ve tüm Type-C cihazlarla uyumlu. 1.5 metre ideal uzunluk. 2 yıl garanti, 15 gün para iade, ücretsiz aynı gün kargo, kapıda ödeme imkanı.</description>
+<link>https://www.haciyatmazkablo.com/</link>
+<g:image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo9webp800x800.webp</g:image_link>
+<g:additional_image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo3webp800x800.webp</g:additional_image_link>
+<g:additional_image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo8webp.webp</g:additional_image_link>
+<g:additional_image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo2webp.webp</g:additional_image_link>
+<g:additional_image_link>https://www.haciyatmazkablo.com/assets/basemo-cable-chrome/basemo4webp.webp</g:additional_image_link>
+<g:availability>in_stock</g:availability>
+<g:price>821.00 TRY</g:price>
+<g:brand>Basemo</g:brand>
+<g:condition>new</g:condition>
+<g:identifier_exists>no</g:identifier_exists>
+<g:google_product_category>7221</g:google_product_category>
+<g:product_type>Elektronik > Kablolar > USB Kabloları > Type-C Kablo</g:product_type>
+<g:shipping>
+<g:country>TR</g:country>
+<g:service>Standart Kargo</g:service>
+<g:price>0.00 TRY</g:price>
+</g:shipping>
+<g:shipping_weight>50 g</g:shipping_weight>
+<g:color>Siyah</g:color>
+<g:material>Naylon Örgü + Çinko Alaşım</g:material>
+<g:size>1.5 metre</g:size>
+<g:product_highlight>240W USB PD 3.1 E-Marker ultra hızlı şarj</g:product_highlight>
+<g:product_highlight>360° dönebilen gizli telefon standı</g:product_highlight>
+<g:product_highlight>90° L tipi dirsek tasarımı - oyun ve video konforu</g:product_highlight>
+<g:product_highlight>48 telli naylon örgü - 50.000+ bükülme testi</g:product_highlight>
+<g:product_highlight>480 Mbps veri aktarım hızı</g:product_highlight>
+<g:product_highlight>2 yıl garanti ve 15 gün para iade</g:product_highlight>
+</item>
+</channel>
 </rss>
