@@ -1,5 +1,5 @@
 // =====================================================
-// BASEMO TYPE-C 240W - JAVASCRIPT
+// BASEMO TİP C 240W - JAVASCRIPT
 // Payment Integration with Iyzico
 // =====================================================
 
@@ -7,7 +7,7 @@
 const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 
 // =====================================================
-// PRICE — sabit 821 TL
+// PRICE — sunucu tarafında tek fiyat
 // =====================================================
 const PRICE_NORMAL = '821';
 let currentPrice   = PRICE_NORMAL;
@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // DOM Initialization — Payment button + Keyboard Shortcuts
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Payment Provider: Iyzico');
+
+    initBatuTechnologyVideo();
+    initLazyCdnVideos();
+    initCityDistrictSelectors();
 
     // Payment Button
     const paymentBtn = document.getElementById('paymentBtn');
@@ -78,6 +82,21 @@ document.addEventListener('DOMContentLoaded', function() {
                        transformOrigin: 'left center', easing: 'easeInOutSine', duration: 280 }, 880)
                 .add({ targets: '#step3',     opacity: [0,1], translateX: [-22, 0] }, 1080);
         });
+
+        orderModal.addEventListener('hidden.bs.modal', function() {
+            const form = document.getElementById('orderForm');
+            const footer = document.getElementById('orderModalFooter');
+            const stage = document.getElementById('paymentStage');
+            const mount = document.getElementById('iyzicoCheckoutMount');
+            const title = document.getElementById('orderModalLabel');
+            if (form) form.hidden = false;
+            if (footer) footer.hidden = false;
+            if (stage) stage.hidden = true;
+            if (mount) mount.replaceChildren();
+            if (title) title.textContent = 'Sipariş ve Teslimat Bilgileri';
+            document.getElementById('step1')?.classList.remove('step-complete');
+            document.getElementById('step2')?.classList.remove('step-active');
+        });
     }
 });
 
@@ -96,6 +115,12 @@ async function handlePayment() {
     const customerPhone   = document.getElementById('customerPhone').value.trim();
     const customerAddress = document.getElementById('customerAddress').value.trim();
     const customerCity    = document.getElementById('customerCity').value.trim();
+    const customerDistrict = document.getElementById('customerDistrict').value.trim();
+    const acceptedTerms   = {
+        onBilgi:  document.getElementById('termsOnBilgi').checked,
+        mesafeli: document.getElementById('termsMesafeli').checked,
+        gizlilik: document.getElementById('termsGizlilik').checked,
+    };
 
     if (!validatePhone(customerPhone)) {
         showAlert('Geçerli bir telefon numarası girin (05XXXXXXXXX — 11 haneli)', 'warning');
@@ -107,6 +132,10 @@ async function handlePayment() {
     }
     if (!customerCity) {
         showAlert('Lütfen şehrinizi girin', 'warning');
+        return;
+    }
+    if (!customerDistrict) {
+        showAlert('Lütfen ilçenizi seçin', 'warning');
         return;
     }
 
@@ -126,25 +155,21 @@ async function handlePayment() {
                 phone:   customerPhone,
                 address: customerAddress,
                 city:    customerCity,
-                price:   currentPrice,   // 821 TL sabit
+                district: customerDistrict,
+                acceptedTerms,
+                acceptedAt: new Date().toISOString(),
             }),
         });
 
         const data = await resp.json();
 
-        if (!resp.ok || !data.paymentPageUrl) {
+        if (!resp.ok || !data.checkoutFormContent) {
             throw new Error(data.error || 'Ödeme başlatılamadı.');
         }
 
-        // Modal kapat, formu sıfırla
-        const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
-        if (modal) modal.hide();
-        document.getElementById('orderForm').reset();
+        showAlert('Teslimat bilgileri hazır. Güvenli ödeme adımına geçildi.', 'success');
 
-        showAlert('🔒 iyzico güvenli ödeme sayfasına yönlendiriliyorsunuz...', 'success');
-
-        // Instagram/TikTok in-app dahil tüm browser'larda çalışır (fetch içinde redirect değil)
-        setTimeout(() => { window.location.href = data.paymentPageUrl; }, 800);
+        showEmbeddedCheckout(data.checkoutFormContent);
 
     } catch (err) {
         console.error('Ödeme hatası:', err);
@@ -152,6 +177,167 @@ async function handlePayment() {
         btn.disabled = false;
         if (inner) inner.innerHTML = innerText;
     }
+}
+
+function initCityDistrictSelectors() {
+    const city = document.getElementById('customerCity');
+    let district = document.getElementById('customerDistrict');
+    if (!city || !district) return;
+
+    let cityDistricts = {};
+    fetch('/assets/tr-il-ilce.json')
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            cityDistricts = data;
+            Object.keys(data)
+                .sort((a, b) => a.localeCompare(b, 'tr'))
+                .forEach(cityName => city.add(new Option(cityName, cityName)));
+        })
+        .catch(error => {
+            console.error('İl/ilçe listesi yüklenemedi:', error);
+            const fallback = document.createElement('input');
+            fallback.type = 'text';
+            fallback.id = 'customerDistrict';
+            fallback.name = 'district';
+            fallback.className = 'form-control';
+            fallback.placeholder = 'İlçenizi yazın';
+            fallback.required = true;
+            fallback.minLength = 2;
+            fallback.autocomplete = 'address-level3';
+            fallback.style.cssText = 'background:#1a1a1a;border:1px solid #333;color:#fff;';
+            district.replaceWith(fallback);
+            district = fallback;
+        });
+
+    city.addEventListener('change', () => {
+        if (!(district instanceof HTMLSelectElement)) return;
+        const names = (cityDistricts[city.value] || []).slice().sort((a, b) => a.localeCompare(b, 'tr'));
+        district.replaceChildren(new Option('— İlçe seçiniz —', '', true, true));
+        district.options[0].disabled = true;
+        names.forEach(name => district.add(new Option(name, name)));
+        district.disabled = names.length === 0;
+    });
+}
+
+function initBatuTechnologyVideo() {
+    const video = document.querySelector('.hyk-footer-video');
+    if (!video) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+
+    let loaded = false;
+    const loadSources = () => {
+        if (loaded) return;
+        loaded = true;
+        video.querySelectorAll('source[data-src]').forEach(source => {
+            source.src = source.dataset.src;
+        });
+        video.load();
+    };
+
+    if (!('IntersectionObserver' in window)) {
+        loadSources();
+        return;
+    }
+
+    const nearObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+            loadSources();
+            nearObserver.disconnect();
+        }
+    }, { rootMargin: '600px 0px' });
+
+    const visibilityObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadSources();
+                video.play().catch(() => {});
+            } else {
+                video.pause();
+            }
+        });
+    }, { threshold: 0.25 });
+
+    nearObserver.observe(video);
+    visibilityObserver.observe(video);
+}
+
+function initLazyCdnVideos() {
+    document.querySelectorAll('.lazy-cdn-video').forEach(video => {
+        let loaded = false;
+        const loadSources = () => {
+            if (loaded) return;
+            loaded = true;
+            video.querySelectorAll('source[data-src]').forEach(source => {
+                source.src = source.dataset.src;
+            });
+            video.load();
+        };
+
+        if (!('IntersectionObserver' in window)) {
+            loadSources();
+            return;
+        }
+
+        const nearObserver = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting)) {
+                loadSources();
+                nearObserver.disconnect();
+            }
+        }, { rootMargin: '500px 0px' });
+
+        const visibilityObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadSources();
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.2 });
+
+        nearObserver.observe(video);
+        visibilityObserver.observe(video);
+    });
+}
+
+function showEmbeddedCheckout(checkoutFormContent) {
+    const form          = document.getElementById('orderForm');
+    const footer        = document.getElementById('orderModalFooter');
+    const paymentStage  = document.getElementById('paymentStage');
+    const checkoutMount = document.getElementById('iyzicoCheckoutMount');
+    const modalTitle    = document.getElementById('orderModalLabel');
+
+    if (!form || !footer || !paymentStage || !checkoutMount) {
+        throw new Error('Ödeme alanı hazırlanamadı. Lütfen tekrar deneyin.');
+    }
+
+    form.hidden = true;
+    footer.hidden = true;
+    paymentStage.hidden = false;
+    modalTitle.textContent = 'Güvenli Ödeme';
+    document.getElementById('step1')?.classList.add('step-complete');
+    document.getElementById('step2')?.classList.add('step-active');
+
+    // innerHTML ile eklenen scriptler çalışmadığı için script düğümlerini
+    // güvenli biçimde yeniden oluşturuyoruz. Kart verisi iyzico alanında kalır.
+    const template = document.createElement('template');
+    template.innerHTML = checkoutFormContent.trim();
+    const scripts = Array.from(template.content.querySelectorAll('script'));
+    scripts.forEach(script => script.remove());
+    checkoutMount.replaceChildren(template.content.cloneNode(true));
+
+    scripts.forEach(source => {
+        const script = document.createElement('script');
+        for (const attr of source.attributes) script.setAttribute(attr.name, attr.value);
+        script.textContent = source.textContent;
+        checkoutMount.appendChild(script);
+    });
+
+    paymentStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 // ===== MOBILE MENU AUTO-CLOSE =====
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -273,9 +459,9 @@ if (phoneInput) {
     phoneInput.addEventListener('input', function() {
         let digits = this.value.replace(/\D/g, '');
         // +90 yapıştırma: 905XXXXXXXXX → 05XXXXXXXXX
-        if (digits.startsWith('90') && digits.length >= 11) digits = '0' + digits.slice(1, 11);
-        // 9... → 05... normalize
-        if (digits.startsWith('9') && digits.length >= 10) digits = '0' + digits.slice(0, 10);
+        if (digits.startsWith('90') && digits.length >= 12) digits = '0' + digits.slice(2, 12);
+        // Başında sıfır olmayan GSM: 5XXXXXXXXX → 05XXXXXXXXX
+        if (digits.startsWith('5') && digits.length >= 10) digits = '0' + digits.slice(0, 10);
         // 11 hanede kes
         if (digits.length > 11) digits = digits.slice(0, 11);
         this.value = digits;
@@ -326,8 +512,8 @@ function trackEvent(eventName, eventData) {
 
 // Track page load
 trackEvent('page_view', {
-    page_title: 'BASEMO Type-C 240W Landing Page',
-    product: 'BASEMO-TYPE-C-240W',
+    page_title: 'BASEMO Tip C 240W Landing Page',
+    product: 'BASEMO-TİP C-240W',
     price: 821,
     currency: 'TRY'
 });
@@ -343,9 +529,9 @@ document.querySelectorAll('button[data-bs-toggle="modal"]').forEach(btn => {
 
 
 // ===== CONSOLE GREETING =====
-console.log('%c🚀 BASEMO Type-C 240W Landing Page', 'font-size: 18px; color: #ffc107; font-weight: bold;');
+console.log('%c🚀 BASEMO Tip C 240W Landing Page', 'font-size: 18px; color: #ffc107; font-weight: bold;');
 console.log('%cPayment Provider: Iyzico Pay Link', 'font-size: 12px; color: #666;');
-console.log('%cPrice: ₺821 | Currency: TRY | Product: BASEMO Type-C 240W', 'font-size: 11px; color: #999;');
+console.log('%cPrice: ₺821 | Currency: TRY | Product: BASEMO Tip C 240W', 'font-size: 11px; color: #999;');
 console.log('%c📞 Support: 0553 475 90 32 (WhatsApp) | 💬 Email: info@batumedikal.com', 'font-size: 11px; color: #666;');
 console.log('%cKeyboard Shortcuts: O = Order, W = WhatsApp', 'font-size: 11px; color: #999;');
 

@@ -2,5 +2,5 @@
 http://haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
 http://www.haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
 
-# www olmadan gelenleri www'ya yönlendir
-https://haciyatmazkablo.com/* https://www.haciyatmazkablo.com/:splat 301
+# HTTPS apex → www yönlendirmesi Cloudflare Dashboard Redirect Rule üzerinden yönetilir;
+# Pages _redirects dosyası HTTPS mutlak kaynak URL'sini kabul etmez.

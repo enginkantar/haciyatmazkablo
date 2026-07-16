@@ -53,23 +53,23 @@
     </div>
 
     <h1>😔 Ödeme Tamamlanamadı</h1>
-    <p class="sub">
-      İşlem sırasında birçok sistemden birinde sorun oluştu.<br>
-      <strong>Hiçbir ücret tahsil edilmedi.</strong>
+    <p class="sub" id="statusSummary">
+      Ödeme işlemi tamamlanamadı veya sonucu doğrulanamadı.<br>
+      <strong id="chargeStatus">Tekrar denemeden önce banka hareketlerinizi kontrol edin.</strong>
     </p>
 
     <div class="reason-box" id="reasonBox" style="display:none">
       <span id="reasonText"></span>
     </div>
 
-    <p class="hint">
-      Sorun devam ederse WhatsApp üzerinden hızlıca sipariş verebilirsiniz.
+    <p class="hint" id="nextStep">
+      Bankanızda tahsilat görünüyorsa yeniden ödeme yapmayın; sipariş durumunu WhatsApp üzerinden kontrol ettirin.
     </p>
 
-    <a href="/" class="btn-retry">
-      <i class="fas fa-redo" style="margin-right:6px;"></i>Tekrar Dene
+    <a href="/" class="btn-retry" id="primaryAction">
+      <i class="fas fa-home" style="margin-right:6px;"></i>Ana Sayfaya Dön
     </a>
-    <p class="alt-card-hint">Farklı bir kart ile de tekrar deneyebilirsiniz.</p>
+    <p class="alt-card-hint" id="actionHint">Aynı sipariş için mükerrer ödeme yapmamaya dikkat edin.</p>
 
     <a href="https://wa.me/905534759032?text=Ödeme%20işleminde%20sorun%20yaşıyorum,%20yardımcı%20olur%20musunuz?"
        class="wa-link"
@@ -88,7 +88,7 @@
     });
 
     const REASONS = {
-      payment_failed:  'Kartınız bankanız tarafından reddedildi. Kart bilgilerinizi, ödeme onaylarının açık olduğunu ve limitinizi kontrol edip tekrar deneyebilirsiniz.',
+      payment_failed:  { text: 'Kartınız bankanız tarafından reddedildi. Kart bilgilerinizi, internet alışverişi iznini ve limitinizi kontrol edebilirsiniz.', safeToRetry: true },
       expired:         'Ödeme sayfasında çok beklediniz ve oturum süresi doldu. Lütfen tekrar başlatın.',
       invalid:         'İşlem geçersiz sayıldı. Sayfayı yenileyip tekrar deneyin.',
       sig_invalid:     'Güvenlik doğrulaması başarısız oldu. Endişelenmeyin — bu sizden kaynaklı değil.',
@@ -97,13 +97,23 @@
       config:          'Sistemde geçici bir sorun oluştu. Lütfen WhatsApp üzerinden ulaşın.',
       retrieve_error:  'Ödeme doğrulama sırasında geçici bir bağlantı hatası oluştu. Tekrar deneyin.',
       parse_error:     'İstek işlenirken sorun oluştu. Tekrar deneyin.',
+      internal:        'Sipariş bilgisi okunamadı. Banka hareketlerinizi kontrol edip destek ekibine ulaşın.',
     };
 
     const params = new URLSearchParams(window.location.search);
     const reason = params.get('reason');
     if (reason && REASONS[reason]) {
-      document.getElementById('reasonText').textContent = REASONS[reason];
+      const detail = typeof REASONS[reason] === 'string' ? { text: REASONS[reason], safeToRetry: false } : REASONS[reason];
+      document.getElementById('reasonText').textContent = detail.text;
       document.getElementById('reasonBox').style.display = 'block';
+
+      if (detail.safeToRetry) {
+        document.getElementById('statusSummary').firstChild.textContent = 'Ödeme bankanız tarafından onaylanmadı. ';
+        document.getElementById('chargeStatus').textContent = 'Bu denemede ücret tahsil edilmedi.';
+        document.getElementById('nextStep').textContent = 'Bilgilerinizi kontrol ederek veya farklı bir kart kullanarak tekrar deneyebilirsiniz.';
+        document.getElementById('primaryAction').innerHTML = '<i class="fas fa-redo" style="margin-right:6px;"></i>Tekrar Dene';
+        document.getElementById('actionHint').textContent = 'Farklı bir kart ile de tekrar deneyebilirsiniz.';
+      }
     }
   </script>
 </body>

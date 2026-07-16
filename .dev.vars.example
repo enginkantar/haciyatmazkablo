@@ -1,0 +1,37 @@
+# Yerel geliştirme örneği. Gerçek değerleri .dev.vars içine yazın; .dev.vars git tarafından yok sayılır.
+
+# iyzico CheckoutForm
+IYZICO_API_KEY=
+IYZICO_SECRET_KEY=
+IYZICO_BASE_URL=https://sandbox-api.iyzipay.com
+IYZICO_CALLBACK_URL=http://127.0.0.1:8788/api/payment/callback
+
+# Sipariş bildirimi
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+
+# Basit Kargo
+BASITKARGO_TOKEN=
+BASITKARGO_HANDLER=YURTICI
+KARGO_SAGLAYICI=basitkargo
+
+# QNB e-Arşiv
+QNB_WS_KULLANICI=
+QNB_WS_SIFRE=
+QNB_EFATURA_USER_WS=
+QNB_EFATURA_CONNECTOR_WS=
+QNB_GONDERICI_VKN=
+QNB_ERP_KODU=
+QNB_FATURA_SERI=HKT
+QNB_MOCK=1
+
+# Satıcı bilgileri — kodda aynı güvenli varsayılanlar da vardır.
+SATICI_UNVAN=Batu Elektronik
+SATICI_VERGI_DAIRESI=Hasanpaşa Vergi Dairesi Müdürlüğü
+SATICI_ADRES=Bahçelievler Mah. Melikgazi 2. Sk.
+SATICI_BINA_NO=2B
+SATICI_ILCE=Merkez
+SATICI_IL=Çorum
+SATICI_POSTA_KODU=19000
+SATICI_TELEFON=05534759032
+SATICI_EPOSTA=haciyatmazkablo@gmail.com

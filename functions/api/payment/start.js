@@ -1,21 +1,27 @@
 // POST /api/payment/start
-// iyzico CheckoutForm Initialize — ödeme oturumu başlatır, paymentPageUrl döner
+// iyzico CheckoutForm Initialize — gömülü ödeme formunu başlatır
 
 const PRODUCT = {
   id:           'BASEMO-TC-240W',
-  name:         'Hacıyatmaz Kablo Type-C 240W',
+  name:         'Hacıyatmaz Kablo Tip C 240W',
   priceNormal:  '821',
-  priceDiscount:'799',
   category1:    'Elektronik',
   category2:    'Kablo',
 };
 
-// Instagram/TikTok in-app browser'lar bazen Origin header göndermez
-// veya farklı origin gönderir — haciyatmazkablo.com içeriyorsa izin ver
 function isAllowedOrigin(request) {
   const origin = request.headers.get('Origin');
-  if (!origin) return true; // Origin yoksa (in-app browser) izin ver
-  return origin.includes('haciyatmazkablo.com') || origin.includes('localhost') || origin.includes('192.168.');
+  if (!origin) return true; // iyzico callback ve bazı uygulama içi tarayıcılar
+  try {
+    const { hostname } = new URL(origin);
+    return hostname === 'haciyatmazkablo.com' ||
+      hostname === 'www.haciyatmazkablo.com' ||
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname.startsWith('192.168.');
+  } catch {
+    return false;
+  }
 }
 
 function corsHeaders(request) {
@@ -93,8 +99,15 @@ async function checkRateLimit(kv, ip) {
   return true;
 }
 
+function cleanText(value, maxLength) {
+  return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
+}
+
 // ─── OPTIONS preflight ────────────────────────────────────────────────────────
 export async function onRequestOptions(context) {
+  if (!isAllowedOrigin(context.request)) {
+    return new Response('Forbidden', { status: 403 });
+  }
   return new Response(null, { status: 204, headers: corsHeaders(context.request) });
 }
 
@@ -111,7 +124,7 @@ export async function onRequestPost(context) {
   const baseUrl     = env.IYZICO_BASE_URL     || 'https://api.iyzipay.com';
   const callbackUrl = env.IYZICO_CALLBACK_URL || 'https://www.haciyatmazkablo.com/api/payment/callback';
 
-  if (!apiKey || !secretKey) {
+  if (!apiKey || !secretKey || !env.PAYMENT_KV) {
     return jsonResp(request, { error: 'Ödeme sistemi yapılandırılmamış.' }, 503);
   }
 
@@ -124,27 +137,52 @@ export async function onRequestPost(context) {
   try { input = await request.json(); }
   catch { return jsonResp(request, { error: 'Geçersiz istek formatı.' }, 400); }
 
-  const { name, email, phone, address, city, price: reqPrice } = input;
-  if (!name?.trim() || !email?.trim() || !phone?.trim() || !address?.trim() || !city?.trim()) {
+  const name    = cleanText(input?.name, 100);
+  const email   = cleanText(input?.email, 150);
+  const phone   = cleanText(input?.phone, 20);
+  const address = cleanText(input?.address, 500);
+  const city    = cleanText(input?.city, 80);
+  const district = cleanText(input?.district, 80);
+  const acceptedTerms = input?.acceptedTerms;
+  const acceptedAt = cleanText(input?.acceptedAt, 40);
+  if (!name || !email || !phone || !address || !city || !district) {
     return jsonResp(request, { error: 'Tüm alanlar zorunludur.' }, 400);
   }
+  if (name.length < 3 || address.length < 10) {
+    return jsonResp(request, { error: 'Ad soyad en az 3, açık adres en az 10 karakter olmalıdır.' }, 400);
+  }
+  const locationPattern = /^[\p{L} .'-]{2,80}$/u;
+  if (!locationPattern.test(city) || !locationPattern.test(district)) {
+    return jsonResp(request, { error: 'Şehir veya ilçe bilgisi geçersiz.' }, 400);
+  }
+  if (!acceptedTerms?.onBilgi || !acceptedTerms?.mesafeli || !acceptedTerms?.gizlilik) {
+    return jsonResp(request, { error: 'Ödeme öncesinde tüm sözleşmeleri onaylamanız gerekir.' }, 400);
+  }
+  const acceptedAtDate = new Date(acceptedAt);
+  if (!acceptedAt || Number.isNaN(acceptedAtDate.getTime()) || Math.abs(Date.now() - acceptedAtDate.getTime()) > 3600000) {
+    return jsonResp(request, { error: 'Sözleşme kabul zamanı geçersiz. Lütfen formu yeniden onaylayın.' }, 400);
+  }
 
-  // İzin verilen fiyat değerleri: 799 (7 dakika indirim) veya 821 (normal)
-  const ALLOWED_PRICES = [PRODUCT.priceNormal, PRODUCT.priceDiscount];
-  const finalPrice = ALLOWED_PRICES.includes(String(reqPrice)) ? String(reqPrice) : PRODUCT.priceNormal;
+  // Fiyat yalnızca sunucuda belirlenir; istemciden fiyat kabul edilmez.
+  const finalPrice = PRODUCT.priceNormal;
 
   // E-posta ASCII kontrolü (ı, ğ, ş gibi Türkçe karakter iyzico'da hata verir)
-  if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email.trim())) {
+  if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email)) {
     return jsonResp(request, { error: 'Geçerli bir e-posta adresi girin (Türkçe karakter kullanmayın).' }, 400);
   }
 
   // Ad / Soyad
-  const parts     = name.trim().split(/\s+/);
+  const parts     = name.split(/\s+/);
   const firstName = parts[0];
   const lastName  = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
 
   // Telefon: iyzico gsmNumber +90 formatı ister
-  const cleanPhone = '+90' + phone.replace(/\s/g, '').replace(/^\+90/, '').replace(/^0/, '');
+  const phoneDigits = phone.replace(/\D/g, '').replace(/^90/, '').replace(/^0/, '');
+  if (!/^5\d{9}$/.test(phoneDigits)) {
+    return jsonResp(request, { error: 'Telefon numarası 05XXXXXXXXX biçiminde olmalıdır.' }, 400);
+  }
+  const cleanPhone = '+90' + phoneDigits;
+  const localPhone = '0' + phoneDigits;
 
   const conversationId = crypto.randomUUID();
   const basketId       = 'B-' + crypto.randomUUID().slice(0, 8).toUpperCase();
@@ -165,28 +203,28 @@ export async function onRequestPost(context) {
       name:                firstName,
       surname:             lastName,
       gsmNumber:           cleanPhone,
-      email:               email.trim().toLowerCase(),
+      email:               email.toLowerCase(),
       identityNumber:      '11111111111',
       lastLoginDate:       new Date().toISOString().slice(0, 19).replace('T', ' '),
       registrationDate:    new Date().toISOString().slice(0, 19).replace('T', ' '),
-      registrationAddress: address.trim(),
-      city:                city.trim(),
+      registrationAddress: `${address}, ${district}`,
+      city,
       country:             'Turkey',
       ip:                  clientIP,
       zipCode:             '00000',
     },
     shippingAddress: {
-      contactName: name.trim(),
-      city:        city.trim(),
+      contactName: name,
+      city,
       country:     'Turkey',
-      address:     address.trim(),
+      address: `${address}, ${district}`,
       zipCode:     '00000',
     },
     billingAddress: {
-      contactName: name.trim(),
-      city:        city.trim(),
+      contactName: name,
+      city,
       country:     'Turkey',
-      address:     address.trim(),
+      address: `${address}, ${district}`,
       zipCode:     '00000',
     },
     basketItems: [{
@@ -224,8 +262,15 @@ export async function onRequestPost(context) {
     return jsonResp(request, { error: 'Ödeme sistemine bağlanılamadı. Lütfen tekrar deneyin.' }, 502);
   }
 
-  if (iyzData.status !== 'success' || !iyzData.paymentPageUrl) {
-    console.error('[payment/start] iyzico error:', JSON.stringify(iyzData));
+  if (iyzData.status !== 'success' || !iyzData.token || !iyzData.checkoutFormContent) {
+    console.error('[payment/start] iyzico error:', JSON.stringify({
+      status: iyzData.status,
+      errorCode: iyzData.errorCode,
+      errorMessage: iyzData.errorMessage,
+      hasToken: !!iyzData.token,
+      hasEmbeddedForm: !!iyzData.checkoutFormContent,
+      hasExternalPage: !!iyzData.paymentPageUrl,
+    }));
     return jsonResp(request, { error: 'Ödeme oturumu başlatılamadı. Lütfen tekrar deneyin.' }, 400);
   }
 
@@ -236,16 +281,22 @@ export async function onRequestPost(context) {
       conversationId,
       basketId,
       amount:           finalPrice,
-      customerName:     name.trim(),
-      customerEmail:    email.trim().toLowerCase(),
-      customerPhone:    phone.trim(),
-      customerAddress:  address.trim(),
-      customerCity:     city.trim(),
+      customerName:     name,
+      customerEmail:    email.toLowerCase(),
+      customerPhone:    localPhone,
+      customerAddress:  address,
+      customerCity:     city,
+      customerTown:     district,
+      acceptedAt:       acceptedAtDate.toISOString(),
+      acceptedTerms:    { onBilgi: true, mesafeli: true, gizlilik: true },
+      termsVersion:     '2026-07-14',
       status:           'PENDING',
       createdAt:        new Date().toISOString(),
     }),
     { expirationTtl: 1800 }
   );
 
-  return jsonResp(request, { paymentPageUrl: iyzData.paymentPageUrl });
+  return jsonResp(request, {
+    checkoutFormContent: iyzData.checkoutFormContent,
+  });
 }

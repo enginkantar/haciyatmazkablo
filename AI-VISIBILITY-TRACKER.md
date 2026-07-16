@@ -13,8 +13,8 @@ Her ay aşağıdaki sorguları 3 platformda test edin ve sonuçları kaydedin.
 
 | # | Sorgu | ChatGPT Cited? | Perplexity Cited? | Google AI Overview? | Hangi Sayfa? | Rakipler |
 |---|-------|:--------------:|:-----------------:|:-------------------:|--------------|----------|
-| 1 | type-c kablo neden kırılır | ☐ | ☐ | ☐ | | |
-| 2 | en iyi type-c kablo | ☐ | ☐ | ☐ | | |
+| 1 | tip c kablo neden kırılır | ☐ | ☐ | ☐ | | |
+| 2 | en iyi tip c kablo | ☐ | ☐ | ☐ | | |
 | 3 | 240w şarj nedir | ☐ | ☐ | ☐ | | |
 | 4 | gaming kablosu önerisi | ☐ | ☐ | ☐ | | |
 | 5 | iphone 15 kablo | ☐ | ☐ | ☐ | | |
@@ -154,7 +154,7 @@ Her test'te, hangi rakipler cite edildi kaydedin:
    - [ ] New queries hedefle
 
 2. **Original Research**
-   - [ ] Türkiye Type-C kullanım anketi
+   - [ ] Türkiye Tip C kullanım anketi
    - [ ] Test results publish et
    - [ ] Industry reports yayınla
 

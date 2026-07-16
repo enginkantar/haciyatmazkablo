@@ -40,7 +40,7 @@
 ### Hedef Sorgular
 
 #### 1. Genel Bilgi Sorguları
-- "Type-C kablo nedir?"
+- "Tip C kablo nedir?"
 - "240W şarj nedir?"
 - "E-marker çip ne işe yarar?"
 - "Örülü kablo neden daha dayanıklı?"
@@ -48,7 +48,7 @@
 **Optimizasyon:** Clear definition blocks, cited statistics, expert attribution
 
 #### 2. Karşılaştırma Sorguları
-- "En iyi Type-C kablo hangisi?"
+- "En iyi Tip C kablo hangisi?"
 - "Hacıyatmaz Kablo vs Anker"
 - "Dayanıklı kablo özellikleri"
 - "240W kablo vs 100W kablo"
@@ -56,7 +56,7 @@
 **Optimizasyon:** Comparison tables, pros/cons blocks, specific metrics
 
 #### 3. Kullanım Senaryoları
-- "Gaming için Type-C kablo"
+- "Gaming için Tip C kablo"
 - "iPhone 15 şarj kablosu"
 - "MacBook için kablo"
 - "Yayın için dayanıklı kablo"
@@ -177,12 +177,12 @@
 - Google AI Overviews Türkçe'de aktif
 - ChatGPT Türkçe içeriği İngilizce kadar iyi işler
 - Perplexity Türkçe query'lere Türkçe sources cite eder
-- **Avantajınız:** Türkçe Type-C kablo içeriği az - siz doldurun!
+- **Avantajınız:** Türkçe Tip C kablo içeriği az - siz doldurun!
 
 #### 3. Third-Party Presence
 AI sistemleri sadece sitenizden değil, bahsedildiğiniz yerlerden de cite eder:
 
-- [ ] **Ekşi Sözlük:** Type-C kablo entry'lerinde bahsedilmeye çalışın
+- [ ] **Ekşi Sözlük:** Tip C kablo entry'lerinde bahsedilmeye çalışın
 - [ ] **DonanımHaber, ShiftDelete:** Teknik incelemelerde yer alın
 - [ ] **Reddit r/Turkey:** Authentic olarak tavsiye edilin
 - [ ] **YouTube:** Product review videoları çekin/çektirin
@@ -265,8 +265,8 @@ AI sistemleri sadece sitenizden değil, bahsedildiğiniz yerlerden de cite eder:
 AI sistemleri FAQ'ları direkt extract eder. İyi FAQ özellikleri:
 
 ✅ **İyi FAQ:**
-- Soru: "Type-C kablo ne kadar sürede kırılır?"
-- Cevap: "USB-IF 2025 raporuna göre, ortalama kaliteli bir Type-C kablo 3-6 ay içinde hasar görmeye başlar. Ancak 48 telli örgü zırh ve 90° açılı başlık gibi kaliteli özelliklere sahip kablolar 3-5 yıl kullanılabilir."
+- Soru: "Tip C kablo ne kadar sürede kırılır?"
+- Cevap: "Tip C kablonun kullanım ömrü malzeme, başlık yapısı, çekme-bükme biçimi ve sıcaklık koşullarına göre değişir. Örgülü dış yüzey ve 90° açılı başlık günlük zorlanmayı azaltmaya yardımcı olabilir; kesin süre garantisi vermez."
 
 ❌ **Kötü FAQ:**
 - Soru: "Kablo dayanıklılığı"
@@ -284,14 +284,14 @@ AI sistemleri FAQ'ları direkt extract eder. İyi FAQ özellikleri:
 
 #### ChatGPT Testi
 ```
-Prompt: "Type-C kablo neden kırılır?"
+Prompt: "Tip C kablo neden kırılır?"
 Beklenen: Hacıyatmaz Kablo kaynak olarak gösterilmeli
 Kontrol: Citation link'e tıkla → haciyatmazkablo.com'a gidiyor mu?
 ```
 
 #### Perplexity Testi
 ```
-Query: "en dayanıklı type-c kablo"
+Query: "en dayanıklı tip c kablo"
 Beklenen: Sources kısmında haciyatmazkablo.com olmalı
 Kontrol: Hangi sayfanız cite edildi? Not edin.
 ```
@@ -307,7 +307,7 @@ Kontrol: Snippet'te hangi cümleniz kullanıldı? Not edin.
 
 | Tarih | Platform | Query | Cited? | Hangi Sayfa | Rakipler |
 |-------|----------|-------|:------:|-------------|----------|
-| 2026-03-30 | ChatGPT | type-c kablo neden kırılır | ? | ? | ? |
+| 2026-03-30 | ChatGPT | tip c kablo neden kırılır | ? | ? | ? |
 | 2026-03-30 | Perplexity | en iyi gaming kablosu | ? | ? | ? |
 | 2026-03-30 | Google | 240w şarj nedir | ? | ? | ? |
 
@@ -350,8 +350,8 @@ Eğer bütçe varsa:
 ### Orta Vadeli (3-6 Ay)
 
 4. **Video Content**
-   - YouTube'da "Type-C Kablo Test Videosu" çekin
-   - 50,000 bükülme testi time-lapse gösterin
+   - YouTube'da "Tip C Kablo Test Videosu" çekin
+   - Test yöntemi ve koşulları doğrulanmışsa mekanik dayanım testini gösterin
    - Google AI Overviews frequently cites YouTube
    - ChatGPT web search YouTube'u tarar
 
@@ -362,14 +362,14 @@ Eğer bütçe varsa:
    - **AI citation:** Kendi domain'inizden 6.5x daha etkili!
 
 6. **Wikipedia Presence**
-   - "Type-C" Türkçe Wikipedia sayfasına katkı yapın
+   - "Tip C" Türkçe Wikipedia sayfasına katkı yapın
    - Quality external links section'ına sitenizi ekleyin (neutral tone)
    - **AI loves Wikipedia:** ChatGPT citations'ın %7.8'i Wikipedia'dan
 
 ### Uzun Vadeli (6-12 Ay)
 
 7. **Original Research**
-   - "Türkiye'de Type-C Kablo Kullanım Alışkanlıkları 2026" anketi
+   - "Türkiye'de Tip C Kablo Kullanım Alışkanlıkları 2026" anketi
    - 500+ kişiye ulaşın, sonuçları yayınlayın
    - **AI LOVES original data** → Maximum citation boost
    - Medyada paylaşılır → backlink + brand awareness
@@ -391,7 +391,7 @@ Eğer bütçe varsa:
 ### Her Yeni İçerik İçin
 
 #### 1. Başlık (H1)
-- ✅ İyi: "Type-C Kablo Neden Kırılır? 5 Ana Sebep"
+- ✅ İyi: "Tip C Kablo Neden Kırılır? 5 Ana Sebep"
 - ❌ Kötü: "Kablo Dayanıklılığı Hakkında"
 
 **Kural:** Soru formatı veya sayı içeren başlık
@@ -489,8 +489,8 @@ AI sistemleri table'ları extract etmekte çok iyi.
 ### AI Test Sorguları (Aylık Kontrol)
 
 ```
-1. "type-c kablo neden kırılır" → ChatGPT
-2. "en iyi type-c kablo" → Perplexity
+1. "tip c kablo neden kırılır" → ChatGPT
+2. "en iyi tip c kablo" → Perplexity
 3. "240w şarj nedir" → Google
 4. "gaming kablosu önerisi" → ChatGPT
 5. "iphone 15 kablo" → Google AI Overview
@@ -531,7 +531,7 @@ AI sistemleri table'ları extract etmekte çok iyi.
 
 ### 12 Aylık Hedefler
 
-- [ ] Type-C kablo category leader (Turkey AI search)
+- [ ] Tip C kablo category leader (Turkey AI search)
 - [ ] 50+ query citation dominance
 - [ ] Original research published + widely cited
 - [ ] Wikipedia presence
