@@ -4,7 +4,7 @@
 const PRODUCT = {
   id:           'BASEMO-TC-240W',
   name:         'Hacıyatmaz Kablo Tip C 240W',
-  priceNormal:  '821',
+  priceNormal:  '499.99',
   category1:    'Elektronik',
   category2:    'Kablo',
 };
