@@ -110,7 +110,8 @@ function isTerminalOrder(status) {
 }
 
 async function telegramGonder(env, message) {
-  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
+  const botToken = env.TELEGRAM_BOT_TOKEN || env.TELEGRAM_BOT;
+  if (!botToken || !env.TELEGRAM_CHAT_ID) {
     return { ok: false, manual: true, error: 'Telegram yapılandırması eksik' };
   }
 
@@ -118,7 +119,7 @@ async function telegramGonder(env, message) {
   for (let deneme = 1; deneme <= 2; deneme += 1) {
     try {
       const response = await fetch(
-        `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+        `https://api.telegram.org/bot${botToken}/sendMessage`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

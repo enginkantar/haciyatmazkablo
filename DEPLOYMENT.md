@@ -16,7 +16,7 @@ Canlıya geçmeden önce sandbox adresinin üretim adresiyle değiştiğini öze
 
 Telegram:
 
-- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_BOT_TOKEN` (mevcut Pages secret `TELEGRAM_BOT` adıyla da kabul edilir)
 - `TELEGRAM_CHAT_ID`
 
 Basit Kargo:
