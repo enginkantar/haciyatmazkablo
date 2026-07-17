@@ -65,7 +65,7 @@ try {
   });
 
   assert.equal(startResponse.status, 200);
-  assert.equal(iyzicoInitializeBody.price, '821');
+  assert.equal(iyzicoInitializeBody.price, '499.99');
   assert.equal(iyzicoInitializeBody.buyer.gsmNumber, '+905321234567');
   assert.equal(iyzicoInitializeBody.shippingAddress.city, 'İstanbul');
   assert.match(iyzicoInitializeBody.shippingAddress.address, /Kadıköy/);
@@ -126,7 +126,7 @@ try {
   await callbackKv.put('token:callback-token', JSON.stringify({
     conversationId: 'conversation-1',
     basketId: 'B-ORDER01',
-    amount: '821',
+    amount: '499.99',
     customerName: 'Ayşe Yılmaz',
     customerEmail: 'ayse@example.com',
     customerPhone: '05321234567',
@@ -146,8 +146,8 @@ try {
       currency: 'TRY',
       basketId: 'B-ORDER01',
       conversationId: 'conversation-1',
-      paidPrice: '821.00',
-      price: '821',
+      paidPrice: '499.99',
+      price: '499.99',
       token: 'callback-token',
     });
   };
@@ -191,11 +191,11 @@ try {
 
   const tamperKv = new MockKV();
   await tamperKv.put('token:tampered-token', JSON.stringify({
-    conversationId: 'conversation-2', basketId: 'B-ORDER02', amount: '821', status: 'PENDING',
+    conversationId: 'conversation-2', basketId: 'B-ORDER02', amount: '499.99', status: 'PENDING',
   }));
   globalThis.fetch = async () => Response.json({
     status: 'success', paymentStatus: 'SUCCESS', paymentId: 'payment-2', currency: 'TRY',
-    basketId: 'B-ORDER02', conversationId: 'conversation-2', paidPrice: '820.99', price: '821',
+    basketId: 'B-ORDER02', conversationId: 'conversation-2', paidPrice: '499.98', price: '499.99',
     token: 'tampered-token',
   });
   const tamperResponse = await paymentCallback({
@@ -218,10 +218,10 @@ try {
     readFile(new URL('../google-feed.xml', import.meta.url), 'utf8'),
     readFile(new URL('../on-bilgilendirme-formu.html', import.meta.url), 'utf8'),
   ]);
-  assert.match(homeHtml, /821 TL/);
-  assert.match(successHtml, /821 TL/);
-  assert.match(feedXml, /<g:price>821\.00 TRY<\/g:price>/);
-  assert.match(preInfoHtml, /821 TL, KDV dahil/);
+  assert.match(homeHtml, /499,99 TL/);
+  assert.match(successHtml, /499,99 TL/);
+  assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
+  assert.match(preInfoHtml, /499,99 TL, KDV dahil/);
   assert.doesNotMatch(errorHtml, /Hiçbir ücret tahsil edilmedi/,
     'Teknik callback hatasında tahsilat gerçekleşmiş olabilir; genel hata sayfası kesin hüküm vermemeli');
   assert.match(errorHtml, /Tekrar denemeden önce banka hareketlerinizi kontrol edin/);

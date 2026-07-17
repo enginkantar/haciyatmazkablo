@@ -9,7 +9,7 @@ const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 // =====================================================
 // PRICE — sunucu tarafında tek fiyat
 // =====================================================
-const PRICE_NORMAL = '821';
+const PRICE_NORMAL = '499.99';
 let currentPrice   = PRICE_NORMAL;
 
 // =====================================================
@@ -514,7 +514,7 @@ function trackEvent(eventName, eventData) {
 trackEvent('page_view', {
     page_title: 'BASEMO Tip C 240W Landing Page',
     product: 'BASEMO-TİP C-240W',
-    price: 821,
+    price: 499.99,
     currency: 'TRY'
 });
 
@@ -531,7 +531,7 @@ document.querySelectorAll('button[data-bs-toggle="modal"]').forEach(btn => {
 // ===== CONSOLE GREETING =====
 console.log('%c🚀 BASEMO Tip C 240W Landing Page', 'font-size: 18px; color: #ffc107; font-weight: bold;');
 console.log('%cPayment Provider: Iyzico Pay Link', 'font-size: 12px; color: #666;');
-console.log('%cPrice: ₺821 | Currency: TRY | Product: BASEMO Tip C 240W', 'font-size: 11px; color: #999;');
+console.log('%cPrice: ₺499.99 | Currency: TRY | Product: BASEMO Tip C 240W', 'font-size: 11px; color: #999;');
 console.log('%c📞 Support: 0553 475 90 32 (WhatsApp) | 💬 Email: info@batumedikal.com', 'font-size: 11px; color: #666;');
 console.log('%cKeyboard Shortcuts: O = Order, W = WhatsApp', 'font-size: 11px; color: #999;');
 
