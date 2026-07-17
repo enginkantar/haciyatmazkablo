@@ -45,6 +45,9 @@ async function exists(file) {
 
 const key = (await readFile(join(root, 'indexnow-key.txt'), 'utf8')).trim();
 if (!/^[a-f0-9]{32}$/i.test(key)) errors.push('indexnow-key.txt must contain a 32-character hexadecimal key.');
+if (/^[a-f0-9]{32}$/i.test(key) && !(await exists(join(root, `${key}.txt`)))) {
+  errors.push(`IndexNow verification file ${key}.txt is missing.`);
+}
 
 const robots = await readFile(join(root, 'robots.txt'), 'utf8');
 for (const bot of ['GPTBot', 'ChatGPT-User', 'OAI-SearchBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Bingbot']) {

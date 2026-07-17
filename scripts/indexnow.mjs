@@ -45,7 +45,7 @@ if (!urlList.length) {
 const payload = {
   host: new URL(origin).hostname,
   key,
-  keyLocation: `${origin}/indexnow-key.txt`,
+  keyLocation: `${origin}/${key}.txt`,
   urlList,
 };
 

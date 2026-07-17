@@ -10,7 +10,7 @@ npm run indexnow:dry      # Gönderilecek URL listesini ağ çağrısı yapmadan
 npm run indexnow          # Sitemap URL'lerini IndexNow'a gönderir
 ```
 
-`indexnow-key.txt` bilerek public'tir. IndexNow doğrulaması bu dosyanın canlı sitede erişilebilir olmasını gerektirir; gizli anahtar değildir.
+`indexnow-key.txt` kaynak key değerini taşır. Aynı değer `<key>.txt` adıyla da yayınlanır; IndexNow doğrulaması bu canlı dosyayı ister. Key gizli değildir.
 
 GitHub Actions, `master` dalına HTML/asset/SEO değişikliği geldiğinde `seo:check`, sitemap güncellik kontrolü ve IndexNow gönderimini otomatik çalıştırır. Site deploy'u tamamlanmadan istek gönderilse bile IndexNow URL'leri daha sonra tarayabilir; canlı key dosyası ve sitemap aynı deploy'da bulunmalıdır.
 

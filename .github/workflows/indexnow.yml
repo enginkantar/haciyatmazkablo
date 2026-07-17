@@ -7,7 +7,7 @@ on:
       - '**/*.html'
       - 'assets/**'
       - 'google-feed.xml'
-      - 'indexnow-key.txt'
+      - '*.txt'
       - 'robots.txt'
       - 'sitemap.xml'
       - 'scripts/**'
