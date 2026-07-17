@@ -318,7 +318,7 @@ function showEmbeddedCheckout(checkoutFormContent) {
     form.hidden = true;
     footer.hidden = true;
     paymentStage.hidden = false;
-    modalTitle.textContent = 'Güvenli Ödeme';
+    modalTitle.textContent = 'Hacıyatmaz Kablo ile Güvenli Ödeme';
     document.getElementById('step1')?.classList.add('step-complete');
     document.getElementById('step2')?.classList.add('step-active');
 
