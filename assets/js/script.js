@@ -187,11 +187,12 @@ async function handlePayment() {
 
         showAlert('Teslimat bilgileri hazır. Güvenli ödeme adımına geçildi.', 'success');
 
-        if (data.checkoutFormContent) {
-            showEmbeddedCheckout(data.checkoutFormContent, data.paymentPageUrl);
-        } else {
-            // Embedded form yoksa aynı iyzico oturumunun hosted sayfasına düş.
+        if (data.paymentPageUrl) {
+            // Hosted sayfa birinci tercih: gömülü form Safari'de üçüncü taraf
+            // çerez engeli yüzünden 3DS adımında takılıyor (18 Tem canlı testi).
             window.location.assign(data.paymentPageUrl);
+        } else {
+            showEmbeddedCheckout(data.checkoutFormContent, data.paymentPageUrl);
         }
 
     } catch (err) {

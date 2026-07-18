@@ -238,7 +238,7 @@ try {
   assert.match(homeHtml, /499,99 TL/);
   assert.match(homeHtml, /id="orderModal"[^>]*data-bs-focus="false"/);
   assert.match(homeHtml, /id="iyzicoHostedFallback"/);
-  assert.match(homeHtml, /script\.js\?v=20260717-payment-fix-v2/);
+  assert.match(homeHtml, /script\.js\?v=20260719-hosted-checkout/);
   assert.match(successHtml, /499,99 TL/);
   assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
   assert.match(preInfoHtml, /499,99 TL, KDV dahil/);
