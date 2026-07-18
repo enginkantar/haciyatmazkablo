@@ -100,9 +100,14 @@ function redirect(url) {
 function moneyToKurus(value) {
   if (value === null || value === undefined || value === '') return null;
   const normalized = String(value).trim().replace(',', '.');
-  if (!/^\d+(?:\.\d{1,2})?$/.test(normalized)) return null;
-  const amount = Number(normalized);
-  return Number.isSafeInteger(Math.round(amount * 100)) ? Math.round(amount * 100) : null;
+  if (!/^\d+(?:\.\d+)?$/.test(normalized)) return null;
+
+  const [whole, fraction = ''] = normalized.split('.');
+  // iyzico may return a monetary value with trailing fractional zeroes.
+  if (fraction.length > 2 && !/^0+$/.test(fraction.slice(2))) return null;
+
+  const kurus = BigInt(whole) * 100n + BigInt((fraction + '00').slice(0, 2));
+  return kurus <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(kurus) : null;
 }
 
 function isTerminalOrder(status) {
@@ -136,8 +141,99 @@ async function telegramGonder(env, message) {
   return { ok: false, error: sonHata || 'Telegram bildirimi gönderilemedi' };
 }
 
+async function finalizePaidOrder(env, token, kvData, retrieveData, order) {
+  const [kargoResult, faturaResult] = await Promise.allSettled([
+    kargoGonderiOlustur(env, order),
+    qnbIrsaliyeliFaturaKes(env, order),
+  ]);
+  const kargo = kargoResult.status === 'fulfilled'
+    ? kargoResult.value
+    : { ok: false, error: kargoResult.reason?.message || 'Kargo çağrısı başarısız' };
+  const fatura = faturaResult.status === 'fulfilled'
+    ? faturaResult.value
+    : { ok: false, error: faturaResult.reason?.message || 'Fatura çağrısı başarısız' };
+
+  const entegrasyonlarTamam = kargo.ok && fatura.ok;
+  order = {
+    ...order,
+    status: entegrasyonlarTamam ? 'PROCESSED' : 'PROCESSED_WITH_WARNINGS',
+    processedAt: new Date().toISOString(),
+    kargoBarcode: kargo.ok ? kargo.barcode : '',
+    kargoHandler: kargo.ok ? kargo.handler : '',
+    kargoError: kargo.ok ? '' : (kargo.error || 'Kargo oluşturulamadı'),
+    faturaNo: fatura.ok ? fatura.faturaNo : '',
+    faturaUuid: fatura.ok ? fatura.uuid : '',
+    faturaMock: !!fatura.mock,
+    faturaError: fatura.ok ? '' : (fatura.error || 'Fatura oluşturulamadı'),
+    telegramNotified: false,
+    telegramError: '',
+  };
+
+  // Mark the order terminal before external notification so retries cannot ship twice.
+  await env.PAYMENT_KV.put(
+    `token:${token}`,
+    JSON.stringify(order),
+    { expirationTtl: 604800 }
+  );
+
+  // Cloudflare Logs: kart verisi içermez; ödeme, müşteri ve teslimat özeti.
+  console.log('[order.paid]', JSON.stringify({
+    basketId: kvData.basketId,
+    paymentId: retrieveData.paymentId,
+    amount: kvData.amount,
+    currency: 'TRY',
+    product: 'Hacıyatmaz Kablo Tip C 240W',
+    customerName: order.customerName,
+    customerEmail: order.customerEmail,
+    customerPhone: order.customerPhone,
+    customerAddress: order.customerAddress,
+    customerTown: order.customerTown,
+    customerCity: order.customerCity,
+    kargoBarcode: order.kargoBarcode,
+    kargoError: order.kargoError,
+    faturaNo: order.faturaNo,
+    faturaError: order.faturaError,
+    acceptedAt: order.acceptedAt,
+  }));
+
+  const msg =
+`🛍️ YENİ SİPARİŞ!
+
+📦 Ürün: Hacıyatmaz Kablo Tip C 240W
+💰 Tutar: ${kvData.amount} TL
+🔖 Sipariş No: ${kvData.basketId}
+💳 iyzico Ödeme No: ${retrieveData.paymentId}
+
+👤 Ad: ${kvData.customerName}
+📧 E-posta: ${kvData.customerEmail}
+📱 Telefon: ${kvData.customerPhone}
+
+📍 Adres:
+${kvData.customerAddress}
+${order.customerTown} / ${order.customerCity}
+
+🚚 Kargo: ${order.kargoBarcode || `Bekliyor (${order.kargoError})`}
+🧾 Fatura: ${order.faturaNo || `Bekliyor (${order.faturaError})`}`;
+
+  const telegram = await telegramGonder(env, msg);
+  order = {
+    ...order,
+    telegramNotified: telegram.ok,
+    telegramError: telegram.ok ? '' : telegram.error,
+  };
+  if (!telegram.ok) {
+    console.error('[callback] Telegram bildirim hatası:', telegram.error);
+  }
+
+  await env.PAYMENT_KV.put(
+    `token:${token}`,
+    JSON.stringify(order),
+    { expirationTtl: 604800 }
+  );
+}
+
 // ─── Ortak işlem mantığı ──────────────────────────────────────────────────────
-async function processCallback(request, env, token, conversationId) {
+async function processCallback(request, env, token, conversationId, waitUntil) {
   const base       = getRedirectBase(request);
   // Cloudflare Pages clean URL'leri tercih eder — .html olmadan kullan (ekstra 308 redirect önler)
   const SUCCESS    = `${base}/odeme-basarili`;
@@ -262,7 +358,7 @@ async function processCallback(request, env, token, conversationId) {
     return redirect(`${ERROR}?reason=payment_failed`);
   }
 
-  // ─── Başarılı: önce kilitle, sonra kargo + fatura ───────────────────────────
+  // ─── Başarılı: kilitle, sonra dış entegrasyonları yanıt sonrasına bırak ───────
   let order = {
     ...kvData,
     status: 'PROCESSING',
@@ -281,96 +377,12 @@ async function processCallback(request, env, token, conversationId) {
     { expirationTtl: 604800 }
   );
 
-  const [kargoResult, faturaResult] = await Promise.allSettled([
-    kargoGonderiOlustur(env, order),
-    qnbIrsaliyeliFaturaKes(env, order),
-  ]);
-  const kargo = kargoResult.status === 'fulfilled'
-    ? kargoResult.value
-    : { ok: false, error: kargoResult.reason?.message || 'Kargo çağrısı başarısız' };
-  const fatura = faturaResult.status === 'fulfilled'
-    ? faturaResult.value
-    : { ok: false, error: faturaResult.reason?.message || 'Fatura çağrısı başarısız' };
-
-  const entegrasyonlarTamam = kargo.ok && fatura.ok;
-  order = {
-    ...order,
-    status: entegrasyonlarTamam ? 'PROCESSED' : 'PROCESSED_WITH_WARNINGS',
-    processedAt: new Date().toISOString(),
-    kargoBarcode: kargo.ok ? kargo.barcode : '',
-    kargoHandler: kargo.ok ? kargo.handler : '',
-    kargoError: kargo.ok ? '' : (kargo.error || 'Kargo oluşturulamadı'),
-    faturaNo: fatura.ok ? fatura.faturaNo : '',
-    faturaUuid: fatura.ok ? fatura.uuid : '',
-    faturaMock: !!fatura.mock,
-    faturaError: fatura.ok ? '' : (fatura.error || 'Fatura oluşturulamadı'),
-    telegramNotified: false,
-    telegramError: '',
-  };
-
-  // Dış bildirimden önce terminal durumu kalıcılaştır. Worker bildirim sırasında
-  // kesilirse callback tekrarında kargo/fatura ikinci kez oluşturulmasın.
-  await env.PAYMENT_KV.put(
-    `token:${token}`,
-    JSON.stringify(order),
-    { expirationTtl: 604800 }
-  );
-
-  // Cloudflare Logs: kart verisi içermez; ödeme, müşteri ve teslimat özeti.
-  console.log('[order.paid]', JSON.stringify({
-    basketId: kvData.basketId,
-    paymentId: retrieveData.paymentId,
-    amount: kvData.amount,
-    currency: 'TRY',
-    product: 'Hacıyatmaz Kablo Tip C 240W',
-    customerName: order.customerName,
-    customerEmail: order.customerEmail,
-    customerPhone: order.customerPhone,
-    customerAddress: order.customerAddress,
-    customerTown: order.customerTown,
-    customerCity: order.customerCity,
-    kargoBarcode: order.kargoBarcode,
-    kargoError: order.kargoError,
-    faturaNo: order.faturaNo,
-    faturaError: order.faturaError,
-    acceptedAt: order.acceptedAt,
-  }));
-
-  // ─── Telegram bildirimi ───────────────────────────────────────────────────
-  const msg =
-`🛍️ YENİ SİPARİŞ!
-
-📦 Ürün: Hacıyatmaz Kablo Tip C 240W
-💰 Tutar: ${kvData.amount} TL
-🔖 Sipariş No: ${kvData.basketId}
-💳 iyzico Ödeme No: ${retrieveData.paymentId}
-
-👤 Ad: ${kvData.customerName}
-📧 E-posta: ${kvData.customerEmail}
-📱 Telefon: ${kvData.customerPhone}
-
-📍 Adres:
-${kvData.customerAddress}
-${order.customerTown} / ${order.customerCity}
-
-🚚 Kargo: ${order.kargoBarcode || `Bekliyor (${order.kargoError})`}
-🧾 Fatura: ${order.faturaNo || `Bekliyor (${order.faturaError})`}`;
-
-  const telegram = await telegramGonder(env, msg);
-  order = {
-    ...order,
-    telegramNotified: telegram.ok,
-    telegramError: telegram.ok ? '' : telegram.error,
-  };
-  if (!telegram.ok) {
-    console.error('[callback] Telegram bildirim hatası:', telegram.error);
+  const finalize = finalizePaidOrder(env, token, kvData, retrieveData, order);
+  if (typeof waitUntil === 'function') {
+    waitUntil(finalize);
+  } else {
+    await finalize;
   }
-
-  await env.PAYMENT_KV.put(
-    `token:${token}`,
-    JSON.stringify(order),
-    { expirationTtl: 604800 }
-  );
 
   return redirect(`${SUCCESS}?order=${order.basketId}`);
 }
@@ -390,7 +402,7 @@ export async function onRequestPost(context) {
     return redirect(`${base}/odeme-hatasi?reason=parse_error`);
   }
 
-  return processCallback(request, env, token, conversationId);
+  return processCallback(request, env, token, conversationId, context.waitUntil);
 }
 
 // ─── GET handler (bazı tarayıcı/iyzico konfigürasyonlarında GET redirect gelir) ─
@@ -406,5 +418,5 @@ export async function onRequestGet(context) {
     return redirect(getRedirectBase(request) + '/');
   }
 
-  return processCallback(request, env, token, conversationId);
+  return processCallback(request, env, token, conversationId, context.waitUntil);
 }

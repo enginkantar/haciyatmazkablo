@@ -9,6 +9,7 @@ Cloudflare Pages proje ayarlarında aşağıdaki değerler şifreli değişken o
 - `IYZICO_SECRET_KEY`
 - `IYZICO_BASE_URL=https://api.iyzipay.com`
 - `IYZICO_CALLBACK_URL=https://www.haciyatmazkablo.com/api/payment/callback`
+- `TURNSTILE_SECRET` (Cloudflare Turnstile server-side secret, when bot verification is enabled)
 
 Canlıya geçmeden önce sandbox adresinin üretim adresiyle değiştiğini özellikle doğrulayın.
 
