@@ -31,7 +31,6 @@ try {
       status: 'success',
       token: 'start-token',
       checkoutFormContent: '<div id="iyzipay-checkout-form"></div>',
-      paymentPageUrl: 'https://pay.example.test?token=start-token',
     });
   };
 
@@ -66,8 +65,6 @@ try {
   });
 
   assert.equal(startResponse.status, 200);
-  assert.equal(JSON.parse(await startResponse.text()).paymentPageUrl,
-    'https://pay.example.test?token=start-token');
   assert.equal(iyzicoInitializeBody.price, '499.99');
   assert.equal(iyzicoInitializeBody.buyer.gsmNumber, '+905321234567');
   assert.equal(iyzicoInitializeBody.shippingAddress.city, 'İstanbul');
@@ -85,14 +82,6 @@ try {
     }),
   });
   assert.equal(invalidOriginResponse.status, 403);
-
-  const previewOriginResponse = await onRequestOptions({
-    request: new Request('https://097958ee.haciyatmazkablo.pages.dev/api/payment/start', {
-      method: 'OPTIONS',
-      headers: { Origin: 'https://097958ee.haciyatmazkablo.pages.dev' },
-    }),
-  });
-  assert.equal(previewOriginResponse.status, 204);
 
   const shortAddressResponse = await startPayment({
     request: new Request('https://www.haciyatmazkablo.com/api/payment/start', {
@@ -131,8 +120,7 @@ try {
     }),
     env: { IYZICO_API_KEY: 'x', IYZICO_SECRET_KEY: 'y', PAYMENT_KV: kv },
   });
-  assert.equal(redirectOnlyResponse.status, 200, 'Embedded form yoksa hosted checkout fallback dönmeli');
-  assert.equal(JSON.parse(await redirectOnlyResponse.text()).paymentPageUrl, 'https://pay.example.test');
+  assert.equal(redirectOnlyResponse.status, 400, 'White-label akış harici ödeme sayfasına düşmemeli');
 
   const callbackKv = new MockKV();
   await callbackKv.put('token:callback-token', JSON.stringify({
@@ -158,7 +146,7 @@ try {
       currency: 'TRY',
       basketId: 'B-ORDER01',
       conversationId: 'conversation-1',
-      paidPrice: '499.9900',
+      paidPrice: '499.99',
       price: '499.99',
       token: 'callback-token',
     });
@@ -170,7 +158,6 @@ try {
     body: new URLSearchParams({ token: 'callback-token', conversationId: 'conversation-1' }),
   });
 
-  const deferredCallbacks = [];
   const callbackResponse = await paymentCallback({
     request: callbackRequest(),
     env: {
@@ -179,15 +166,11 @@ try {
       IYZICO_BASE_URL: 'https://mock.iyzico.test',
       PAYMENT_KV: callbackKv,
     },
-    waitUntil: (promise) => deferredCallbacks.push(promise),
   });
 
   assert.equal(callbackResponse.status, 302);
   assert.match(callbackResponse.headers.get('location'), /odeme-basarili/);
   assert.equal(retrieveCalls, 1);
-  assert.equal(deferredCallbacks.length, 1);
-  assert.equal(JSON.parse(await callbackKv.get('token:callback-token')).status, 'PROCESSING');
-  await Promise.all(deferredCallbacks);
   const processedOrder = JSON.parse(await callbackKv.get('token:callback-token'));
   assert.equal(processedOrder.status, 'PROCESSED_WITH_WARNINGS');
   assert.match(processedOrder.kargoError, /token yok/);
@@ -236,9 +219,6 @@ try {
     readFile(new URL('../on-bilgilendirme-formu.html', import.meta.url), 'utf8'),
   ]);
   assert.match(homeHtml, /499,99 TL/);
-  assert.match(homeHtml, /id="orderModal"[^>]*data-bs-focus="false"/);
-  assert.match(homeHtml, /id="iyzicoHostedFallback"/);
-  assert.match(homeHtml, /script\.js\?v=20260717-payment-fix-v2/);
   assert.match(successHtml, /499,99 TL/);
   assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
   assert.match(preInfoHtml, /499,99 TL, KDV dahil/);

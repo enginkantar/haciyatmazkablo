@@ -16,8 +16,6 @@ function isAllowedOrigin(request) {
     const { hostname } = new URL(origin);
     return hostname === 'haciyatmazkablo.com' ||
       hostname === 'www.haciyatmazkablo.com' ||
-      hostname === 'haciyatmazkablo.pages.dev' ||
-      hostname.endsWith('.haciyatmazkablo.pages.dev') ||
       hostname === 'localhost' ||
       hostname === '127.0.0.1' ||
       hostname.startsWith('192.168.');
@@ -101,24 +99,6 @@ async function checkRateLimit(kv, ip) {
   return true;
 }
 
-// ─── Turnstile bot doğrulaması ────────────────────────────────────────────────
-async function verifyTurnstile(secret, token, ip) {
-  if (!token) return false;
-  try {
-    const body = new URLSearchParams({ secret, response: token });
-    if (ip) body.set('remoteip', ip);
-    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body,
-    });
-    const data = await res.json();
-    return data.success === true;
-  } catch (e) {
-    console.error('[turnstile] verify error:', e.message);
-    return false;
-  }
-}
-
 function cleanText(value, maxLength) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
 }
@@ -156,13 +136,6 @@ export async function onRequestPost(context) {
   let input;
   try { input = await request.json(); }
   catch { return jsonResp(request, { error: 'Geçersiz istek formatı.' }, 400); }
-
-  if (env.TURNSTILE_SECRET) {
-    const tsToken = input?.turnstileToken || input?.['cf-turnstile-response'] || '';
-    if (!(await verifyTurnstile(env.TURNSTILE_SECRET, tsToken, clientIP))) {
-      return jsonResp(request, { error: 'Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar deneyin.' }, 403);
-    }
-  }
 
   const name    = cleanText(input?.name, 100);
   const email   = cleanText(input?.email, 150);
@@ -289,8 +262,7 @@ export async function onRequestPost(context) {
     return jsonResp(request, { error: 'Ödeme sistemine bağlanılamadı. Lütfen tekrar deneyin.' }, 502);
   }
 
-  if (iyzData.status !== 'success' || !iyzData.token ||
-      (!iyzData.checkoutFormContent && !iyzData.paymentPageUrl)) {
+  if (iyzData.status !== 'success' || !iyzData.token || !iyzData.checkoutFormContent) {
     console.error('[payment/start] iyzico error:', JSON.stringify({
       status: iyzData.status,
       errorCode: iyzData.errorCode,
@@ -326,6 +298,5 @@ export async function onRequestPost(context) {
 
   return jsonResp(request, {
     checkoutFormContent: iyzData.checkoutFormContent,
-    paymentPageUrl:      iyzData.paymentPageUrl || '',
   });
 }

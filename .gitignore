@@ -19,5 +19,3 @@ package-lock.json
 # Test dosyaları
 test-iyzico-sdk.cjs
 test-iyzico.mjs
-.gstack/
-.claude-flow/
