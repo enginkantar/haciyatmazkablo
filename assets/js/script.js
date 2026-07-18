@@ -11,6 +11,8 @@ const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 // =====================================================
 const PRICE_NORMAL = '499.99';
 let currentPrice   = PRICE_NORMAL;
+let checkoutFallbackTimer = null;
+let checkoutFallbackCleanup = null;
 
 // =====================================================
 // DOM READY — TIMER + MENÜ + PAYMENT INIT
@@ -88,11 +90,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const footer = document.getElementById('orderModalFooter');
             const stage = document.getElementById('paymentStage');
             const mount = document.getElementById('iyzicoCheckoutMount');
+            const fallback = document.getElementById('iyzicoHostedFallback');
             const title = document.getElementById('orderModalLabel');
             if (form) form.hidden = false;
             if (footer) footer.hidden = false;
             if (stage) stage.hidden = true;
             if (mount) mount.replaceChildren();
+            if (fallback) {
+                fallback.hidden = true;
+                fallback.classList.remove('is-visible');
+            }
+            clearTimeout(checkoutFallbackTimer);
+            checkoutFallbackCleanup?.();
+            checkoutFallbackCleanup = null;
             if (title) title.textContent = 'Sipariş ve Teslimat Bilgileri';
             document.getElementById('step1')?.classList.remove('step-complete');
             document.getElementById('step2')?.classList.remove('step-active');
@@ -139,6 +149,9 @@ async function handlePayment() {
         return;
     }
 
+    const tsToken = document.querySelector('.cf-turnstile input[name="cf-turnstile-response"]')?.value ||
+        window.turnstile?.getResponse?.() || '';
+
     const btn       = document.getElementById('paymentBtn');
     const inner     = document.getElementById('paymentBtnInner');
     const innerText = inner ? inner.innerHTML : '';
@@ -158,18 +171,28 @@ async function handlePayment() {
                 district: customerDistrict,
                 acceptedTerms,
                 acceptedAt: new Date().toISOString(),
+                turnstileToken: tsToken,
             }),
         });
 
-        const data = await resp.json();
+        const contentType = resp.headers.get('content-type') || '';
+        const data = contentType.includes('application/json') ? await resp.json() : {};
 
-        if (!resp.ok || !data.checkoutFormContent) {
+        if (!resp.ok) {
+            throw new Error(data.error || 'Ödeme sistemi şu anda yanıt vermiyor. Lütfen tekrar deneyin.');
+        }
+        if (!data.checkoutFormContent && !data.paymentPageUrl) {
             throw new Error(data.error || 'Ödeme başlatılamadı.');
         }
 
         showAlert('Teslimat bilgileri hazır. Güvenli ödeme adımına geçildi.', 'success');
 
-        showEmbeddedCheckout(data.checkoutFormContent);
+        if (data.checkoutFormContent) {
+            showEmbeddedCheckout(data.checkoutFormContent, data.paymentPageUrl);
+        } else {
+            // Embedded form yoksa aynı iyzico oturumunun hosted sayfasına düş.
+            window.location.assign(data.paymentPageUrl);
+        }
 
     } catch (err) {
         console.error('Ödeme hatası:', err);
@@ -304,11 +327,13 @@ function initLazyCdnVideos() {
     });
 }
 
-function showEmbeddedCheckout(checkoutFormContent) {
+function showEmbeddedCheckout(checkoutFormContent, paymentPageUrl) {
     const form          = document.getElementById('orderForm');
     const footer        = document.getElementById('orderModalFooter');
     const paymentStage  = document.getElementById('paymentStage');
     const checkoutMount = document.getElementById('iyzicoCheckoutMount');
+    const fallback      = document.getElementById('iyzicoHostedFallback');
+    const fallbackLink  = document.getElementById('iyzicoHostedFallbackLink');
     const modalTitle    = document.getElementById('orderModalLabel');
 
     if (!form || !footer || !paymentStage || !checkoutMount) {
@@ -336,6 +361,27 @@ function showEmbeddedCheckout(checkoutFormContent) {
         script.textContent = source.textContent;
         checkoutMount.appendChild(script);
     });
+
+    checkoutFallbackCleanup?.();
+    checkoutFallbackCleanup = null;
+    clearTimeout(checkoutFallbackTimer);
+    if (fallback && fallbackLink && paymentPageUrl) {
+        fallbackLink.href = paymentPageUrl;
+        fallback.hidden = true;
+        fallback.classList.remove('is-visible');
+
+        const revealFallback = () => {
+            fallback.hidden = false;
+            fallback.classList.add('is-visible');
+        };
+        const armFallback = event => {
+            if (!(event.target instanceof Element) || !event.target.closest('#iyz-payment-button')) return;
+            clearTimeout(checkoutFallbackTimer);
+            checkoutFallbackTimer = setTimeout(revealFallback, 12000);
+        };
+        document.addEventListener('click', armFallback, true);
+        checkoutFallbackCleanup = () => document.removeEventListener('click', armFallback, true);
+    }
 
     paymentStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }

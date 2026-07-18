@@ -2,6 +2,7 @@
 <html lang="tr">
 
 <head>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,9 +38,10 @@
 }
 </script>
     <meta charset="UTF-8">
-    <!-- CSP Güvenlik Politikası (Fallback - Birincil kaynak: Cloudflare _headers) -->
-    <meta http-equiv="Content-Security-Policy"
+    <!-- CSP enforcement lives in Cloudflare _headers. -->
+    <!-- <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://static.cloudflareinsights.com https://*.iyzipay.com https://*.iyzico.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://*.iyzipay.com https://*.iyzico.com; img-src 'self' data: https: blob:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com https://cdn.iyzipay.com; frame-src https://www.youtube.com https://*.iyzipay.com https://*.iyzico.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://connect.facebook.net https://www.facebook.com https://www.merchant-center-analytics.goog https://cloudflareinsights.com https://*.iyzipay.com https://*.iyzico.com; base-uri 'self'; object-src 'none'">
+    -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -928,7 +930,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
     <section id="hero" class="hyk-hero">
         <div class="container">
-            <div class="row align-items-center g-4 g-lg-5">
+            <div class="row align-items-start g-4 g-lg-5">
 
                 <!-- SOL: Copy -->
                 <div class="col-lg-6">
@@ -3549,6 +3551,23 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         border: 0;
     }
 
+    .checkout-fallback {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 193, 7, 0.45);
+        border-radius: 10px;
+        background: rgba(255, 193, 7, 0.1);
+        color: #5a3e00;
+        font-size: 0.82rem;
+        text-align: center;
+    }
+
+    .checkout-fallback a {
+        color: #8a5a00;
+        font-weight: 800;
+        text-decoration: underline;
+    }
+
     @media (max-width: 560px) {
         .checkout-brand-shell {
             align-items: flex-start;
@@ -3595,7 +3614,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 </style>
 
 <!-- ===== SİPARİŞ MODAL ===== -->
-<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-modal="true" role="dialog">
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-modal="true" role="dialog" data-bs-focus="false">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content game-console-panel" style="border-radius:16px; color:#fff;">
 
@@ -3731,11 +3750,16 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                         Kart bilgilerinizi güvenli ödeme alanına girin. Kart bilgileriniz Hacıyatmaz Kablo sunucularına aktarılmaz.
                     </p>
                     <div id="iyzicoCheckoutMount"></div>
+                    <div id="iyzicoHostedFallback" class="checkout-fallback" hidden>
+                        3D Secure ekranı açılmadıysa
+                        <a id="iyzicoHostedFallbackLink" href="#">güvenli ödeme sayfasında devam edin.</a>
+                    </div>
                 </section>
             </div>
 
             <div class="modal-footer" id="orderModalFooter"
                 style="border-top:1px solid #2a2a2a; flex-direction:column; align-items:stretch; gap:8px; overflow:visible;">
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAD33mTchS4lY6xwo" data-language="tr" style="margin:0 0 6px"></div>
                 <button type="button" class="btn-payment-hover" id="paymentBtn" tabindex="10">
                     <div class="btn-payment-inner" id="paymentBtnInner">
                         <i class="fas fa-lock me-2"></i>Güvenli Ödemeye Git →
@@ -3757,7 +3781,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 <!-- Anime.js v3 -->
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 <!-- Custom JS -->
-<script src="assets/js/script.js?v=20260717-white-label"></script>
+<script src="assets/js/script.js?v=20260717-payment-fix-v2"></script>
 
 <!-- ===== AAVE DESIGN PACKAGE ===== -->
 <style id="aave-design-system">
@@ -5126,7 +5150,31 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         }
 
         body .compare-table {
-            min-width: 650px;
+            min-width: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        body .compare-table th:nth-child(1),
+        body .compare-table td:nth-child(1) { width: 20%; }
+
+        body .compare-table th:nth-child(2),
+        body .compare-table td:nth-child(2) { width: 30%; }
+
+        body .compare-table th:nth-child(3),
+        body .compare-table td:nth-child(3),
+        body .compare-table th:nth-child(4),
+        body .compare-table td:nth-child(4) { width: 25%; }
+
+        body .compare-table th,
+        body .compare-table td {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            overflow-wrap: break-word;
+        }
+
+        body .compare-table th {
+            line-height: 1.15;
         }
 
         body .table-responsive {
