@@ -74,7 +74,7 @@ try {
 
   assert.equal(startResponse.status, 200);
   const startData = JSON.parse(await startResponse.text());
-  assert.match(startData.link, /^\/odeme\.html\?invoice_id=/);
+  assert.match(startData.link, /^\/odeme\?invoice_id=/);
   const invoiceId = startData.invoice_id;
   assert.ok(invoiceId);
 

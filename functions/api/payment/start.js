@@ -186,7 +186,7 @@ export async function onRequestPost(context) {
   );
 
   return jsonResp(request, {
-    link: `/odeme.html?invoice_id=${encodeURIComponent(invoiceId)}`,
+    link: `/odeme?invoice_id=${encodeURIComponent(invoiceId)}`,
     invoice_id: invoiceId,
   });
 }
