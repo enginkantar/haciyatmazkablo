@@ -2,6 +2,7 @@
 // Hem webhook hem notify-success (tarayıcı dönüşü) buradan geçer — idempotent.
 import { kargoGonderiOlustur } from './kargo.js';
 import { qnbIrsaliyeliFaturaKes } from './fatura.js';
+import { sendOrderEmails, mailConfigured } from './mail.js';
 
 export async function telegramGonder(env, message) {
   const botToken = env.TELEGRAM_BOT_TOKEN || env.TELEGRAM_BOT;
@@ -114,6 +115,17 @@ ${order.customerTown} / ${order.customerCity}
   order.telegramNotified = telegram.ok;
   order.telegramError = telegram.ok ? '' : telegram.error;
   if (!telegram.ok) console.error(`[fulfill:${source}] Telegram bildirim hatası:`, telegram.error);
+
+  // E-posta: operatör(ler) + müşteri (Zoho → Resend fallback)
+  if (mailConfigured(env)) {
+    const mail = await sendOrderEmails(env, order, invoiceId).catch(e => ({ ok: false, error: e.message }));
+    order.mailNotified = !!mail.ok;
+    order.mailError = mail.ok ? '' : (mail.error || `${mail.failures} gönderim başarısız`);
+    if (!mail.ok) console.error(`[fulfill:${source}] mail hatası:`, order.mailError);
+  } else {
+    order.mailNotified = false;
+    order.mailError = 'mail yapılandırması eksik';
+  }
 
   await env.PAYMENT_KV.put(
     `order:${invoiceId}`,

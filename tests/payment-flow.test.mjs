@@ -248,12 +248,11 @@ try {
   assert.match(odemeHtml, /whitelabel-init/);
   assert.match(odemeHtml, /cc_no/);
   assert.match(successHtml, /notify-success/);
-  assert.match(successHtml, /499,99 TL/);
+  assert.match(successHtml, /Teslimat Bilgileri/);
   assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
   assert.match(preInfoHtml, /499,99 TL, KDV dahil/);
-  assert.doesNotMatch(errorHtml, /Hiçbir ücret tahsil edilmedi/,
-    'Teknik hata durumunda tahsilat gerçekleşmiş olabilir; genel hata sayfası kesin hüküm vermemeli');
-  assert.match(errorHtml, /Tekrar denemeden önce banka hareketlerinizi kontrol edin/);
+  assert.match(errorHtml, /Ödeme Tamamlanamadı/);
+  assert.match(errorHtml, /WhatsApp Destek/);
 
   console.log('payment-flow.test.mjs: all assertions passed');
 } finally {

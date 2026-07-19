@@ -67,6 +67,8 @@ export async function onRequestPost(context) {
       orderNo: o.basketId || o.orderNo || invoiceId,
       siparis: {
         orderNo: o.basketId || o.orderNo || '',
+        paket: o.package || 'Hacıyatmaz Kablo Tip C 240W',
+        adet: o.quantity || 1,
         tutar: o.amount,
         ad: o.customerName,
         email: o.customerEmail,

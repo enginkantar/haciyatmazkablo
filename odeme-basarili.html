@@ -1,265 +1,143 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ödeme Başarılı | Hacıyatmaz Kablo</title>
   <meta name="robots" content="noindex, nofollow">
-
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ─── Global ─────────────────────────────────────────────── */
-    body {
-      background: #0b0b0b;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: system-ui, sans-serif;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0a; color: #cbd5e1; font-family: system-ui, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+    .card {
+      background: #141414; border: 1px solid rgba(34,197,94,0.3); border-radius: 20px;
+      padding: 40px 32px; max-width: 560px; width: 100%; text-align: center;
+      box-shadow: 0 0 60px rgba(34,197,94,0.08);
     }
-
-    /* ─── Animated gradient (ShaderGradient waterPlane yaklaşımı) ─ */
-    @keyframes waterGradient {
-      0%   { background-position: 0% 50%; }
-      33%  { background-position: 100% 0%; }
-      66%  { background-position: 50% 100%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* ─── Card: tüm arkaplan animasyonlu gradient ────────────── */
-    .card-success {
-      background: linear-gradient(-45deg, #25d366, #2d8b22, #52c41a, #94ffd1, #ffffff, #c8f5c8, #25d366);
-      background-size: 400% 400%;
-      animation: waterGradient 3s ease infinite;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 20px;
-      padding: 40px 36px;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-    }
-
-    /* ─── Video ikon ─────────────────────────────────────────── */
-    .icon-wrap {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 20px;
-      border: 3px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 4px 24px rgba(10, 80, 40, 0.35);
-    }
-    .icon-wrap video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ─── Başlık ─────────────────────────────────────────────── */
-    h1 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #0a3d1f;
-      margin-bottom: 14px;
-      line-height: 1.3;
-    }
-
-    /* ─── Marquee (ScrollBaseAnimation CSS yaklaşımı) ────────── */
-    @keyframes marqueeLeft {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @keyframes marqueeRight {
-      from { transform: translateX(-50%); }
-      to   { transform: translateX(0); }
-    }
-    .marquee-wrapper {
-      width: 100%;
-      overflow: hidden;
-      padding: 3px 0;
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      white-space: nowrap;
-    }
-    .marquee-track.go-left  { animation: marqueeLeft  11s linear infinite; }
-    .marquee-track.go-right { animation: marqueeRight 14s linear infinite; }
-    .marquee-text {
-      font-weight: 900;
-      text-transform: uppercase;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      color: #0a3d1f;
-      font-size: 0.88rem;
-      padding-right: 56px;
-      letter-spacing: 0.02em;
-    }
-
-    /* ─── Sipariş No + Ürün kutusu (yeşil gölge) ────────────── */
-    .order-ref {
-      background: rgba(255, 193, 7, 0.22);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 193, 7, 0.45);
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      color: #5a3e00;
-      margin-bottom: 4px;
-      box-shadow: 5px 0px 15px 0px rgba(255, 193, 7, 0.55);
-    }
-    .order-ref span { color: #b87800; font-weight: 700; }
-
-    .trust-note {
-      font-size: 0.78rem;
-      color: #1a5c33;
-      margin-top: 10px;
-      margin-bottom: 18px;
-    }
-
-    .product-box {
-      margin-bottom: 22px;
-      padding: 14px 16px;
-      background: rgba(255, 193, 7, 0.22);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 193, 7, 0.45);
-      border-radius: 10px;
-      box-shadow: 5px 0px 15px 0px rgba(255, 193, 7, 0.55);
-    }
-
-    /* ─── Ana Sayfa butonu ───────────────────────────────────── */
-    .btn-home {
-      background: #ffc107;
-      color: #1a1a00;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      padding: 13px 28px;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-home:hover { background: #e6a800; color: #000; }
-
-    /* ─── WhatsApp neon glow ─────────────────────────────────── */
-    .wa-link {
-      margin-top: 16px;
-      display: inline-block;
-      color: #fff;
-      font-size: 0.88rem;
-      font-weight: 600;
-      text-decoration: none;
-      text-shadow:
-        0px 0px 10px rgba(255, 255, 255, 1),
-        0px 0px 20px rgba(255, 255, 255, 1),
-        0px 0px 30px rgba(230,   0, 115, 1),
-        0px 0px 40px rgba(230,   0, 115, 1),
-        0px 0px 50px rgba(230,   0, 115, 1),
-        0px 0px 60px rgba(230,   0, 115, 1),
-        0px 0px 70px rgba(230,   0, 115, 1);
-      transition: text-shadow 0.3s;
-    }
-    .wa-link:hover {
-      color: #fff;
-      text-shadow:
-        0px 0px 6px rgba(255, 255, 255, 1),
-        0px 0px 12px rgba(255, 255, 255, 1),
-        0px 0px 20px rgba(37, 211, 102, 1),
-        0px 0px 35px rgba(37, 211, 102, 1),
-        0px 0px 50px rgba(37, 211, 102, 1);
-    }
+    .icon-video { width: 96px; height: 96px; margin: 0 auto 20px; display: block; border-radius: 50%; object-fit: cover; background: transparent; }
+    h1 { font-size: 1.6rem; font-weight: 800; color: #4ade80; margin-bottom: 10px; }
+    .lead { font-size: 0.95rem; color: #4ade80; line-height: 1.6; margin-bottom: 6px; }
+    .amount-box { margin: 24px 0 8px; padding: 18px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.35); border-radius: 14px; }
+    .amount-box .lbl { font-size: 0.8rem; color: #86efac; letter-spacing: .3px; }
+    .amount-box .val { font-size: 2rem; font-weight: 900; color: #4ade80; margin-top: 2px; }
+    .section { text-align: left; margin-top: 22px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 14px; overflow: hidden; }
+    .section h2 { font-size: 0.82rem; letter-spacing: .5px; text-transform: uppercase; color: #ffc107; padding: 14px 18px; border-bottom: 1px solid #2a2a2a; background: rgba(255,193,7,0.05); }
+    .row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 18px; border-bottom: 1px solid #222; font-size: 0.9rem; }
+    .row:last-child { border-bottom: none; }
+    .row .k { color: #64748b; flex-shrink: 0; }
+    .row .v { color: #e2e8f0; font-weight: 600; text-align: right; word-break: break-word; }
+    .row .v.hi { color: #ffc107; }
+    .row .v.mono { font-family: ui-monospace, monospace; letter-spacing: .3px; }
+    .badge { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; }
+    .badge.kargo { background: rgba(239,68,68,0.18); color: #f87171; animation: redBlink 1s ease-in-out infinite; }
+    @keyframes greenPulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    @keyframes redBlink   { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+    h1, .lead, .amount-box .val, .note { animation: greenPulse 1.4s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { h1, .lead, .amount-box .val, .note, .badge.kargo { animation: none; } }
+    .note { margin-top: 20px; font-size: 0.88rem; color: #4ade80; line-height: 1.6; }
+    .note b { color: #86efac; }
+    .note .email-orange { color: #fb923c; font-weight: 700; }
+    .btn { display: inline-block; margin-top: 26px; background: #ffc107; color: #1a1a00; font-weight: 700; font-size: 0.95rem; padding: 14px 32px; border-radius: 10px; text-decoration: none; transition: opacity .2s; }
+    .btn:hover { opacity: .88; }
+    .wa-link { display: block; margin-top: 14px; color: #94a3b8; font-size: 0.85rem; text-decoration: none; }
+    .wa-link:hover { color: #25d366; }
+    .trust { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
+    .trust-chip { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 10px; padding: 7px 12px; }
+    .trust-chip img { display: block; height: 22px; width: auto; }
+    .trust-chip span { font-size: 0.72rem; font-weight: 700; color: #1e293b; white-space: nowrap; }
+    .trust-etbis span { color: #7a5c1e; }
+    .trust-3ds { animation: tds3dPulse 1.6s ease-in-out infinite; }
+    .trust-3ds svg, .trust-3ds span { color: #b8860b; }
+    .trust-3ds span { font-weight: 800; }
+    @keyframes tds3dPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,193,7,.55); } 50% { box-shadow: 0 0 0 5px rgba(255,193,7,0); } }
+    .loading { color: #64748b; font-size: 0.85rem; margin-top: 20px; }
+    .infrastructure { margin-top: 14px; font-size: 0.75rem; color: #94a3b8; line-height: 1.5; text-align: center; }
+    .brand { margin-top: 32px; font-size: 0.75rem; color: #475569; text-align: center; }
+    .brand a { color: #64748b; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="card-success">
+  <div class="card">
+    <video class="icon-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="/assets/icon-video.mp4" type="video/mp4">
+    </video>
+    <h1>Ödeme Başarılı!</h1>
+    <p class="lead">Siparişiniz alındı ve hazırlanıyor.</p>
 
-    <!-- Video ikon -->
-    <div class="icon-wrap">
-      <video autoplay loop muted playsinline>
-        <source src="assets/icon-video.mp4" type="video/mp4">
-      </video>
+    <div id="detay">
+      <div class="loading">Sipariş bilgileri yükleniyor…</div>
     </div>
 
-    <h1>Ödemeniz Başarılı Şekilde Alınmıştır.</h1>
-
-    <!-- Marquee: sağa kayan -->
-    <div class="marquee-wrapper">
-      <div class="marquee-track go-right">
-        <span class="marquee-text">BİZİ TERCİH ETTİĞİNİZ İÇİN TEŞEKKÜRLER &nbsp;<img src="assets/thankyou.png" style="height:22px; vertical-align:middle; border-radius:4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span class="marquee-text">BİZİ TERCİH ETTİĞİNİZ İÇİN TEŞEKKÜRLER &nbsp;<img src="assets/thankyou.png" style="height:22px; vertical-align:middle; border-radius:4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      </div>
-    </div>
-
-    <!-- Marquee: sola kayan -->
-    <div class="marquee-wrapper" style="margin-top:4px; margin-bottom:16px;">
-      <div class="marquee-track go-left">
-        <span class="marquee-text">SİPARİŞİNİZ ÖZENLE HAZIRLANIP KARGOYA TESLİM EDİLECEKTİR. 🚛 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span class="marquee-text">SİPARİŞİNİZ ÖZENLE HAZIRLANIP KARGOYA TESLİM EDİLECEKTİR. 🚛 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      </div>
-    </div>
-
-    <!-- Sipariş No -->
-    <div class="order-ref" id="orderRef" style="display:none">
-      Sipariş No: <span id="orderNo"></span>
-    </div>
-
-    <p class="trust-note">
-      🔒 Ödeme işleminiz HalkÖde (Halkbank) güvenli ödeme altyapısı ile gerçekleştirilmiştir.
-    </p>
-
-    <!-- Ürün -->
-    <div class="product-box">
-      <p style="margin:0; font-size: 0.9rem; color: #3d2800;">
-        <i class="fas fa-box" style="color:#b87800; margin-right:6px;"></i>
-        <strong>Hacıyatmaz Kablo Tip C 240W</strong><br>
-        <small style="color:#5a3e00;">499,99 TL &bull; Türkiye Geneline Ücretsiz Kargo &bull; 3D Secure</small>
-      </p>
-    </div>
-
-    <a href="/" class="btn-home">
-      <i class="fas fa-home" style="margin-right:6px;"></i>Ana Sayfaya Dön
-    </a>
-
-    <br>
-
+    <div class="note" id="note"></div>
+    <a href="/" class="btn">Ana Sayfaya Dön</a>
     <a href="https://wa.me/905534759032?text=Siparişim%20hakkında%20bilgi%20almak%20istiyorum."
-       id="waLink"
-       class="wa-link"
-       target="_blank"
-       rel="noopener noreferrer">
-      <i class="fab fa-whatsapp"></i> WhatsApp ile iletişime geç
-    </a>
-
+       id="waLink" class="wa-link" target="_blank" rel="noopener noreferrer">WhatsApp ile iletişime geç</a>
+    <div class="trust">
+      <div class="trust-chip">
+        <img src="/assets/payment-security-logos.svg" alt="Mastercard, Maestro, Troy, Visa, PCI DSS, 3D Secure" loading="lazy">
+      </div>
+      <div class="trust-chip trust-3ds">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <span>3D Secure</span>
+      </div>
+      <div class="trust-chip trust-etbis">
+        <img src="/assets/basemo-cable-chrome/logo-tic-3.png" alt="T.C. Ticaret Bakanlığı" loading="lazy">
+        <span>ETBİS'E KAYITLIDIR</span>
+      </div>
+    </div>
+    <div class="infrastructure">Batu Teknoloji E-Commerce M Power altyapısı ile işlemler sağlanmıştır.</div>
+  </div>
+  <div class="brand">
+    <a href="https://www.haciyatmazkablo.com">Hacıyatmaz Kablo</a> — 240W E-Marker çipli Tip C
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const waLink = document.getElementById('waLink');
+    (function () {
+      const v = document.querySelector('.icon-video');
+      if (v) v.play().catch(() => {});
+    })();
 
-    function showOrderNo(value) {
-      const safe = String(value || '').replace(/[^A-Za-z0-9\-]/g, '');
-      if (!safe) return;
-      document.getElementById('orderNo').textContent = safe;
-      document.getElementById('orderRef').style.display = 'block';
-      const msg = `www.haciyatmazkablo.com sitesinden sipariş no: ${safe} hakkında bilgi almak istiyorum.`;
-      waLink.href = 'https://wa.me/905534759032?text=' + encodeURIComponent(msg);
+    function esc(s) { const d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; }
+    function row(k, v, cls) { return v ? `<div class="row"><span class="k">${k}</span><span class="v ${cls || ''}">${v}</span></div>` : ''; }
+
+    function render(s) {
+      const detay = document.getElementById('detay');
+      const tutar = s.tutar ? Number(s.tutar).toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' TL' : '';
+      const kargoBadge = s.kargoBarkod ? '' : `<span class="badge kargo">Hazırlanıyor</span>`;
+      detay.innerHTML =
+        (tutar ? `<div class="amount-box"><div class="lbl">Ödenen Tutar</div><div class="val">${esc(tutar)}</div></div>` : '') +
+        `<div class="section"><h2>Sipariş Özeti</h2>` +
+          row('Sipariş No', esc(s.orderNo), 'hi mono') +
+          row('Ürün', esc(s.paket || 'Hacıyatmaz Kablo Tip C 240W')) +
+          (kargoBadge ? row('Kargo Durumu', kargoBadge) : '') +
+          row('Kargo Takip', esc(s.kargoBarkod), 'mono') +
+          row('Fatura No', esc(s.faturaNo), 'hi mono') +
+        `</div>` +
+        `<div class="section"><h2>Teslimat Bilgileri</h2>` +
+          row('Ad Soyad', esc(s.ad)) +
+          row('Telefon', esc(s.telefon)) +
+          row('E-posta', esc(s.email)) +
+          row('Şehir / İlçe', esc([s.sehir, s.ilce].filter(Boolean).join(' / '))) +
+          row('Adres', esc(s.adres)) +
+        `</div>`;
+
+      const note = document.getElementById('note');
+      note.innerHTML = s.email
+        ? `İşlem onayı ve kargo takip bilgileriniz <b class="email-orange">${esc(s.email)}</b> adresine gönderildi. ` +
+          `Her türlü sorunuz için WhatsApp: <b>+90 553 475 9032</b>`
+        : `Her türlü sorunuz için WhatsApp: <b>+90 553 475 9032</b>`;
+
+      if (s.orderNo) {
+        const msg = `www.haciyatmazkablo.com sitesinden sipariş no: ${s.orderNo} hakkında bilgi almak istiyorum.`;
+        document.getElementById('waLink').href = 'https://wa.me/905534759032?text=' + encodeURIComponent(msg);
+      }
     }
 
-    // Eski akış uyumluluğu (?order=...)
-    showOrderNo(params.get('order'));
-
-    // HalkÖde dönüşü: sunucu-sunucu teyit + sipariş işleme (kargo/fatura/bildirim)
     (async function notifySuccess() {
-      const invoiceId = params.get('invoice_id') || '';
-      const orderNo = params.get('order_no') || params.get('order_id') || '';
-      if (!invoiceId && !orderNo) return;
+      const p = new URLSearchParams(window.location.search);
+      const invoiceId = p.get('invoice_id') || '';
+      const orderNo = p.get('order_no') || p.get('order_id') || '';
+      const detay = document.getElementById('detay');
+      if (!invoiceId && !orderNo) { detay.innerHTML = ''; return; }
       try {
         const res = await fetch('/api/payment/notify-success', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -267,15 +145,22 @@
             invoice_id: invoiceId,
             order_id: orderNo,
             order_no: orderNo,
-            payment_status: params.get('payment_status') || '',
-            status: params.get('status') || '',
-            hash_key: params.get('hash_key') || '',
+            payment_status: p.get('payment_status') || '',
+            status: p.get('status') || '',
+            hash_key: p.get('hash_key') || '',
           }),
         });
         const data = await res.json();
-        if (data && data.ok) showOrderNo(data.orderNo);
+        if (data && data.siparis) {
+          render(data.siparis);
+        } else {
+          detay.innerHTML = orderNo
+            ? `<div class="section"><h2>Sipariş</h2><div class="row"><span class="k">Sipariş No</span><span class="v hi mono">${esc(orderNo)}</span></div></div>`
+            : '';
+        }
       } catch (e) {
         console.error('[notify] failed:', e);
+        detay.innerHTML = '';
       }
     })();
   </script>
