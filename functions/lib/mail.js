@@ -140,16 +140,27 @@ async function sendZohoEmail(env, { to, subject, html }) {
   }
 }
 
-// ─── Zoho → Resend fallback ──────────────────────────────────────────────────
+// ─── Resend (birincil: siparis@haciyatmazkablo.com göndericisi) → Zoho yedek ──
+// Zoho hesabı hydrozid'inki; Lite planda haciyatmazkablo alias'ı eklenemiyor,
+// o yüzden markalı gönderici Resend üzerinden. Resend başarısız olursa
+// (örn. domain doğrulaması beklerken) Zoho'dan gider — mail asla kaybolmaz.
 export async function sendEmail(env, { to, subject, html, replyTo }) {
+  if (env.RESEND_API_KEY) {
+    const resend = await sendResendEmail(env, { to, subject, html, replyTo });
+    if (resend) return true;
+    console.warn('[resend] fallback to zoho');
+  }
+
   if (env.ZOHO_REFRESH_TOKEN && env.ZOHO_CLIENT_ID && env.ZOHO_CLIENT_SECRET) {
     const zoho = await sendZohoEmail(env, { to, subject, html });
     if (zoho.ok) return true;
-    console.warn('[zoho] fallback to resend:', zoho.error || 'unknown error');
+    console.warn('[zoho] send failed:', zoho.error || 'unknown error');
   }
 
-  if (!env.RESEND_API_KEY) return false;
+  return false;
+}
 
+async function sendResendEmail(env, { to, subject, html, replyTo }) {
   try {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
