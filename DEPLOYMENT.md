@@ -22,11 +22,15 @@ Telegram:
 - `TELEGRAM_BOT_TOKEN` (mevcut Pages secret `TELEGRAM_BOT` adıyla da kabul edilir)
 - `TELEGRAM_CHAT_ID`
 
-Basit Kargo:
+Kargo (aktif: Kargonomi + HepsiJET pinli):
 
-- `BASITKARGO_TOKEN`
-- `BASITKARGO_HANDLER` (`YURTICI`, `ARAS`, `MNG`, `SURAT`, `PTT`, `ECONOMIC` veya hesapta tanımlı değer)
-- `KARGO_SAGLAYICI=basitkargo`
+- `KARGO_SAGLAYICI=kargonomi`
+- `KARGONOMI_TOKEN`
+- `KARGONOMI_SAGLAYICI=hepsijet` (pin; o bölgede yoksa en ucuz sağlayıcı seçilir)
+- `KARGO_GONDERICI_VKN`, `KARGO_GONDERICI_TEL`, `KARGO_GONDERICI_ADRES`,
+  `KARGO_GONDERICI_STATE_ID`, `KARGO_GONDERICI_CITY_ID` (Çorum=19, Merkez=639),
+  opsiyonel `KARGO_GONDERICI_UNVAN`
+- Alternatif: `KARGO_SAGLAYICI=basitkargo` + `BASITKARGO_TOKEN` + `BASITKARGO_HANDLER`
 
 QNB e-Arşiv:
 
