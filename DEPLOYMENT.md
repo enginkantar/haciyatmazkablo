@@ -5,13 +5,15 @@
 `wrangler.toml` içindeki `PAYMENT_KV` binding'i ödeme oturumları ve idempotency için kullanılır.
 Cloudflare Pages proje ayarlarında aşağıdaki değerler şifreli değişken olarak tanımlanmalıdır:
 
-- `IYZICO_API_KEY`
-- `IYZICO_SECRET_KEY`
-- `IYZICO_BASE_URL=https://api.iyzipay.com`
-- `IYZICO_CALLBACK_URL=https://www.haciyatmazkablo.com/api/payment/callback`
+- `HALKODE_APP_ID` (HalkÖde "Uygulama Anahtarı")
+- `HALKODE_APP_SECRET` (HalkÖde "Uygulama Parolası")
+- `HALKODE_MERCHANT_KEY` (HalkÖde "Üyeişyeri Anahtarı", `$2y$10$...` ile başlar)
 - `TURNSTILE_SECRET` (Cloudflare Turnstile server-side secret, when bot verification is enabled)
+- Opsiyonel: `WEBHOOK_SECRET` (HalkÖde webhook anahtarı), `BASE_URL` (varsayılan https://www.haciyatmazkablo.com), `GOOGLE_MAPS_API_KEY` (adres autocomplete'i Google Places'a geçirir; yoksa OSM kullanılır)
 
-Canlıya geçmeden önce sandbox adresinin üretim adresiyle değiştiğini özellikle doğrulayın.
+Ödeme akışı: sipariş formu → `/api/payment/start` → `/odeme` white-label kart sayfası →
+HalkÖde `paySmart3D` (3D Secure) → dönüş `/odeme-basarili` (`notify-success` + sunucu-sunucu
+`checkstatus` teyidi) ve `/api/payment/webhook`. Kart verisi sitemizin sunucusuna uğramaz.
 
 ## 2. Sipariş sonrası entegrasyonlar
 
@@ -51,17 +53,17 @@ Regresyon testi şunları doğrular:
 - fiyatın yalnız sunucudan alınması;
 - `+90` telefonun `05XXXXXXXXX` biçimine dönüştürülmesi;
 - kısa adres ve yabancı Origin reddi;
-- yalnız gömülü iyzico formunun kabul edilmesi;
-- `821` ile `821.00` tutarlarının eşdeğer kabul edilmesi;
-- kurcalanmış tutarın reddi;
-- işlenmiş callback'in entegrasyonları ikinci kez çağırmaması.
+- whitelabel-init'in sağlayıcı formatında hash üretmesi;
+- hash'siz "ödendi" webhook'unun checkstatus teyidiyle işlenmesi;
+- teyitsiz (sahte) webhook'un siparişi PAID yapmaması;
+- işlenmiş webhook'un entegrasyonları ikinci kez çağırmaması (idempotency);
 - eksik kargo/fatura yapılandırmasının `PROCESSED_WITH_WARNINGS` olarak kaydedilmesi.
 
 ## 4. Canlı duman testi
 
 1. Düşük riskli gerçek bir sipariş oluşturun.
-2. Kart alanının modal içinde kaldığını doğrulayın.
-3. iyzico panelinde ödeme ve sipariş numarasını eşleştirin.
+2. `/odeme` kart sayfasından 3D Secure ekranının açıldığını doğrulayın.
+3. HalkÖde panelinde ödeme ve sipariş numarasını eşleştirin.
 4. Cloudflare loglarında `order.paid` kaydını kontrol edin.
 5. Telegram mesajı, Basit Kargo barkodu ve QNB fatura numarasının aynı sipariş numarasını taşıdığını doğrulayın.
 6. Başarılı sayfayı yenileyin; ikinci kargo/fatura oluşmamalıdır.
