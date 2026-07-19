@@ -65,15 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ── Step indicator animation on modal open (tek seferlik) ─────
+    // ── Step indicator animation on modal open (her açılışta) ─────
     const orderModal = document.getElementById('orderModal');
-    let stepsAnimated = false;
     if (orderModal) {
         orderModal.addEventListener('shown.bs.modal', function() {
-            if (stepsAnimated) return;   // ikinci açılışta tekrarlama
-            stepsAnimated = true;
-
-            if (typeof anime === 'undefined') return;
+            if (typeof anime === 'undefined') {
+                // anime yüklenemezse adımlar görünmez kalmasın
+                document.querySelectorAll('.step-item, .step-connector')
+                    .forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+                return;
+            }
 
             anime.timeline({ easing: 'easeOutBack', duration: 380 })
                 .add({ targets: '#step1',     opacity: [0,1], translateX: [-22, 0] }, 80)
@@ -108,6 +109,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('step2')?.classList.remove('step-active');
         });
     }
+
+    // Geçersiz alan uyarısı: alan düzelince kırmızı/mor efekt söner
+    document.getElementById('orderForm')?.addEventListener('input', function(e) {
+        const el = e.target;
+        if (!(el instanceof Element) || typeof el.checkValidity !== 'function' || !el.checkValidity()) return;
+        el.classList.remove('field-error');
+        if (el.id === 'customerPhone') {
+            document.querySelector('#customerPhone ~ .form-text')?.classList.remove('hint-error');
+        }
+    });
 });
 
 // ===== PAYMENT HANDLER =====
@@ -116,6 +127,10 @@ async function handlePayment() {
 
     if (!form.checkValidity()) {
         showAlert('Lütfen tüm alanları doğru şekilde doldurunuz!', 'warning');
+        form.querySelectorAll(':invalid').forEach(el => el.classList.add('field-error'));
+        if (!document.getElementById('customerPhone').checkValidity()) {
+            document.querySelector('#customerPhone ~ .form-text')?.classList.add('hint-error');
+        }
         form.reportValidity();
         return;
     }

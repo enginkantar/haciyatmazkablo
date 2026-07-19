@@ -3011,7 +3011,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <p>
                         <strong>240W E-Marker çipli</strong> profesyonel Tip C kablomuzla farkı yaşayın.
                     </p>
-                    <a href="#hero" class="btn btn-warning btn-lg">
+                    <a class="btn btn-warning btn-lg" role="button" tabindex="0" style="cursor:pointer"
+                        data-bs-toggle="modal" data-bs-target="#orderModal">
                         🛒 Hemen Satın Al — 499,99 TL
                     </a>
                 </div>
@@ -3195,7 +3196,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div class="hyk-footer-trust">
                     <div class="hyk-trust-chip hyk-trust-batu">
                         <img src="/assets/batu-teknoloji-icon.jpg" alt="Batu Teknoloji" loading="lazy">
-                        <span>Batu Teknoloji güvencesi ile</span>
+                        <span>Batu Teknoloji E-Commerce M POWER ile</span>
                     </div>
                     <div class="hyk-trust-chip hyk-trust-payment">
                         <img class="hyk-payment-logos" src="/assets/payment-security-logos.svg" alt="Mastercard, Maestro, Troy, Visa, Visa Electron, PCI DSS, 3D Secure ve Güvenli Öde" loading="lazy">
@@ -3471,6 +3472,34 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.18), 0 0 18px rgba(255, 193, 7, 0.55);
     }
 
+    /* ── GEÇERSİZ ALAN UYARILARI (nötron yıldızı efekti) ──── */
+    @keyframes neutronPulse {
+        0%, 100% { box-shadow: 0 0 5px 1px rgba(255, 45, 85, 0.9); border-color: #ff2d55 !important; }
+        50%      { box-shadow: 0 0 16px 4px rgba(175, 82, 222, 0.95); border-color: #af52de !important; }
+    }
+
+    #orderForm .field-error {
+        animation: neutronPulse 0.9s ease-in-out infinite;
+    }
+
+    @keyframes neutronBurst {
+        0%, 100% { opacity: 1;   color: #ff2d55; text-shadow: 0 0 2px rgba(255, 45, 85, 0.6); }
+        50%      { opacity: 0.5; color: #ff2d55; text-shadow: 0 0 16px rgba(255, 45, 85, 1); }
+    }
+
+    #orderForm .hint-error {
+        animation: neutronBurst 0.8s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #orderForm .field-error,
+        #orderForm .hint-error {
+            animation: none;
+            border-color: #ff2d55 !important;
+            color: #ff2d55;
+        }
+    }
+
     .checkout-stage {
         padding: 6px 0 4px;
     }
@@ -3723,10 +3752,12 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                         </div>
                     </div>
 
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAD33mTchS4lY6xwo" data-language="tr" style="margin:12px 0 2px"></div>
+
                     <div class="hyk-footer-trust" style="margin:14px 0 2px;">
                         <div class="hyk-trust-chip hyk-trust-batu">
                             <img src="/assets/batu-teknoloji-icon.jpg" alt="Batu Teknoloji" loading="lazy">
-                            <span>Batu Teknoloji güvencesi ile</span>
+                            <span>Batu Teknoloji E-Commerce M POWER ile</span>
                         </div>
                         <div class="hyk-trust-chip hyk-trust-payment">
                             <img class="hyk-payment-logos" src="/assets/payment-security-logos.svg" alt="Mastercard, Maestro, Troy, Visa, Visa Electron, PCI DSS, 3D Secure ve Güvenli Öde" loading="lazy">
@@ -3759,7 +3790,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
             <div class="modal-footer" id="orderModalFooter"
                 style="border-top:1px solid #2a2a2a; flex-direction:column; align-items:stretch; gap:8px; overflow:visible;">
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAD33mTchS4lY6xwo" data-language="tr" style="margin:0 0 6px"></div>
                 <button type="button" class="btn-payment-hover" id="paymentBtn" tabindex="10">
                     <div class="btn-payment-inner" id="paymentBtnInner">
                         <i class="fas fa-lock me-2"></i>Güvenli Ödemeye Git →
@@ -3781,7 +3811,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 <!-- Anime.js v3 -->
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 <!-- Custom JS -->
-<script src="assets/js/script.js?v=20260719-hosted-checkout"></script>
+<script src="assets/js/script.js?v=20260719-ui-pass"></script>
 
 <!-- ===== AAVE DESIGN PACKAGE ===== -->
 <style id="aave-design-system">

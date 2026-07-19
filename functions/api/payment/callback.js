@@ -331,11 +331,22 @@ async function processCallback(request, env, token, conversationId, waitUntil) {
     return redirect(`${ERROR}?reason=sig_invalid`);
   }
 
-  // Tutar ve sipariş bağını doğrula
-  const paidKurus = moneyToKurus(retrieveData.paidPrice);
+  // Tutar ve sipariş bağını doğrula — sepet tutarı (price) sabittir;
+  // paidPrice taksit vade farkıyla BÜYÜYEBİLİR ama asla küçülemez.
+  const priceKurus    = moneyToKurus(retrieveData.price);
+  const paidKurus     = moneyToKurus(retrieveData.paidPrice);
   const expectedKurus = moneyToKurus(kvData.amount);
-  if (paidKurus === null || expectedKurus === null || paidKurus !== expectedKurus) {
-    console.error('[payment/callback] Tutar uyuşmazlığı:', retrieveData.paidPrice, '!=', kvData.amount);
+  if (priceKurus === null || expectedKurus === null || priceKurus !== expectedKurus ||
+      paidKurus === null || paidKurus < priceKurus) {
+    console.error('[payment/callback] Tutar uyuşmazlığı:', retrieveData.price, '/', retrieveData.paidPrice, '!=', kvData.amount);
+    if (retrieveData.paymentStatus === 'SUCCESS') {
+      // Kart çekilmiş olabilir — sessiz düşme yok, elle kontrol için alarm.
+      await telegramGonder(env,
+`⚠️ TUTAR UYUŞMAZLIĞI — tahsilat gerçekleşmiş olabilir, elle kontrol et!
+Sipariş: ${kvData.basketId}
+iyzico paymentId: ${retrieveData.paymentId || '-'}
+price: ${retrieveData.price} / paidPrice: ${retrieveData.paidPrice} / beklenen: ${kvData.amount}`);
+    }
     return redirect(`${ERROR}?reason=amount_mismatch`);
   }
 

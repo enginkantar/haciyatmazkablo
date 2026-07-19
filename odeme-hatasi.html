@@ -44,6 +44,14 @@
     .alt-card-hint { font-size: 0.8rem; color: #888; margin-top: 10px; }
     .wa-link { margin-top: 16px; display: block; color: #aaa; font-size: 0.85rem; text-decoration: none; }
     .wa-link:hover { color: #25d366; }
+    @keyframes neutronBurst {
+      0%, 100% { opacity: 1;    text-shadow: 0 0 2px rgba(255, 45, 85, 0.5); }
+      50%      { opacity: 0.45; text-shadow: 0 0 18px rgba(255, 45, 85, 1); }
+    }
+    h1, p.sub, .reason-box, .hint { animation: neutronBurst 1.1s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      h1, p.sub, .reason-box, .hint { animation: none; }
+    }
   </style>
 </head>
 <body>

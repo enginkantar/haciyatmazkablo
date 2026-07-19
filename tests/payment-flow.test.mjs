@@ -228,6 +228,31 @@ try {
   });
   assert.match(tamperResponse.headers.get('location'), /amount_mismatch/);
 
+  // Taksitli ödeme: paidPrice vade farkıyla büyür, sepet tutarı (price) sabit — kabul edilmeli
+  const taksitKv = new MockKV();
+  await taksitKv.put('token:taksit-token', JSON.stringify({
+    conversationId: 'conversation-3', basketId: 'B-ORDER03', amount: '499.99', status: 'PENDING',
+  }));
+  globalThis.fetch = async () => Response.json({
+    status: 'success', paymentStatus: 'SUCCESS', paymentId: 'payment-3', currency: 'TRY',
+    basketId: 'B-ORDER03', conversationId: 'conversation-3', paidPrice: '518.46', price: '499.99',
+    token: 'taksit-token',
+  });
+  const taksitResponse = await paymentCallback({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/callback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ token: 'taksit-token', conversationId: 'conversation-3' }),
+    }),
+    env: {
+      IYZICO_API_KEY: 'test-key', IYZICO_SECRET_KEY: 'test-secret',
+      IYZICO_BASE_URL: 'https://mock.iyzico.test', PAYMENT_KV: taksitKv,
+    },
+    waitUntil: () => {},
+  });
+  assert.match(taksitResponse.headers.get('location'), /odeme-basarili/,
+    'Taksitli ödemede paidPrice > price kabul edilmeli');
+
   const [homeHtml, errorHtml, successHtml, feedXml, preInfoHtml] = await Promise.all([
     readFile(new URL('../index.html', import.meta.url), 'utf8'),
     readFile(new URL('../odeme-hatasi.html', import.meta.url), 'utf8'),
@@ -238,7 +263,7 @@ try {
   assert.match(homeHtml, /499,99 TL/);
   assert.match(homeHtml, /id="orderModal"[^>]*data-bs-focus="false"/);
   assert.match(homeHtml, /id="iyzicoHostedFallback"/);
-  assert.match(homeHtml, /script\.js\?v=20260719-hosted-checkout/);
+  assert.match(homeHtml, /script\.js\?v=20260719-ui-pass/);
   assert.match(successHtml, /499,99 TL/);
   assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
   assert.match(preInfoHtml, /499,99 TL, KDV dahil/);
