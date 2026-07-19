@@ -11,8 +11,6 @@ const IYZICO_PAY_LINK = 'https://iyzi.link/AKc7ug';
 // =====================================================
 const PRICE_NORMAL = '499.99';
 let currentPrice   = PRICE_NORMAL;
-let checkoutFallbackTimer = null;
-let checkoutFallbackCleanup = null;
 
 // =====================================================
 // DOM READY — TIMER + MENÜ + PAYMENT INIT
@@ -89,26 +87,16 @@ document.addEventListener('DOMContentLoaded', function() {
         orderModal.addEventListener('hidden.bs.modal', function() {
             const form = document.getElementById('orderForm');
             const footer = document.getElementById('orderModalFooter');
-            const stage = document.getElementById('paymentStage');
-            const mount = document.getElementById('iyzicoCheckoutMount');
-            const fallback = document.getElementById('iyzicoHostedFallback');
             const title = document.getElementById('orderModalLabel');
             if (form) form.hidden = false;
             if (footer) footer.hidden = false;
-            if (stage) stage.hidden = true;
-            if (mount) mount.replaceChildren();
-            if (fallback) {
-                fallback.hidden = true;
-                fallback.classList.remove('is-visible');
-            }
-            clearTimeout(checkoutFallbackTimer);
-            checkoutFallbackCleanup?.();
-            checkoutFallbackCleanup = null;
             if (title) title.textContent = 'Sipariş ve Teslimat Bilgileri';
             document.getElementById('step1')?.classList.remove('step-complete');
             document.getElementById('step2')?.classList.remove('step-active');
         });
     }
+
+    initAddressAutocomplete();
 
     // Geçersiz alan uyarısı: alan düzelince kırmızı/mor efekt söner
     document.getElementById('orderForm')?.addEventListener('input', function(e) {
@@ -196,19 +184,14 @@ async function handlePayment() {
         if (!resp.ok) {
             throw new Error(data.error || 'Ödeme sistemi şu anda yanıt vermiyor. Lütfen tekrar deneyin.');
         }
-        if (!data.checkoutFormContent && !data.paymentPageUrl) {
+        if (!data.link) {
             throw new Error(data.error || 'Ödeme başlatılamadı.');
         }
 
         showAlert('Teslimat bilgileri hazır. Güvenli ödeme adımına geçildi.', 'success');
-
-        if (data.paymentPageUrl) {
-            // Hosted sayfa birinci tercih: gömülü form Safari'de üçüncü taraf
-            // çerez engeli yüzünden 3DS adımında takılıyor (18 Tem canlı testi).
-            window.location.assign(data.paymentPageUrl);
-        } else {
-            showEmbeddedCheckout(data.checkoutFormContent, data.paymentPageUrl);
-        }
+        // Markalı white-label kart sayfası (HalkÖde) — kart verisi oradan
+        // doğrudan sağlayıcıya gider.
+        window.location.assign(data.link);
 
     } catch (err) {
         console.error('Ödeme hatası:', err);
@@ -216,6 +199,72 @@ async function handlePayment() {
         btn.disabled = false;
         if (inner) inner.innerHTML = innerText;
     }
+}
+
+// ===== ADRES OTOMATİK TAMAMLAMA (/api/address-suggest) =====
+function initAddressAutocomplete() {
+    const input = document.getElementById('customerAddress');
+    if (!input) return;
+
+    const list = document.createElement('div');
+    list.id = 'addressSuggestList';
+    list.style.cssText = 'position:absolute; z-index:2000; left:0; right:0; top:100%; background:#1a1a1a; border:1px solid #444; border-radius:0 0 10px 10px; max-height:220px; overflow-y:auto; display:none;';
+    input.parentElement.style.position = 'relative';
+    input.parentElement.appendChild(list);
+
+    let timer = null;
+    let lastQuery = '';
+
+    function hide() { list.style.display = 'none'; list.replaceChildren(); }
+
+    input.addEventListener('input', () => {
+        clearTimeout(timer);
+        const q = input.value.trim();
+        if (q.length < 4) { hide(); return; }
+        timer = setTimeout(async () => {
+            lastQuery = q;
+            try {
+                const res = await fetch('/api/address-suggest?q=' + encodeURIComponent(q));
+                const data = await res.json();
+                if (lastQuery !== q) return; // eski yanıt
+                const items = (data.suggestions || []).slice(0, 6);
+                if (!items.length) { hide(); return; }
+                list.replaceChildren(...items.map(s => {
+                    const row = document.createElement('button');
+                    row.type = 'button';
+                    row.textContent = s.label;
+                    row.style.cssText = 'display:block; width:100%; text-align:left; background:none; border:0; border-bottom:1px solid #2a2a2a; color:#ddd; padding:9px 12px; font-size:0.82rem; cursor:pointer;';
+                    row.addEventListener('mouseenter', () => row.style.background = '#2a2a2a');
+                    row.addEventListener('mouseleave', () => row.style.background = 'none');
+                    row.addEventListener('click', () => {
+                        input.value = s.address || s.label;
+                        const citySel = document.getElementById('customerCity');
+                        if (s.city && citySel instanceof HTMLSelectElement) {
+                            const opt = Array.from(citySel.options).find(o => o.value.localeCompare(s.city, 'tr', { sensitivity: 'base' }) === 0);
+                            if (opt) {
+                                citySel.value = opt.value;
+                                citySel.dispatchEvent(new Event('change'));
+                                if (s.district) setTimeout(() => {
+                                    const distSel = document.getElementById('customerDistrict');
+                                    if (distSel instanceof HTMLSelectElement) {
+                                        const dOpt = Array.from(distSel.options).find(o => o.value.localeCompare(s.district, 'tr', { sensitivity: 'base' }) === 0);
+                                        if (dOpt) distSel.value = dOpt.value;
+                                    }
+                                }, 50);
+                            }
+                        }
+                        hide();
+                    });
+                    return row;
+                }));
+                list.style.display = 'block';
+            } catch { hide(); }
+        }, 450);
+    });
+
+    document.addEventListener('click', e => {
+        if (!(e.target instanceof Element) || (!list.contains(e.target) && e.target !== input)) hide();
+    });
 }
 
 function initCityDistrictSelectors() {
@@ -343,64 +392,6 @@ function initLazyCdnVideos() {
     });
 }
 
-function showEmbeddedCheckout(checkoutFormContent, paymentPageUrl) {
-    const form          = document.getElementById('orderForm');
-    const footer        = document.getElementById('orderModalFooter');
-    const paymentStage  = document.getElementById('paymentStage');
-    const checkoutMount = document.getElementById('iyzicoCheckoutMount');
-    const fallback      = document.getElementById('iyzicoHostedFallback');
-    const fallbackLink  = document.getElementById('iyzicoHostedFallbackLink');
-    const modalTitle    = document.getElementById('orderModalLabel');
-
-    if (!form || !footer || !paymentStage || !checkoutMount) {
-        throw new Error('Ödeme alanı hazırlanamadı. Lütfen tekrar deneyin.');
-    }
-
-    form.hidden = true;
-    footer.hidden = true;
-    paymentStage.hidden = false;
-    modalTitle.textContent = 'Hacıyatmaz Kablo ile Güvenli Ödeme';
-    document.getElementById('step1')?.classList.add('step-complete');
-    document.getElementById('step2')?.classList.add('step-active');
-
-    // innerHTML ile eklenen scriptler çalışmadığı için script düğümlerini
-    // güvenli biçimde yeniden oluşturuyoruz. Kart verisi iyzico alanında kalır.
-    const template = document.createElement('template');
-    template.innerHTML = checkoutFormContent.trim();
-    const scripts = Array.from(template.content.querySelectorAll('script'));
-    scripts.forEach(script => script.remove());
-    checkoutMount.replaceChildren(template.content.cloneNode(true));
-
-    scripts.forEach(source => {
-        const script = document.createElement('script');
-        for (const attr of source.attributes) script.setAttribute(attr.name, attr.value);
-        script.textContent = source.textContent;
-        checkoutMount.appendChild(script);
-    });
-
-    checkoutFallbackCleanup?.();
-    checkoutFallbackCleanup = null;
-    clearTimeout(checkoutFallbackTimer);
-    if (fallback && fallbackLink && paymentPageUrl) {
-        fallbackLink.href = paymentPageUrl;
-        fallback.hidden = true;
-        fallback.classList.remove('is-visible');
-
-        const revealFallback = () => {
-            fallback.hidden = false;
-            fallback.classList.add('is-visible');
-        };
-        const armFallback = event => {
-            if (!(event.target instanceof Element) || !event.target.closest('#iyz-payment-button')) return;
-            clearTimeout(checkoutFallbackTimer);
-            checkoutFallbackTimer = setTimeout(revealFallback, 12000);
-        };
-        document.addEventListener('click', armFallback, true);
-        checkoutFallbackCleanup = () => document.removeEventListener('click', armFallback, true);
-    }
-
-    paymentStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 // ===== MOBILE MENU AUTO-CLOSE =====
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function() {

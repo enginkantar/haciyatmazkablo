@@ -1,5 +1,7 @@
 // POST /api/payment/start
-// iyzico CheckoutForm Initialize — gömülü ödeme formunu başlatır
+// HalkÖde white-label ödeme — siparişi KV'ye yazar, markalı kart sayfasının
+// linkini döner. Kart verisi bu sunucuya HİÇ gelmez; /odeme.html formu
+// doğrudan HalkÖde paySmart3D'ye POST eder.
 
 const PRODUCT = {
   id:           'BASEMO-TC-240W',
@@ -11,7 +13,7 @@ const PRODUCT = {
 
 function isAllowedOrigin(request) {
   const origin = request.headers.get('Origin');
-  if (!origin) return true; // iyzico callback ve bazı uygulama içi tarayıcılar
+  if (!origin) return true; // ödeme sağlayıcı dönüşleri ve bazı uygulama içi tarayıcılar
   try {
     const { hostname } = new URL(origin);
     return hostname === 'haciyatmazkablo.com' ||
@@ -34,50 +36,6 @@ function corsHeaders(request) {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Vary': 'Origin',
   };
-}
-
-// ─── Yardımcı: random string ─────────────────────────────────────────────────
-function randomKey(len = 16) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const bytes = new Uint8Array(len);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, b => chars[b % chars.length]).join('');
-}
-
-// ─── iyzico PKI string formatı ───────────────────────────────────────────────
-function toPKI(val) {
-  if (val === null || val === undefined) return '';
-  if (Array.isArray(val)) {
-    return '[' + val.map(toPKI).join(', ') + ']';
-  }
-  if (typeof val === 'object') {
-    const parts = [];
-    for (const [k, v] of Object.entries(val)) {
-      if (v === null || v === undefined) continue;
-      if (Array.isArray(v))         parts.push(`${k}=[${v.map(toPKI).join(', ')}]`);
-      else if (typeof v === 'object') parts.push(`${k}=${toPKI(v)}`);
-      else                            parts.push(`${k}=${v}`);
-    }
-    return '[' + parts.join(', ') + ']';
-  }
-  return String(val);
-}
-
-// ─── iyzico IYZWSv2 Authorization header ─────────────────────────────────────
-// payload  = rnd + uri + JSON.stringify(body)
-// hash     = hex(HMAC-SHA256(secretKey, payload))
-// authStr  = "apiKey:xxx&randomKey:xxx&signature:xxx"  ← camelCase, ":"
-// header   = "IYZWSv2 " + base64(authStr)
-async function iyzicoAuthHeader(apiKey, secretKey, rnd, uri, body) {
-  const payload = rnd + uri + JSON.stringify(body);
-  const keyMat  = await crypto.subtle.importKey(
-    'raw', new TextEncoder().encode(secretKey),
-    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-  );
-  const sigBuf = await crypto.subtle.sign('HMAC', keyMat, new TextEncoder().encode(payload));
-  const sigHex = Array.from(new Uint8Array(sigBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
-  const auth   = `apiKey:${apiKey}&randomKey:${rnd}&signature:${sigHex}`;
-  return 'IYZWSv2 ' + btoa(auth);
 }
 
 function jsonResp(request, data, status = 200) {
@@ -139,12 +97,8 @@ export async function onRequestPost(context) {
     return new Response('Forbidden', { status: 403 });
   }
 
-  const apiKey      = env.IYZICO_API_KEY;
-  const secretKey   = env.IYZICO_SECRET_KEY;
-  const baseUrl     = env.IYZICO_BASE_URL     || 'https://api.iyzipay.com';
-  const callbackUrl = env.IYZICO_CALLBACK_URL || 'https://www.haciyatmazkablo.com/api/payment/callback';
-
-  if (!apiKey || !secretKey || !env.PAYMENT_KV) {
+  if (!env.HALKODE_APP_ID || !env.HALKODE_APP_SECRET || !env.HALKODE_MERCHANT_KEY || !env.PAYMENT_KV) {
+    console.error('[payment/start] missing HalkÖde configuration');
     return jsonResp(request, { error: 'Ödeme sistemi yapılandırılmamış.' }, 503);
   }
 
@@ -193,122 +147,29 @@ export async function onRequestPost(context) {
   // Fiyat yalnızca sunucuda belirlenir; istemciden fiyat kabul edilmez.
   const finalPrice = PRODUCT.priceNormal;
 
-  // E-posta ASCII kontrolü (ı, ğ, ş gibi Türkçe karakter iyzico'da hata verir)
   if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email)) {
     return jsonResp(request, { error: 'Geçerli bir e-posta adresi girin (Türkçe karakter kullanmayın).' }, 400);
   }
 
-  // Ad / Soyad
-  const parts     = name.split(/\s+/);
-  const firstName = parts[0];
-  const lastName  = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
-
-  // Telefon: iyzico gsmNumber +90 formatı ister
   const phoneDigits = phone.replace(/\D/g, '').replace(/^90/, '').replace(/^0/, '');
   if (!/^5\d{9}$/.test(phoneDigits)) {
     return jsonResp(request, { error: 'Telefon numarası 05XXXXXXXXX biçiminde olmalıdır.' }, 400);
   }
-  const cleanPhone = '+90' + phoneDigits;
   const localPhone = '0' + phoneDigits;
 
-  const conversationId = crypto.randomUUID();
-  const basketId       = 'B-' + crypto.randomUUID().slice(0, 8).toUpperCase();
-  const buyerId        = 'C-' + crypto.randomUUID().slice(0, 8).toUpperCase();
+  const invoiceId = crypto.randomUUID();
+  const basketId  = 'B-' + crypto.randomUUID().slice(0, 8).toUpperCase();
 
-  const iyziBody = {
-    locale:       'tr',
-    conversationId,
-    price:        finalPrice,
-    paidPrice:    finalPrice,
-    currency:     'TRY',
-    installment:  '1',
-    basketId,
-    paymentGroup: 'PRODUCT',
-    callbackUrl:  callbackUrl,
-    buyer: {
-      id:                  buyerId,
-      name:                firstName,
-      surname:             lastName,
-      gsmNumber:           cleanPhone,
-      email:               email.toLowerCase(),
-      identityNumber:      '11111111111',
-      lastLoginDate:       new Date().toISOString().slice(0, 19).replace('T', ' '),
-      registrationDate:    new Date().toISOString().slice(0, 19).replace('T', ' '),
-      registrationAddress: `${address}, ${district}`,
-      city,
-      country:             'Turkey',
-      ip:                  clientIP,
-      zipCode:             '00000',
-    },
-    shippingAddress: {
-      contactName: name,
-      city,
-      country:     'Turkey',
-      address: `${address}, ${district}`,
-      zipCode:     '00000',
-    },
-    billingAddress: {
-      contactName: name,
-      city,
-      country:     'Turkey',
-      address: `${address}, ${district}`,
-      zipCode:     '00000',
-    },
-    basketItems: [{
-      id:        PRODUCT.id,
-      name:      PRODUCT.name,
-      category1: PRODUCT.category1,
-      category2: PRODUCT.category2,
-      itemType:  'PHYSICAL',
-      price:     finalPrice,
-    }],
-  };
-
-  const initUri       = '/payment/iyzipos/checkoutform/initialize/auth/ecom';
-  const rnd           = randomKey();
-  const authorization = await iyzicoAuthHeader(apiKey, secretKey, rnd, initUri, iyziBody);
-
-  let iyzData;
-  try {
-    const resp = await fetch(
-      `${baseUrl}${initUri}`,
-      {
-        method:  'POST',
-        headers: {
-          Authorization:  authorization,
-          'x-iyzi-rnd':   rnd,
-          'Content-Type': 'application/json',
-          Accept:         'application/json',
-        },
-        body: JSON.stringify(iyziBody),
-      }
-    );
-    iyzData = await resp.json();
-  } catch (err) {
-    console.error('[payment/start] fetch error:', err);
-    return jsonResp(request, { error: 'Ödeme sistemine bağlanılamadı. Lütfen tekrar deneyin.' }, 502);
-  }
-
-  if (iyzData.status !== 'success' || !iyzData.token ||
-      (!iyzData.checkoutFormContent && !iyzData.paymentPageUrl)) {
-    console.error('[payment/start] iyzico error:', JSON.stringify({
-      status: iyzData.status,
-      errorCode: iyzData.errorCode,
-      errorMessage: iyzData.errorMessage,
-      hasToken: !!iyzData.token,
-      hasEmbeddedForm: !!iyzData.checkoutFormContent,
-      hasExternalPage: !!iyzData.paymentPageUrl,
-    }));
-    return jsonResp(request, { error: 'Ödeme oturumu başlatılamadı. Lütfen tekrar deneyin.' }, 400);
-  }
-
-  // Token → KV (TTL: 30 dakika — iyzico session süresiyle eşleşiyor)
   await env.PAYMENT_KV.put(
-    `token:${iyzData.token}`,
+    `order:${invoiceId}`,
     JSON.stringify({
-      conversationId,
+      invoiceId,
       basketId,
+      orderNo:          '',
       amount:           finalPrice,
+      currency:         'TRY',
+      quantity:         1,
+      package:          PRODUCT.name,
       customerName:     name,
       customerEmail:    email.toLowerCase(),
       customerPhone:    localPhone,
@@ -321,11 +182,11 @@ export async function onRequestPost(context) {
       status:           'PENDING',
       createdAt:        new Date().toISOString(),
     }),
-    { expirationTtl: 1800 }
+    { expirationTtl: 604800 }
   );
 
   return jsonResp(request, {
-    checkoutFormContent: iyzData.checkoutFormContent,
-    paymentPageUrl:      iyzData.paymentPageUrl || '',
+    link: `/odeme.html?invoice_id=${encodeURIComponent(invoiceId)}`,
+    invoice_id: invoiceId,
   });
 }

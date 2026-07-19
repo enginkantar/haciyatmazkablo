@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node tests/payment-flow.test.mjs",
+    "test:syntax": "node --check assets/js/script.js && node --check functions/api/payment/start.js && node --check functions/api/payment/webhook.js && node --check functions/api/payment/notify-success.js && node --check functions/api/payment/whitelabel-init.js && node --check functions/api/address-suggest.js && node --check functions/lib/halkode.js && node --check functions/lib/fulfill.js && node --check functions/lib/kargo.js && node --check functions/lib/fatura.js",
+    "seo:sitemap": "node scripts/generate-sitemap.mjs",
+    "seo:sitemap:check": "node scripts/generate-sitemap.mjs --check",
+    "seo:check": "node scripts/seo-check.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "indexnow:dry": "node scripts/indexnow.mjs --dry-run"
+  }
+}

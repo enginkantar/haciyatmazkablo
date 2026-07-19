@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { onRequestOptions, onRequestPost as startPayment } from '../functions/api/payment/start.js';
-import { onRequestPost as paymentCallback } from '../functions/api/payment/callback.js';
+import { onRequestGet as whitelabelInit } from '../functions/api/payment/whitelabel-init.js';
+import { onRequestPost as paymentWebhook } from '../functions/api/payment/webhook.js';
+import { onRequestPost as notifySuccess } from '../functions/api/payment/notify-success.js';
 
 class MockKV {
   constructor() {
@@ -19,65 +21,71 @@ class MockKV {
   }
 }
 
+const HALKODE_ENV = {
+  HALKODE_APP_ID: 'app-id',
+  HALKODE_APP_SECRET: 'app-secret',
+  HALKODE_MERCHANT_KEY: '$2y$10$testmerchantkey',
+};
+
+// HalkÖde API mock: token + checkstatus
+function mockHalkodeFetch({ checkstatusOk = true } = {}) {
+  return async (url) => {
+    const u = String(url);
+    if (u.includes('/api/token')) {
+      return Response.json({ data: { token: 'halkode-token' } });
+    }
+    if (u.includes('/api/checkstatus')) {
+      return checkstatusOk
+        ? Response.json({ status_code: 100, transaction_status: 'Completed', order_id: 'HK-123' })
+        : Response.json({ status_code: 0, status_description: 'not paid' });
+    }
+    throw new Error('unexpected fetch: ' + u);
+  };
+}
+
 const originalFetch = globalThis.fetch;
 
 try {
+  // ─── /api/payment/start ──────────────────────────────────────────────────
   const kv = new MockKV();
-  let iyzicoInitializeBody;
-
-  globalThis.fetch = async (_url, options) => {
-    iyzicoInitializeBody = JSON.parse(options.body);
-    return Response.json({
-      status: 'success',
-      token: 'start-token',
-      checkoutFormContent: '<div id="iyzipay-checkout-form"></div>',
-      paymentPageUrl: 'https://pay.example.test?token=start-token',
-    });
-  };
-
   const acceptedAt = new Date().toISOString();
-  const startRequest = new Request('https://www.haciyatmazkablo.com/api/payment/start', {
-    method: 'POST',
-    headers: {
-      Origin: 'https://www.haciyatmazkablo.com',
-      'Content-Type': 'application/json',
-      'CF-Connecting-IP': '203.0.113.10',
-    },
-    body: JSON.stringify({
-      name: 'Ayşe Yılmaz',
-      email: 'ayse@example.com',
-      phone: '+90 532 123 45 67',
-      city: 'İstanbul',
-      district: 'Kadıköy',
-      address: 'Caferağa Mahallesi Moda Caddesi No: 1 D: 2',
-      acceptedTerms: { onBilgi: true, mesafeli: true, gizlilik: true },
-      acceptedAt,
-    }),
-  });
 
   const startResponse = await startPayment({
-    request: startRequest,
-    env: {
-      IYZICO_API_KEY: 'test-key',
-      IYZICO_SECRET_KEY: 'test-secret',
-      IYZICO_BASE_URL: 'https://mock.iyzico.test',
-      PAYMENT_KV: kv,
-    },
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/start', {
+      method: 'POST',
+      headers: {
+        Origin: 'https://www.haciyatmazkablo.com',
+        'Content-Type': 'application/json',
+        'CF-Connecting-IP': '203.0.113.10',
+      },
+      body: JSON.stringify({
+        name: 'Ayşe Yılmaz',
+        email: 'ayse@example.com',
+        phone: '+90 532 123 45 67',
+        city: 'İstanbul',
+        district: 'Kadıköy',
+        address: 'Caferağa Mahallesi Moda Caddesi No: 1 D: 2',
+        acceptedTerms: { onBilgi: true, mesafeli: true, gizlilik: true },
+        acceptedAt,
+      }),
+    }),
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
   });
 
   assert.equal(startResponse.status, 200);
-  assert.equal(JSON.parse(await startResponse.text()).paymentPageUrl,
-    'https://pay.example.test?token=start-token');
-  assert.equal(iyzicoInitializeBody.price, '499.99');
-  assert.equal(iyzicoInitializeBody.buyer.gsmNumber, '+905321234567');
-  assert.equal(iyzicoInitializeBody.shippingAddress.city, 'İstanbul');
-  assert.match(iyzicoInitializeBody.shippingAddress.address, /Kadıköy/);
+  const startData = JSON.parse(await startResponse.text());
+  assert.match(startData.link, /^\/odeme\.html\?invoice_id=/);
+  const invoiceId = startData.invoice_id;
+  assert.ok(invoiceId);
 
-  const storedStartOrder = JSON.parse(await kv.get('token:start-token'));
-  assert.equal(storedStartOrder.customerPhone, '05321234567');
-  assert.equal(storedStartOrder.customerTown, 'Kadıköy');
-  assert.equal(storedStartOrder.termsVersion, '2026-07-14');
+  const storedOrder = JSON.parse(await kv.get(`order:${invoiceId}`));
+  assert.equal(storedOrder.amount, '499.99');
+  assert.equal(storedOrder.customerPhone, '05321234567');
+  assert.equal(storedOrder.customerTown, 'Kadıköy');
+  assert.equal(storedOrder.status, 'PENDING');
+  assert.match(storedOrder.basketId, /^B-/);
 
+  // Origin kontrolleri
   const invalidOriginResponse = await onRequestOptions({
     request: new Request('https://www.haciyatmazkablo.com/api/payment/start', {
       method: 'OPTIONS',
@@ -94,6 +102,7 @@ try {
   });
   assert.equal(previewOriginResponse.status, 204);
 
+  // Kısa adres reddi
   const shortAddressResponse = await startPayment({
     request: new Request('https://www.haciyatmazkablo.com/api/payment/start', {
       method: 'POST',
@@ -108,167 +117,142 @@ try {
         acceptedTerms: { onBilgi: true, mesafeli: true, gizlilik: true }, acceptedAt,
       }),
     }),
-    env: { IYZICO_API_KEY: 'x', IYZICO_SECRET_KEY: 'y', PAYMENT_KV: kv },
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
   });
   assert.equal(shortAddressResponse.status, 400);
 
-  globalThis.fetch = async () => Response.json({
-    status: 'success', token: 'redirect-only-token', paymentPageUrl: 'https://pay.example.test',
+  // ─── /api/payment/whitelabel-init ────────────────────────────────────────
+  const initResponse = await whitelabelInit({
+    request: new Request(`https://www.haciyatmazkablo.com/api/payment/whitelabel-init?invoice_id=${invoiceId}`),
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
   });
-  const redirectOnlyResponse = await startPayment({
-    request: new Request('https://www.haciyatmazkablo.com/api/payment/start', {
+  assert.equal(initResponse.status, 200);
+  const initData = JSON.parse(await initResponse.text());
+  assert.equal(initData.total, '499.99');
+  assert.equal(initData.currency_code, 'TRY');
+  assert.match(initData.action_url, /paySmart3D$/);
+  assert.ok(initData.hash_key && initData.hash_key.split(':').length === 3, 'hash_key sağlayıcı formatında olmalı');
+  assert.match(initData.return_url, /odeme-basarili$/);
+
+  const missingInit = await whitelabelInit({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/whitelabel-init?invoice_id=yok-boyle-siparis'),
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
+  });
+  assert.equal(missingInit.status, 404);
+
+  // ─── /api/payment/webhook: hash'siz "ödendi" → checkstatus teyidiyle PAID ─
+  globalThis.fetch = mockHalkodeFetch({ checkstatusOk: true });
+  const webhookResponse = await paymentWebhook({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/webhook', {
       method: 'POST',
-      headers: {
-        Origin: 'https://www.haciyatmazkablo.com',
-        'Content-Type': 'application/json',
-        'CF-Connecting-IP': '203.0.113.12',
-      },
-      body: JSON.stringify({
-        name: 'Ali Veli', email: 'ali@example.com', phone: '05321234567',
-        city: 'Çorum', district: 'Merkez', address: 'Bahçelievler Mahallesi No 2',
-        acceptedTerms: { onBilgi: true, mesafeli: true, gizlilik: true }, acceptedAt,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        invoice_id: invoiceId, order_id: 'HK-123', status: 'Completed', payment_status: '1',
       }),
     }),
-    env: { IYZICO_API_KEY: 'x', IYZICO_SECRET_KEY: 'y', PAYMENT_KV: kv },
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
   });
-  assert.equal(redirectOnlyResponse.status, 200, 'Embedded form yoksa hosted checkout fallback dönmeli');
-  assert.equal(JSON.parse(await redirectOnlyResponse.text()).paymentPageUrl, 'https://pay.example.test');
+  assert.equal(webhookResponse.status, 200);
+  const webhookData = JSON.parse(await webhookResponse.text());
+  assert.equal(webhookData.status, 'paid');
 
-  const callbackKv = new MockKV();
-  await callbackKv.put('token:callback-token', JSON.stringify({
-    conversationId: 'conversation-1',
-    basketId: 'B-ORDER01',
-    amount: '499.99',
-    customerName: 'Ayşe Yılmaz',
-    customerEmail: 'ayse@example.com',
-    customerPhone: '05321234567',
-    customerAddress: 'Caferağa Mahallesi Moda Caddesi No: 1 D: 2',
-    customerCity: 'İstanbul',
-    customerTown: 'Kadıköy',
-    status: 'PENDING',
-  }));
+  const paidOrder = JSON.parse(await kv.get(`order:${invoiceId}`));
+  assert.ok(['PROCESSED', 'PROCESSED_WITH_WARNINGS'].includes(paidOrder.status), `beklenmedik durum: ${paidOrder.status}`);
+  assert.equal(paidOrder.orderNo, 'HK-123');
+  assert.ok(paidOrder.notifiedAt, 'fulfillment çalışmış olmalı');
+  // Kargo/fatura env yok → uyarıyla işlenmeli, sipariş kaybolmamalı
+  assert.ok(paidOrder.kargoError, 'kargo yapılandırması olmadan hata kaydı düşmeli');
 
-  let retrieveCalls = 0;
-  globalThis.fetch = async () => {
-    retrieveCalls += 1;
-    return Response.json({
-      status: 'success',
-      paymentStatus: 'SUCCESS',
-      paymentId: 'payment-1',
-      currency: 'TRY',
-      basketId: 'B-ORDER01',
-      conversationId: 'conversation-1',
-      paidPrice: '499.9900',
-      price: '499.99',
-      token: 'callback-token',
-    });
-  };
-
-  const callbackRequest = () => new Request('https://www.haciyatmazkablo.com/api/payment/callback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ token: 'callback-token', conversationId: 'conversation-1' }),
-  });
-
-  const deferredCallbacks = [];
-  const callbackResponse = await paymentCallback({
-    request: callbackRequest(),
-    env: {
-      IYZICO_API_KEY: 'test-key',
-      IYZICO_SECRET_KEY: 'test-secret',
-      IYZICO_BASE_URL: 'https://mock.iyzico.test',
-      PAYMENT_KV: callbackKv,
-    },
-    waitUntil: (promise) => deferredCallbacks.push(promise),
-  });
-
-  assert.equal(callbackResponse.status, 302);
-  assert.match(callbackResponse.headers.get('location'), /odeme-basarili/);
-  assert.equal(retrieveCalls, 1);
-  assert.equal(deferredCallbacks.length, 1);
-  assert.equal(JSON.parse(await callbackKv.get('token:callback-token')).status, 'PROCESSING');
-  await Promise.all(deferredCallbacks);
-  const processedOrder = JSON.parse(await callbackKv.get('token:callback-token'));
-  assert.equal(processedOrder.status, 'PROCESSED_WITH_WARNINGS');
-  assert.match(processedOrder.kargoError, /token yok/);
-  assert.match(processedOrder.faturaError, /yapılandırması eksik/);
-  assert.match(processedOrder.telegramError, /yapılandırması eksik/);
-
-  const replayResponse = await paymentCallback({
-    request: callbackRequest(),
-    env: {
-      IYZICO_API_KEY: 'test-key',
-      IYZICO_SECRET_KEY: 'test-secret',
-      IYZICO_BASE_URL: 'https://mock.iyzico.test',
-      PAYMENT_KV: callbackKv,
-    },
-  });
-  assert.equal(replayResponse.status, 302);
-  assert.equal(retrieveCalls, 1, 'İşlenmiş sipariş iyzico veya entegrasyonları yeniden çağırmamalı');
-
-  const tamperKv = new MockKV();
-  await tamperKv.put('token:tampered-token', JSON.stringify({
-    conversationId: 'conversation-2', basketId: 'B-ORDER02', amount: '499.99', status: 'PENDING',
-  }));
-  globalThis.fetch = async () => Response.json({
-    status: 'success', paymentStatus: 'SUCCESS', paymentId: 'payment-2', currency: 'TRY',
-    basketId: 'B-ORDER02', conversationId: 'conversation-2', paidPrice: '499.98', price: '499.99',
-    token: 'tampered-token',
-  });
-  const tamperResponse = await paymentCallback({
-    request: new Request('https://www.haciyatmazkablo.com/api/payment/callback', {
+  // Idempotency: aynı webhook ikinci kez gelirse tekrar işlenmez
+  const replayResponse = await paymentWebhook({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/webhook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ token: 'tampered-token', conversationId: 'conversation-2' }),
+      body: new URLSearchParams({
+        invoice_id: invoiceId, order_id: 'HK-123', status: 'Completed', payment_status: '1',
+      }),
     }),
-    env: {
-      IYZICO_API_KEY: 'test-key', IYZICO_SECRET_KEY: 'test-secret',
-      IYZICO_BASE_URL: 'https://mock.iyzico.test', PAYMENT_KV: tamperKv,
-    },
+    env: { ...HALKODE_ENV, PAYMENT_KV: kv },
   });
-  assert.match(tamperResponse.headers.get('location'), /amount_mismatch/);
+  const replayData = JSON.parse(await replayResponse.text());
+  assert.equal(replayData.idempotent, true);
 
-  // Taksitli ödeme: paidPrice vade farkıyla büyür, sepet tutarı (price) sabit — kabul edilmeli
-  const taksitKv = new MockKV();
-  await taksitKv.put('token:taksit-token', JSON.stringify({
-    conversationId: 'conversation-3', basketId: 'B-ORDER03', amount: '499.99', status: 'PENDING',
+  // ─── Sahte webhook: checkstatus teyidi yoksa PAID yapılmaz ────────────────
+  const fakeKv = new MockKV();
+  await fakeKv.put('order:fake-invoice', JSON.stringify({
+    invoiceId: 'fake-invoice', basketId: 'B-FAKE', amount: '499.99', status: 'PENDING',
+    customerName: 'X', customerEmail: 'x@example.com', customerPhone: '05321234567',
+    customerAddress: 'Bir mahalle bir sokak 1', customerCity: 'İstanbul', customerTown: 'Kadıköy',
   }));
-  globalThis.fetch = async () => Response.json({
-    status: 'success', paymentStatus: 'SUCCESS', paymentId: 'payment-3', currency: 'TRY',
-    basketId: 'B-ORDER03', conversationId: 'conversation-3', paidPrice: '518.46', price: '499.99',
-    token: 'taksit-token',
-  });
-  const taksitResponse = await paymentCallback({
-    request: new Request('https://www.haciyatmazkablo.com/api/payment/callback', {
+  globalThis.fetch = mockHalkodeFetch({ checkstatusOk: false });
+  const fakeResponse = await paymentWebhook({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/webhook', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ token: 'taksit-token', conversationId: 'conversation-3' }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoice_id: 'fake-invoice', order_id: 'HK-999', status: 'Completed', payment_status: '1' }),
     }),
-    env: {
-      IYZICO_API_KEY: 'test-key', IYZICO_SECRET_KEY: 'test-secret',
-      IYZICO_BASE_URL: 'https://mock.iyzico.test', PAYMENT_KV: taksitKv,
-    },
-    waitUntil: () => {},
+    env: { ...HALKODE_ENV, PAYMENT_KV: fakeKv },
   });
-  assert.match(taksitResponse.headers.get('location'), /odeme-basarili/,
-    'Taksitli ödemede paidPrice > price kabul edilmeli');
+  const fakeData = JSON.parse(await fakeResponse.text());
+  assert.equal(fakeData.success, false);
+  assert.equal(JSON.parse(await fakeKv.get('order:fake-invoice')).status, 'PENDING', 'teyitsiz sipariş PAID olmamalı');
 
-  const [homeHtml, errorHtml, successHtml, feedXml, preInfoHtml] = await Promise.all([
+  // ─── /api/payment/notify-success: tarayıcı dönüşü + checkstatus teyidi ────
+  const notifyKv = new MockKV();
+  await notifyKv.put('order:notify-invoice', JSON.stringify({
+    invoiceId: 'notify-invoice', basketId: 'B-NTF01', amount: '499.99', status: 'PENDING',
+    customerName: 'Ayşe Yılmaz', customerEmail: 'ayse@example.com', customerPhone: '05321234567',
+    customerAddress: 'Caferağa Mahallesi Moda Caddesi No: 1 D: 2', customerCity: 'İstanbul', customerTown: 'Kadıköy',
+  }));
+  globalThis.fetch = mockHalkodeFetch({ checkstatusOk: true });
+  const notifyResponse = await notifySuccess({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/notify-success', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoice_id: 'notify-invoice', order_no: 'HK-456', payment_status: '1' }),
+    }),
+    env: { ...HALKODE_ENV, PAYMENT_KV: notifyKv },
+  });
+  assert.equal(notifyResponse.status, 200);
+  const notifyData = JSON.parse(await notifyResponse.text());
+  assert.equal(notifyData.ok, true);
+  assert.equal(notifyData.orderNo, 'B-NTF01');
+  assert.equal(notifyData.siparis.ad, 'Ayşe Yılmaz');
+
+  // Başarı teyidi olmadan dönüş → PAID yapılmaz
+  const pendingKv = new MockKV();
+  await pendingKv.put('order:pending-invoice', JSON.stringify({
+    invoiceId: 'pending-invoice', basketId: 'B-PND01', amount: '499.99', status: 'PENDING',
+  }));
+  const pendingResponse = await notifySuccess({
+    request: new Request('https://www.haciyatmazkablo.com/api/payment/notify-success', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoice_id: 'pending-invoice' }),
+    }),
+    env: { ...HALKODE_ENV, PAYMENT_KV: pendingKv },
+  });
+  assert.equal(pendingResponse.status, 409);
+
+  // ─── Statik dosya kontrolleri ─────────────────────────────────────────────
+  const [homeHtml, odemeHtml, errorHtml, successHtml, feedXml, preInfoHtml] = await Promise.all([
     readFile(new URL('../index.html', import.meta.url), 'utf8'),
+    readFile(new URL('../odeme.html', import.meta.url), 'utf8'),
     readFile(new URL('../odeme-hatasi.html', import.meta.url), 'utf8'),
     readFile(new URL('../odeme-basarili.html', import.meta.url), 'utf8'),
     readFile(new URL('../google-feed.xml', import.meta.url), 'utf8'),
     readFile(new URL('../on-bilgilendirme-formu.html', import.meta.url), 'utf8'),
   ]);
   assert.match(homeHtml, /499,99 TL/);
-  assert.match(homeHtml, /id="orderModal"[^>]*data-bs-focus="false"/);
-  assert.match(homeHtml, /id="iyzicoHostedFallback"/);
-  assert.match(homeHtml, /script\.js\?v=20260719-ui-pass/);
+  assert.match(homeHtml, /script\.js\?v=20260719-halkode/);
+  assert.match(odemeHtml, /whitelabel-init/);
+  assert.match(odemeHtml, /cc_no/);
+  assert.match(successHtml, /notify-success/);
   assert.match(successHtml, /499,99 TL/);
   assert.match(feedXml, /<g:price>499\.99 TRY<\/g:price>/);
   assert.match(preInfoHtml, /499,99 TL, KDV dahil/);
   assert.doesNotMatch(errorHtml, /Hiçbir ücret tahsil edilmedi/,
-    'Teknik callback hatasında tahsilat gerçekleşmiş olabilir; genel hata sayfası kesin hüküm vermemeli');
+    'Teknik hata durumunda tahsilat gerçekleşmiş olabilir; genel hata sayfası kesin hüküm vermemeli');
   assert.match(errorHtml, /Tekrar denemeden önce banka hareketlerinizi kontrol edin/);
 
   console.log('payment-flow.test.mjs: all assertions passed');

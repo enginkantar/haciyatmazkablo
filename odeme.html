@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Güvenli Ödeme — Hacıyatmaz Kablo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a; color: #cbd5e1; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .card {
+      background: #141414; border: 1px solid #2a2a2a; border-radius: 16px;
+      max-width: 440px; width: 100%; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .mode-banner {
+      background: rgba(255, 193, 7, 0.08); border: 1px solid rgba(255, 193, 7, 0.25); color: #ffc107;
+      border-radius: 8px; padding: 10px 14px; font-size: 13px; text-align: center;
+      margin-bottom: 24px; font-weight: 600;
+    }
+    .head { text-align: center; margin-bottom: 24px; }
+    .head .lock { font-size: 28px; }
+    .head h1 { font-size: 1.15rem; color: #fff; margin: 8px 0 4px; }
+    .head p { font-size: 13px; color: #94a3b8; }
+    .amount {
+      text-align: center; background: #1a1a1a; border: 1px solid #2a2a2a;
+      border-radius: 12px; padding: 18px; margin-bottom: 24px;
+    }
+    .amount .pkg { font-size: 13px; color: #94a3b8; margin-bottom: 4px; }
+    .amount .val { font-size: 1.9rem; font-weight: 800; color: #ffc107; }
+    label { display: block; font-size: 12px; color: #94a3b8; margin: 14px 0 6px; }
+    input {
+      width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px;
+      padding: 12px 14px; color: #e2e8f0; font-size: 15px; letter-spacing: .5px;
+    }
+    input:focus { outline: none; border-color: #ffc107; }
+    input[readonly] { color: #94a3b8; }
+    .row { display: flex; gap: 12px; }
+    .row > div { flex: 1; }
+    .field .err { color: #ff2d55; font-size: 0.78rem; font-weight: 700; margin-top: 5px; display: none; }
+    .field.invalid .err { display: block; animation: pulse 0.9s ease-in-out infinite; }
+    .field.invalid input { border-color: #ff2d55 !important; animation: bpulse 0.9s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @keyframes bpulse { 0%,100%{box-shadow:0 0 5px 1px rgba(255,45,85,.9)} 50%{box-shadow:0 0 16px 4px rgba(175,82,222,.95)} }
+    #banner { display:none; background:rgba(255,45,85,0.12); border:1px solid #ff2d55; color:#ff8fa3;
+      border-radius:8px; padding:10px 14px; margin-bottom:16px; font-size:0.82rem; font-weight:700; }
+    #banner.show { display:block; }
+    .btn {
+      width: 100%; border: none; border-radius: 10px; padding: 15px;
+      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 24px; transition: opacity .2s;
+    }
+    .btn-pay { background: linear-gradient(135deg, #ffc107, #e6a800); color: #1a1a00; }
+    .btn-pay:hover { opacity: .9; }
+    .btn-pay:disabled { opacity: .6; cursor: wait; }
+    .btn-cancel {
+      background: transparent; color: #64748b; border: 1px solid #2a2a2a;
+      margin-top: 10px; font-size: 13px; padding: 11px;
+    }
+    .btn-cancel:hover { color: #ff2d55; border-color: #7f1d1d; }
+    .secure { text-align: center; font-size: 11px; color: #64748b; margin-top: 18px; }
+    .trust { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 18px; }
+    .trust-chip { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 10px; padding: 7px 12px; }
+    .trust-chip img { display: block; height: 22px; width: auto; }
+    .trust-chip span { font-size: 0.72rem; font-weight: 700; color: #1e293b; white-space: nowrap; }
+    .trust-batu img { height: 26px; }
+    .trust-pay img { height: 20px; }
+    .trust-etbis span { color: #7a5c1e; }
+    .trust-3ds { animation: tds3dPulse 1.6s ease-in-out infinite; }
+    .trust-3ds svg, .trust-3ds span { color: #b8860b; }
+    .trust-3ds span { font-weight: 800; }
+    @keyframes tds3dPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,193,7,.55); } 50% { box-shadow: 0 0 0 5px rgba(255,193,7,0); } }
+    .notice { margin-top: 14px; font-size: 12px; color: #94a3b8; line-height: 1.5; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="mode-banner" id="modeBanner">Güvenli ödeme alanı yükleniyor...</div>
+    <div class="head">
+      <div class="lock">🔒</div>
+      <h1>Güvenli Ödeme</h1>
+      <p>Kart bilgileriniz sitemizde saklanmaz — doğrudan ödeme sağlayıcısına iletilir</p>
+    </div>
+    <div class="amount">
+      <div class="pkg">Hacıyatmaz Kablo Tip C 240W</div>
+      <div class="val" id="amtLabel">—</div>
+    </div>
+
+    <div id="banner"></div>
+    <form id="payForm" novalidate>
+      <div class="field">
+        <label>Ad Soyad</label>
+        <input type="text" id="customerName" readonly>
+      </div>
+      <div class="field">
+        <label>Teslimat Adresi</label>
+        <input type="text" id="customerAddress" readonly>
+      </div>
+      <div class="field" id="f-name">
+        <label>Kart Üzerindeki İsim</label>
+        <input type="text" id="cardName" autocomplete="cc-name">
+        <div class="err"></div>
+      </div>
+      <div class="field" id="f-no">
+        <label>Kart Numarası</label>
+        <input type="text" id="cardNo" maxlength="19" inputmode="numeric" autocomplete="cc-number" placeholder="•••• •••• •••• ••••">
+        <div class="err"></div>
+      </div>
+      <div class="row">
+        <div class="field" id="f-exp">
+          <label>Son Kullanma (AA/YY)</label>
+          <input type="text" id="cardExp" maxlength="5" inputmode="numeric" autocomplete="cc-exp" placeholder="12/30">
+          <div class="err"></div>
+        </div>
+        <div class="field" id="f-cvv">
+          <label>CVV</label>
+          <input type="text" id="cardCvv" maxlength="4" inputmode="numeric" autocomplete="cc-csc" placeholder="•••">
+          <div class="err"></div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-pay" id="payBtn">Ödemeyi Tamamla</button>
+      <button type="button" class="btn btn-cancel" id="cancelBtn">İptal Et</button>
+    </form>
+    <div class="secure">🛡️ 3D Secure ile korunan ödeme — banka doğrulama ekranına yönlendirilirsiniz.</div>
+    <div class="trust">
+      <div class="trust-chip trust-batu">
+        <img src="/assets/batu-teknoloji-icon.jpg" alt="Batu Teknoloji" loading="lazy">
+        <span>E-Commerce M POWER ile</span>
+      </div>
+      <div class="trust-chip trust-pay">
+        <img src="/assets/payment-security-logos.svg" alt="Mastercard, Maestro, Troy, Visa, PCI DSS, 3D Secure" loading="lazy">
+      </div>
+      <div class="trust-chip trust-3ds">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <span>3D Secure</span>
+      </div>
+      <div class="trust-chip trust-etbis">
+        <img src="/assets/basemo-cable-chrome/logo-tic-3.png" alt="T.C. Ticaret Bakanlığı" loading="lazy">
+        <span>ETBİS'E KAYITLIDIR</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const p = new URLSearchParams(location.search);
+    const invoiceId = p.get('invoice_id') || '';
+    const noEl = document.getElementById('cardNo');
+    const expEl = document.getElementById('cardExp');
+    const cvvEl = document.getElementById('cardCvv');
+    const payForm = document.getElementById('payForm');
+    const payBtn = document.getElementById('payBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const modeBanner = document.getElementById('modeBanner');
+
+    const state = { init: null, actionUrl: '' };
+
+    function setErr(fid, msg) {
+      const f = document.getElementById(fid);
+      f.classList.add('invalid');
+      f.querySelector('.err').textContent = '⚠️ ' + msg;
+      f.querySelector('input').focus();
+    }
+    function clearErr(fid) { document.getElementById(fid).classList.remove('invalid'); }
+    function clearAll() {
+      ['f-name', 'f-no', 'f-exp', 'f-cvv'].forEach(clearErr);
+      const b = document.getElementById('banner'); b.classList.remove('show'); b.textContent = '';
+    }
+    function validate() {
+      const name = document.getElementById('cardName').value.trim();
+      const no = noEl.value.replace(/\s/g, '');
+      const exp = expEl.value.trim();
+      const cvv = cvvEl.value.trim();
+      if (!name) return { fid: 'f-name', msg: 'Kart üzerindeki ismi giriniz.' };
+      if (name.length < 2) return { fid: 'f-name', msg: 'Geçerli bir isim giriniz.' };
+      if (!no) return { fid: 'f-no', msg: 'Kart numarasını giriniz.' };
+      if (!/^\d+$/.test(no)) return { fid: 'f-no', msg: 'Kart numarası yalnızca rakamlardan oluşmalıdır.' };
+      if (no.length !== 16) return { fid: 'f-no', msg: 'Kart numarası 16 haneli olmalıdır.' };
+      if (!exp) return { fid: 'f-exp', msg: 'Son kullanma tarihini giriniz.' };
+      const m = exp.match(/^(\d{2})\/(\d{2})$/);
+      if (!m) return { fid: 'f-exp', msg: 'Tarih AA/YY formatında olmalıdır (örn. 12/30).' };
+      const mm = +m[1], yy = +m[2];
+      if (mm < 1 || mm > 12) return { fid: 'f-exp', msg: 'Ay 01 ile 12 arasında olmalıdır.' };
+      const now = new Date(), curY = now.getFullYear() % 100, curM = now.getMonth() + 1;
+      if (yy < curY || (yy === curY && mm < curM)) return { fid: 'f-exp', msg: 'Kartın son kullanma tarihi geçmiş.' };
+      if (!cvv) return { fid: 'f-cvv', msg: 'CVV giriniz.' };
+      if (!/^\d{3,4}$/.test(cvv)) return { fid: 'f-cvv', msg: 'CVV 3 veya 4 rakam olmalıdır.' };
+      return null;
+    }
+
+    noEl.addEventListener('input', () => {
+      let d = noEl.value.replace(/\D/g, '').slice(0, 16);
+      noEl.value = d.replace(/(.{4})/g, '$1 ').trim();
+      clearErr('f-no');
+    });
+    expEl.addEventListener('input', () => {
+      let d = expEl.value.replace(/\D/g, '').slice(0, 4);
+      expEl.value = d.length >= 3 ? d.slice(0, 2) + '/' + d.slice(2) : d;
+      clearErr('f-exp');
+    });
+    cvvEl.addEventListener('input', () => { cvvEl.value = cvvEl.value.replace(/\D/g, '').slice(0, 4); clearErr('f-cvv'); });
+    document.getElementById('cardName').addEventListener('input', () => clearErr('f-name'));
+
+    function addHidden(form, name, value) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value == null ? '' : String(value);
+      form.appendChild(input);
+    }
+
+    async function init() {
+      if (!invoiceId) {
+        modeBanner.textContent = 'Sipariş bilgisi eksik — lütfen ana sayfadan yeniden başlayın.';
+        payBtn.disabled = true;
+        return;
+      }
+      const res = await fetch('/api/payment/whitelabel-init?invoice_id=' + encodeURIComponent(invoiceId));
+      const data = await res.json();
+      if (!res.ok) throw new Error(data && data.error ? data.error : 'Ödeme bilgileri yüklenemedi');
+      state.init = data;
+      state.actionUrl = data.action_url;
+      modeBanner.textContent = 'Güvenli ödeme alanı';
+      document.getElementById('amtLabel').textContent = Number(data.total).toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + ' ₺';
+      document.getElementById('customerName').value = (data.name + ' ' + data.surname).trim();
+      document.getElementById('customerAddress').value = data.bill_address1 || '';
+      cancelBtn.onclick = function () {
+        location.href = (data.cancel_url || '/odeme-hatasi') + '?invoice_id=' + encodeURIComponent(invoiceId);
+      };
+    }
+
+    payForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearAll();
+      if (!state.init || !state.actionUrl) {
+        const b = document.getElementById('banner');
+        b.textContent = 'Ödeme bilgileri yüklenemedi. Sayfayı yenileyin.';
+        b.classList.add('show');
+        return;
+      }
+      const err = validate();
+      if (err) { setErr(err.fid, err.msg); return; }
+
+      payBtn.disabled = true;
+      payBtn.textContent = 'Bankaya yönlendiriliyor...';
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = state.actionUrl;
+      form.style.display = 'none';
+      addHidden(form, 'merchant_key', state.init.merchant_key);
+      addHidden(form, 'invoice_id', state.init.invoice_id);
+      addHidden(form, 'invoice_description', state.init.invoice_description);
+      addHidden(form, 'total', state.init.total);
+      addHidden(form, 'currency_id', state.init.currency_id || 1);
+      addHidden(form, 'currency_code', state.init.currency_code);
+      addHidden(form, 'items', JSON.stringify(state.init.items || []));
+      addHidden(form, 'return_url', state.init.return_url);
+      addHidden(form, 'cancel_url', state.init.cancel_url);
+      addHidden(form, 'response_method', state.init.response_method || 'GET');
+      addHidden(form, 'name', state.init.name);
+      addHidden(form, 'surname', state.init.surname);
+      addHidden(form, 'bill_address1', state.init.bill_address1);
+      addHidden(form, 'bill_address2', '');
+      addHidden(form, 'bill_city', state.init.bill_city);
+      addHidden(form, 'bill_state', state.init.bill_state);
+      addHidden(form, 'bill_postcode', state.init.bill_postcode || '');
+      addHidden(form, 'bill_country', state.init.bill_country);
+      addHidden(form, 'bill_email', state.init.bill_email);
+      addHidden(form, 'bill_phone', state.init.bill_phone);
+      addHidden(form, 'sale_web_hook_key', state.init.sale_web_hook_key);
+      addHidden(form, 'ip', state.init.ip);
+      addHidden(form, 'saved_card', 0);
+      addHidden(form, 'maturity_period', 0);
+      addHidden(form, 'payment_frequency', 0);
+      addHidden(form, 'installments_number', String(state.init.installments_number || 1));
+      addHidden(form, 'transaction_type', state.init.transaction_type || 'Auth');
+      addHidden(form, 'hash_key', state.init.hash_key);
+      addHidden(form, 'order_id', state.init.order_id || '');
+      addHidden(form, 'cc_holder_name', document.getElementById('cardName').value.trim());
+      addHidden(form, 'cc_no', noEl.value.replace(/\s/g, ''));
+      addHidden(form, 'expiry_month', expEl.value.split('/')[0] || '');
+      addHidden(form, 'expiry_year', expEl.value.split('/')[1] || '');
+      addHidden(form, 'cvv', cvvEl.value.trim());
+      document.body.appendChild(form);
+      form.submit();
+    });
+
+    init().catch(err => {
+      modeBanner.textContent = 'Hata: ' + err.message;
+      const b = document.getElementById('banner');
+      b.textContent = err.message;
+      b.classList.add('show');
+      payBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>

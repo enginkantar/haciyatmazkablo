@@ -211,7 +211,7 @@
     </div>
 
     <p class="trust-note">
-      🔒 Ödeme işleminiz iyzico güvenli ödeme altyapısı ile gerçekleştirilmiştir.
+      🔒 Ödeme işleminiz HalkÖde (Halkbank) güvenli ödeme altyapısı ile gerçekleştirilmiştir.
     </p>
 
     <!-- Ürün -->
@@ -240,23 +240,44 @@
   </div>
 
   <script>
-    // order parametresini sanitize et (XSS koruması)
     const params = new URLSearchParams(window.location.search);
-    const order  = params.get('order');
     const waLink = document.getElementById('waLink');
 
-    if (order) {
-      const safe = order.replace(/[^A-Za-z0-9\-]/g, '');
-      if (safe) {
-        // Sipariş No kutusunu göster
-        document.getElementById('orderNo').textContent = safe;
-        document.getElementById('orderRef').style.display = 'block';
-
-        // WhatsApp mesajını sipariş numarasıyla güncelle
-        const msg = `www.haciyatmazkablo.com sitesinden sipariş no: ${safe} hakkında bilgi almak istiyorum.`;
-        waLink.href = 'https://wa.me/905534759032?text=' + encodeURIComponent(msg);
-      }
+    function showOrderNo(value) {
+      const safe = String(value || '').replace(/[^A-Za-z0-9\-]/g, '');
+      if (!safe) return;
+      document.getElementById('orderNo').textContent = safe;
+      document.getElementById('orderRef').style.display = 'block';
+      const msg = `www.haciyatmazkablo.com sitesinden sipariş no: ${safe} hakkında bilgi almak istiyorum.`;
+      waLink.href = 'https://wa.me/905534759032?text=' + encodeURIComponent(msg);
     }
+
+    // Eski akış uyumluluğu (?order=...)
+    showOrderNo(params.get('order'));
+
+    // HalkÖde dönüşü: sunucu-sunucu teyit + sipariş işleme (kargo/fatura/bildirim)
+    (async function notifySuccess() {
+      const invoiceId = params.get('invoice_id') || '';
+      const orderNo = params.get('order_no') || params.get('order_id') || '';
+      if (!invoiceId && !orderNo) return;
+      try {
+        const res = await fetch('/api/payment/notify-success', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            invoice_id: invoiceId,
+            order_id: orderNo,
+            order_no: orderNo,
+            payment_status: params.get('payment_status') || '',
+            status: params.get('status') || '',
+            hash_key: params.get('hash_key') || '',
+          }),
+        });
+        const data = await res.json();
+        if (data && data.ok) showOrderNo(data.orderNo);
+      } catch (e) {
+        console.error('[notify] failed:', e);
+      }
+    })();
   </script>
 </body>
 </html>
