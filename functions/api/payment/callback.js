@@ -331,6 +331,29 @@ async function processCallback(request, env, token, conversationId, waitUntil) {
     return redirect(`${ERROR}?reason=sig_invalid`);
   }
 
+  // Önce iyzico çağrısının kendisi başarılı mı? (IP whitelist reddi, geçersiz
+  // token vb. hata yanıtlarında price alanları hiç gelmez — bunları tutar
+  // uyuşmazlığı diye raporlama.)
+  if (retrieveData.status !== 'success') {
+    console.error('[payment/callback] retrieve failure:', JSON.stringify({
+      errorCode: retrieveData.errorCode,
+      errorMessage: retrieveData.errorMessage,
+    }));
+    return redirect(`${ERROR}?reason=retrieve_error`);
+  }
+
+  // Payment status kontrolü — tutardan ÖNCE: başarısız ödemede tutar alanları
+  // güvenilir değildir.
+  if (retrieveData.paymentStatus !== 'SUCCESS') {
+    console.warn('[payment/callback] Ödeme başarısız:', retrieveData.paymentStatus);
+    await env.PAYMENT_KV.put(
+      `token:${token}`,
+      JSON.stringify({ ...kvData, status: 'FAILED', failedAt: new Date().toISOString(), reason: retrieveData.paymentStatus }),
+      { expirationTtl: 3600 }
+    );
+    return redirect(`${ERROR}?reason=payment_failed`);
+  }
+
   // Tutar ve sipariş bağını doğrula — sepet tutarı (price) sabittir;
   // paidPrice taksit vade farkıyla BÜYÜYEBİLİR ama asla küçülemez.
   const priceKurus    = moneyToKurus(retrieveData.price);
@@ -339,14 +362,12 @@ async function processCallback(request, env, token, conversationId, waitUntil) {
   if (priceKurus === null || expectedKurus === null || priceKurus !== expectedKurus ||
       paidKurus === null || paidKurus < priceKurus) {
     console.error('[payment/callback] Tutar uyuşmazlığı:', retrieveData.price, '/', retrieveData.paidPrice, '!=', kvData.amount);
-    if (retrieveData.paymentStatus === 'SUCCESS') {
-      // Kart çekilmiş olabilir — sessiz düşme yok, elle kontrol için alarm.
-      await telegramGonder(env,
+    // Ödeme SUCCESS — kart çekilmiş olabilir; sessiz düşme yok, elle kontrol için alarm.
+    await telegramGonder(env,
 `⚠️ TUTAR UYUŞMAZLIĞI — tahsilat gerçekleşmiş olabilir, elle kontrol et!
 Sipariş: ${kvData.basketId}
 iyzico paymentId: ${retrieveData.paymentId || '-'}
 price: ${retrieveData.price} / paidPrice: ${retrieveData.paidPrice} / beklenen: ${kvData.amount}`);
-    }
     return redirect(`${ERROR}?reason=amount_mismatch`);
   }
 
@@ -356,17 +377,6 @@ price: ${retrieveData.price} / paidPrice: ${retrieveData.paidPrice} / beklenen: 
       retrieveData.token !== token) {
     console.error('[payment/callback] Sipariş bağı uyuşmazlığı');
     return redirect(`${ERROR}?reason=invalid`);
-  }
-
-  // Payment status kontrolü
-  if (retrieveData.paymentStatus !== 'SUCCESS') {
-    console.warn('[payment/callback] Ödeme başarısız:', retrieveData.paymentStatus);
-    await env.PAYMENT_KV.put(
-      `token:${token}`,
-      JSON.stringify({ ...kvData, status: 'FAILED', failedAt: new Date().toISOString(), reason: retrieveData.paymentStatus }),
-      { expirationTtl: 3600 }
-    );
-    return redirect(`${ERROR}?reason=payment_failed`);
   }
 
   // ─── Başarılı: kilitle, sonra dış entegrasyonları yanıt sonrasına bırak ───────
