@@ -5443,10 +5443,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 var log = document.getElementById('hykChatLog');
                 var d = document.createElement('div');
                 d.className = 'hykMsg ' + (role === 'user' ? 'user' : 'bot');
-                d.textContent = text;
+                d.innerHTML = hykLinkify(text);
                 log.appendChild(d);
                 log.scrollTop = log.scrollHeight;
                 return d;
+            }
+            var HYK_WA = 'https://wa.me/905534759032';
+            function hykLinkify(text) {
+                var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return esc.replace(/https?:\/\/wa\.me\/\S+/g, function (u) {
+                    return '<a href="' + u + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;font-weight:700;">WhatsApp\'tan yazın</a>';
+                });
             }
             window.hykSendChat = function (e) {
                 e.preventDefault();
@@ -5464,13 +5471,13 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     body: JSON.stringify({ message: msg, history: hist })
                 }).then(function (r) { return r.json(); }).then(function (data) {
                     loading.remove();
-                    var reply = data.reply || data.error || 'Şu anda yanıt veremiyorum, WhatsApp\'tan yazabilirsiniz.';
+                    var reply = data.reply || ('Şu anda yanıt veremiyorum. ' + HYK_WA);
                     hykAppendMsg('bot', reply);
                     hist.push({ role: 'user', content: msg });
                     hist.push({ role: 'assistant', content: reply });
                 }).catch(function () {
                     loading.remove();
-                    hykAppendMsg('bot', 'Bağlantı hatası. WhatsApp\'tan yazabilirsiniz.');
+                    hykAppendMsg('bot', 'Bağlantı hatası. ' + HYK_WA);
                 }).finally(function () { btn.disabled = false; });
                 return false;
             };
