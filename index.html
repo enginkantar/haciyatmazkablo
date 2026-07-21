@@ -5391,7 +5391,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         #hykChatSend:disabled { opacity: 0.5; cursor: default; }
+        #hykChatHint {
+            position: fixed; right: 20px; bottom: 86px; z-index: 9997;
+            background: #141414; color: #fff; padding: 8px 14px; border-radius: 14px;
+            border: 1px solid rgba(147,145,247,0.4); font-size: 0.8rem; white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+        }
     </style>
+    <div id="hykChatHint">Sorunuz varsa burada bekliyorum🤗</div>
     <button id="hykChatBubble" type="button" aria-label="Sohbet başlat" onclick="openHykChat()">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
             <path d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.1-3.5A7.96 7.96 0 0 1 4 12Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
@@ -5420,6 +5427,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             window.openHykChat = function () {
                 document.getElementById('hykChatPanel').classList.add('open');
                 document.getElementById('hykChatBubble').style.display = 'none';
+                document.getElementById('hykChatHint').style.display = 'none';
                 if (!opened) {
                     opened = true;
                     hykAppendMsg('bot', 'Sorunuz varsa burada bekliyorum🤗');
@@ -5429,6 +5437,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             window.closeHykChat = function () {
                 document.getElementById('hykChatPanel').classList.remove('open');
                 document.getElementById('hykChatBubble').style.display = 'flex';
+                document.getElementById('hykChatHint').style.display = 'block';
             };
             function hykAppendMsg(role, text) {
                 var log = document.getElementById('hykChatLog');
